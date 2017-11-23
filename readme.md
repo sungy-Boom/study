@@ -1,4 +1,4 @@
-#This is ideal not dream  
+# This is ideal not dream  
 
 __A project of daily study,in which takes notes that I learned.Such as algorithm,new technique,some view of myself and so on.__ 
 
