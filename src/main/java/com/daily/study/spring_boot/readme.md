@@ -1,6 +1,6 @@
 ## 项目中使用springboot的jpa
 首先要建一个springboot的项目，在http://start.spring.io/网站上边可以方便的建一个新的springboot工程。  
-![springboot initializr](/springboot.png)  
+![springboot initializr](springboot.png)  
 在项目中进行配置（配置application.properties文件）  
  
     spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8
