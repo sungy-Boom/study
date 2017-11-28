@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,23 +19,23 @@ public class NameTestController {
     @Autowired
     private NameTestService nameTestService;
 
-    @GetMapping(name = "/name")
+    @GetMapping(name = "/getFirstByName")
     @ResponseBody
-    public List<NameTestEntity> getNameTest(){
-        return nameTestService.getNameTestByName("as");
-    }
-
-    @GetMapping("/test")
-    @ResponseBody
-    public String hello(String name, String hello){
-        return name;
+    public List<NameTestEntity> getNameTest(String name) {
+        return nameTestService.getNameTestByName(name);
     }
 
     @PostMapping("/update")
     @ResponseBody
-    public String updateData(){
+    public String updateData() {
         nameTestService.updateByName(new Date(), "f");
 
         return "success";
+    }
+
+    @PostMapping("/insert")
+    @ResponseBody
+    public boolean insertData(String name) {
+        return nameTestService.insertDB(name);
     }
 }

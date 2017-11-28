@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "name_test")
-public class NameTestEntity implements Serializable{
+public class NameTestEntity implements Serializable {
 
     private static final long serialVersionUID = -6083759041312261110L;
     @Id
@@ -20,6 +20,14 @@ public class NameTestEntity implements Serializable{
 
     private String name;
     private String sub;
+
+    public NameTestEntity() {
+    }
+
+    public NameTestEntity(String name, String sub) {
+        this.name = name;
+        this.sub = sub;
+    }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;

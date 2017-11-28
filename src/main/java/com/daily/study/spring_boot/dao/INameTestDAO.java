@@ -22,7 +22,16 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
      * @param name
      * @return
      */
-    List<NameTestEntity> getNameTestEntityByName(String name);
+    List<NameTestEntity> getListByName(String name);
+
+    /**
+     * 通过名字获取
+     *
+     * @param name
+     * @return
+     */
+    @Query(value = "select * from name_test where name = :name ORDER BY sub DESC LIMIT 1", nativeQuery = true)
+    NameTestEntity getFirstByName(String name);
 
     /**
      * 更新数据

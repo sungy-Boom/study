@@ -27,4 +27,12 @@ public interface NameTestService {
      * @param name
      */
     void updateByName(Date updateTime, String name);
+
+    /**
+     * 插入一个用户
+     *
+     * @param name
+     * @return
+     */
+    boolean insertDB(String name);
 }
