@@ -63,4 +63,14 @@ public class NameTestEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "NameTestEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", sub='" + sub + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }
