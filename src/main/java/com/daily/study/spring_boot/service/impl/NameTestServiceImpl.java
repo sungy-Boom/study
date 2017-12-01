@@ -37,6 +37,11 @@ public class NameTestServiceImpl implements NameTestService {
         return true;
     }
 
+    @Override
+    public List<NameTestEntity> getList(String name) {
+        return nameTestDAO.getTop10ByNameContaining(name);
+    }
+
     /**
      * 看是否有重名
      *

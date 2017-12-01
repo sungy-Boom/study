@@ -35,4 +35,6 @@ public interface NameTestService {
      * @return
      */
     boolean insertDB(String name);
+
+    List<NameTestEntity> getList(String name);
 }

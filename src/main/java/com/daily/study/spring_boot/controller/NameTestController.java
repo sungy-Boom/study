@@ -38,4 +38,11 @@ public class NameTestController {
     public boolean insertData(String name) {
         return nameTestService.insertDB(name);
     }
+
+    @GetMapping("/getList")
+    @ResponseBody
+    public List<NameTestEntity> getList(String name) {
+
+        return nameTestService.getList(name);
+    }
 }

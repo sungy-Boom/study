@@ -35,7 +35,7 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
 
     /**
      * 更新数据
-     *
+     * //没有使用@Param 怎么也是可以的，好怪~~
      * @param updateTime
      * @param name
      */
@@ -43,4 +43,11 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
     @Modifying
     @Transactional(rollbackFor = Exception.class)
     void updateByName(Date updateTime, String name);
+
+    /**
+     * 模糊查询
+     *
+     * @param name 公告名
+     */
+    List<NameTestEntity> getTop10ByNameContaining(String name);
 }
