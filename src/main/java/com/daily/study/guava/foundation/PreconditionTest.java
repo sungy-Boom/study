@@ -1,4 +1,4 @@
-package com.daily.study.guava;
+package com.daily.study.guava.foundation;
 
 import com.google.common.base.Preconditions;
 
