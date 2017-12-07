@@ -1,7 +1,7 @@
 [TOC]
 <h1 align="center">Guava</h1>
 
-## 在pom文件中引入Guava
+## 1. 在pom文件中引入Guava
  
     <dependency>  
         <groupId>com.google.guava</groupId>  
@@ -9,33 +9,34 @@
         <version>21.0</version>  
     </dependency>  
 
-## Optional 
+## 1. 基本类
+### 1.1 Optional 
 在Java中null既不是对象也不是实例，只是一个关键字。Optional就是对null的处理。  
-### <T> T Optional.of(T reference)  
+#### <T> T Optional.of(T reference)  
     //Optional.of ---> 会检测null 如果是null抛出异常。在of方法中调用了Preconditions.checkNotNull方法进行空值判断 
     Optional<Integer> num1 = Optional.of(value1);  
-### <T> Optional<T> Optional.fromNullable(T nullableReference)     
+#### <T> Optional<T> Optional.fromNullable(T nullableReference)     
     //Optional.fromNullable --> 允许输入为空。但是在使用的时候要进行判断  
     Optional<Integer> num2 = Optional.fromNullable(value1);    
     //如果num2不为空。pres == true 否则 pres == false  
     boolean pres = num2.isPresent();   
-### T orNull() 
+#### T orNull() 
     Optional<Integer> num3 = Optional.absent();   
     //Optional.orNull --> 如果是null，就把null作为值，否则返回num3的值    
     System.out.println(num3.orNull());   
-### T or(Optional<? extends T> newValue)
+#### T or(Optional<? extends T> newValue)
     //Optional.or --> 如果存在，返回值，如果不存在，返回传入的值  
     //想用一个特定值代替null的时候，可以使用这个方法  
     Integer num = Optional.fromNullable(value1).or(0);  
-### T get()  
+#### T get()  
     //通过get方法获取Optional对象的值
     num1.get();
     
-## Preconditions
+## 1.2 Preconditions
 前置条件检查，可以对表达式、布尔值进行检查，检查中可以输出自定义异常信息，输出被检查的值  
 在Preconditions这个类中，checkArgument/checkState比较相似，checkElementIndex /checkPositionIndex比较相似  
 
-### checkArgument/checkState方法
+#### checkArgument/checkState方法
 __void Preconditions.checkArgument(boolean expression)/checkState方法
 void Preconditions.checkArgument(boolean expression，Object errorMessage)/checkState
 void Preconditions.checkArgument(boolean expression, String errorMessageTemplate, Object.. errorMessageObjects)/checkState
@@ -50,7 +51,7 @@ void Preconditions.checkArgument(boolean expression, String errorMessageTemplate
     //当age <= 0 || name == null 时，抛出异常，并在异常信息中输出age， name对应的值。其他的，不能够通过errorMessageTemplate格式化的参数，以数组形式，统一输出 
     Preconditions.checkArgument(age > 0 && name != null, "%s's age is %s is valid", name, age, 1,2,3,4,5,4,3,4,32);  
 
-### checkElementIndex/checkPositionIndex方法
+#### checkElementIndex/checkPositionIndex方法
 
 __int Preconditions.checkElementIndex(int index, int size)/checkPositionIndex  
 int Preconditions.checkElementIndex(int index, int size, String desc)/checkPositionIndexes    
@@ -67,7 +68,7 @@ void Preconditions.checkPositionIndexes(int start, int end, int size)__
     // 如果start < 0  || end < start || end > size 抛出异常  
     void Preconditions.checkPositionIndexes(int start, int end, int size)  
     
-### checkNotNull 方法
+#### checkNotNull 方法
 
 __<T> T Preconditions.checkNotNull(T reference)  
 <T> T Preconditions.checkNotNull(T reference, @Nullable Object errorMessage)  
@@ -83,14 +84,14 @@ __<T> T Preconditions.checkNotNull(T reference)
     //name == null 时，抛出异常，并在异常信息中输出age对应的值。其他的，不能够通过errorMessageTemplate格式化的参数，以数组形式，统一输出 
     Preconditions.checkArgument(name, "name is null, age is %s", age, 1,2,3,4,5,4,3,4,32); 
     
-## Ordering  
+### 1.3 Ordering  
 Ordering是Guava类库提供的一个强大的比较器工具，它非常容易扩展，可以轻松构造复杂的comparator，然后用在容器的比较、排序等操作中。Ordering使用链式表达式，配合java8的lambda~~很不错  
 
-### 返回一个排序器
+#### 返回一个排序器
 
     // 生成一个对数据随意排列的排序器
     static Ordering<Object> arbitrary(); 
-    // 生成一个数据按照自然序排列的排序器
+     // 生成一个数据按照自然序排列的排序器
     static <C extends Comparable> Ordering<C> natural()  
     // 所有数据地位相等，表明这个返回的是一个无排序的排序器
     static Ordering<Object> allEqual()  
@@ -99,7 +100,7 @@ Ordering是Guava类库提供的一个强大的比较器工具，它非常容易�
     // 生成一个按照指定方式排序的排序器
     static <T> Ordering<T> from(Comparator<T> comparator)  
 
-### 常用方法  
+#### 常用方法  
 
     // 返回一个将数据反转的排序器。
     <S extends T> Ordering<S> reverse()  
@@ -134,7 +135,7 @@ Ordering是Guava类库提供的一个强大的比较器工具，它非常容易�
     // 把空值放在末位
     <S extends T> Ordering<S> nullsLast()  
 
-### 例子
+#### 例子
 
 ```java
 import com.google.common.collect.ImmutableList;
