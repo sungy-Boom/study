@@ -31,3 +31,9 @@
 # entity层
 
 entity层需要有无参构造函数，否则会报错
+
+getTop10ByTitleConditionAndIsDel(title, 0) //IsDel设置默认的0
+
+@Query(value = "select * from `peiyou-pad`.`tb_experience_mgmt` "
+      + "where `file_name` like CONCAT('%',:fileName,'%') and `is_del`=0 limit 10", nativeQuery = true)
+List<ExperienceEntity> get10FuzzyRecordByFileName(@Param("fileName") String fileName);
