@@ -25,7 +25,7 @@ public class NameTestController {
         return nameTestService.getNameTestByName(name);
     }
 
-    @PostMapping("/update")
+    @GetMapping("/update")
     @ResponseBody
     public String updateData() {
         nameTestService.updateByName(new Date(), "f");
