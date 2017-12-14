@@ -8,6 +8,7 @@ import com.google.common.collect.TreeMultiset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ import java.util.Set;
  *
  * int add(E element) :向其中添加单个元素
  *
- * int add(E element,int occurrences) : 向其中添加指定个数的元素
+ * int add(E element,int occurrences) : 向其中添加指定个数的元素 返回0 element是新增加的对象，返回1的时候，说明原来的element已经存在
  *
  * int count(Object element) : 返回给定参数元素的个数
  *
@@ -26,23 +27,23 @@ import java.util.Set;
  *
  * boolean containsAll(Collection<?> elements) ：判断当前集合是不是指定集合的子集
  *
- * boolean equals(Object object) ：判断集合是否相等
- *
  * boolean remove(E element) : 移除一个元素，其count值 会响应减少
  *
- * int remove(E element,int occurrences): 移除相应个数的元素
+ * int remove(Object element, int occurrences) 如果element存在，返回数目，如果不存在返回0
  *
- * elementSet() : 将不同的元素放入一个Set中
+ * boolean retainAll(Collection c) : 保留出现在给定集合参数的所有的元素
  *
- * entrySet(): 类似与Map.entrySet 返回Set<Multiset.Entry>。包含的Entry支持使用getElement()和getCount()
+ * boolean removeAll(Collection c) : 去除出现给给定集合参数的所有的元素
  *
- * setCount(E element ,int count): 设定某一个元素的重复次数
+ * Set<E> elementSet() : 将不同的元素放入一个Set中。保有set的不重性质，只输出元素，不计个数
  *
- * setCount(E element,int oldCount,int newCount): 将符合原有重复个数的元素修改为新的重复次数
+ * Iterator<E> iterator() 返回所有的数据，例如有 qw x 3 那么qw就会输出三次
  *
- * retainAll(Collection c) : 保留出现在给定集合参数的所有的元素
+ * Set<Multiset.Entry<E>> entrySet(): 类似与Map.entrySet 返回Set<Multiset.Entry>。包含的Entry支持使用getElement()和getCount()
  *
- * removeAll(Collectionc) : 去除出现给给定集合参数的所有的元素
+ * int setCount(E element ,int count): 设定某一个元素的重复次数.如果这个元素之前不存在，返回0，如果存在，返回之前出现的次数
+ *
+ * boolean setCount(E element,int oldCount,int newCount): 将符合原有重复个数的元素修改为新的重复次数
  *
  * </p>
  */
@@ -60,6 +61,9 @@ public class MultisetTest {
     MultisetTest test = new MultisetTest();
     test.addSetElement(multiset);
     test.countAndJudge(multiset);
+    test.removeAndRetain(multiset);
+    test.goThroughSet(multiset);
+    test.setCountTest(multiset);
   }
 
   /**
@@ -75,7 +79,8 @@ public class MultisetTest {
     multiset.add(null);
 
     //指定添加元素的个数,这个个数最大为Integer.MAX_VALUE
-    System.out.println(multiset.add("count", Integer.MAX_VALUE));
+//    System.out.println(multiset.add("count", Integer.MAX_VALUE));
+//    System.out.println(multiset.add("count", Integer.MAX_VALUE+1));
     System.out.println(multiset.add("qw", 3));
     System.out.println(multiset.add("e", 0));
     System.out.println("向集合中添加元素：" + multiset);
@@ -92,6 +97,67 @@ public class MultisetTest {
     List<String> list = new ArrayList<>(Arrays.asList("raw", "qw"));
     System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(set));
     System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(list));
+  }
 
+  /**
+   * remove / retain
+   */
+  private void removeAndRetain(Multiset<String> multiset) {
+    System.out.println("remove test：" + multiset.remove("raw"));
+    System.out.println("after remove ：" + multiset);
+
+    System.out.println("remove specify num：" + multiset.remove("qpoi", 1));
+    System.out.println("after remove specify num ：" + multiset);
+
+    Multiset<String> set = HashMultiset.create();
+    set.add("raw");
+    set.add("qqqq");
+    set.add("qw");
+    System.out.println("retain :" + multiset.retainAll(set));
+    System.out.println("after retain element：" + multiset);
+
+    System.out.println("remove all in set：" + multiset.removeAll(set));
+    System.out.println("after remove all element in set：" + multiset);
+
+    addSetElement(multiset);
+  }
+
+  /**
+   * 集合遍历
+   */
+  private void goThroughSet(Multiset<String> multiset) {
+    Set<String> set = multiset.elementSet();
+
+    System.out.print("use elementSet go through set：");
+    for (String item : set) {
+      System.out.print(item + " ");
+    }
+
+    Iterator<String> iter = multiset.iterator();
+    System.out.println("iterator go through set ：");
+    while (iter.hasNext()) {
+      System.out.print(iter.next() + " ");
+    }
+    System.out.println();
+    System.out.println("entrySet go through set：");
+    for (Multiset.Entry<String> item : multiset.entrySet()) {
+      System.out.println(
+          item.getCount() + " " + item.getElement() + " " + (item.getElement() == null ? 0
+              : item.getElement().length()));
+    }
+  }
+
+  /**
+   * setCount test
+   */
+  private void setCountTest(Multiset<String> multiset) {
+
+    System.out.println(multiset.setCount("test", 9));
+    System.out.println(multiset);
+    System.out.println(multiset.setCount("qw", 6));
+    System.out.println(multiset);
+
+    System.out.println(multiset.setCount("qw", 8, 9));
+    System.out.println(multiset.setCount("qw", 6, 9));
   }
 }

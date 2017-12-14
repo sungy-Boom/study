@@ -9,8 +9,8 @@
         <version>21.0</version>  
     </dependency>  
 
-## 1. 基本类
-### 1.1 Optional 
+## 2. 基本类
+### 2.1 Optional 
 在Java中null既不是对象也不是实例，只是一个关键字。Optional就是对null的处理。  
 #### <T> T Optional.of(T reference)  
     //Optional.of ---> 会检测null 如果是null抛出异常。在of方法中调用了Preconditions.checkNotNull方法进行空值判断 
@@ -32,7 +32,7 @@
     //通过get方法获取Optional对象的值
     num1.get();
     
-## 1.2 Preconditions
+## 2.2 Preconditions
 前置条件检查，可以对表达式、布尔值进行检查，检查中可以输出自定义异常信息，输出被检查的值  
 在Preconditions这个类中，checkArgument/checkState比较相似，checkElementIndex /checkPositionIndex比较相似  
 
@@ -84,7 +84,7 @@ __<T> T Preconditions.checkNotNull(T reference)
     //name == null 时，抛出异常，并在异常信息中输出age对应的值。其他的，不能够通过errorMessageTemplate格式化的参数，以数组形式，统一输出 
     Preconditions.checkArgument(name, "name is null, age is %s", age, 1,2,3,4,5,4,3,4,32); 
     
-### 1.3 Ordering  
+### 2.3 Ordering  
 Ordering是Guava类库提供的一个强大的比较器工具，它非常容易扩展，可以轻松构造复杂的comparator，然后用在容器的比较、排序等操作中。Ordering使用链式表达式，配合java8的lambda~~很不错  
 
 #### 返回一个排序器
@@ -276,3 +276,222 @@ public class OrderingTest {
     第二次low = 3, high = 5, mid = 4, 查到3<5.low = mid+1 = 5  
     第三次low = 5, high = 5, mid = 5, 查到4<5.low = mid+1 = 6
     第四次low > high,结束循环，返回 -(low+1) = -7
+
+## 3.集合类
+
+### 3.1 Multiset
+允许重复，但是不保证顺序。
+
+    Multiset<String> multiset_1 = LinkedHashMultiset.create();
+    Multiset<String> multiset_2 = TreeMultiset.create();
+    Multisets multisets;
+    Multiset<String> multiset = HashMultiset.create();
+        
+#### 常用方法
+
+    //向其中添加单个元素
+    int add(E element)  
+    //向其中添加指定个数的元素 返回0 element是新增加的对象，返回1的时候，说明原来的element已经存在
+    int add(E element,int occurrences) 
+     
+    //返回给定参数元素的个数
+    int count(Object element) 
+    //判断集合中是否包含指定元素
+    boolean contains(Object element)
+    //判断当前集合是不是指定集合的子集
+    boolean containsAll(Collection<?> elements)
+     
+    //移除一个元素，其count值 会响应减少
+    boolean remove(E element) 
+    //如果element存在，返回数目，如果不存在返回0
+    int remove(Object element, int occurrences) 
+    //保留出现在给定集合参数的所有的元素
+    boolean retainAll(Collection c) 
+    //去除出现给给定集合参数的所有的元素
+    boolean removeAll(Collection c) 
+     
+    //将不同的元素放入一个Set中。保有set的不重性质，只输出元素，不计个数
+    Set<E> elementSet() 
+    //返回所有的数据，例如有 qw x 3 那么qw就会输出三次
+    Iterator<E> iterator() 
+    //类似与Map.entrySet 返回Set<Multiset.Entry>。包含的Entry支持使用getElement()和getCount()
+    Set<Multiset.Entry<E>> entrySet()
+     
+    //设定某一个元素的重复次数.如果这个元素之前不存在，返回0，如果存在，返回之前出现的次数
+    int setCount(E element ,int count)
+    //将符合原有重复个数的元素修改为新的重复次数
+    boolean setCount(E element,int oldCount,int newCount)
+    
+#### 代码示例
+
+```java
+public class MultisetTest {
+
+  public static void main(String[] args) {
+
+    Set<String> set = new HashSet<>();
+
+    Multiset<String> multiset = HashMultiset.create();
+    MultisetTest test = new MultisetTest();
+    test.addSetElement(multiset);
+    test.countAndJudge(multiset);
+    test.removeAndRetain(multiset);
+    test.goThroughSet(multiset);
+    test.setCountTest(multiset);
+  }
+
+  /**
+   * 集合中增加元素
+   */
+  private void addSetElement(Multiset<String> multiset) {
+    multiset.add("raw");
+    multiset.add("raw");
+    multiset.add("raw");
+    multiset.add("qw");
+
+    //加入null值
+    multiset.add(null);
+
+    //指定添加元素的个数,这个个数最大为Integer.MAX_VALUE
+//    System.out.println(multiset.add("count", Integer.MAX_VALUE));
+//    System.out.println(multiset.add("count", Integer.MAX_VALUE+1));
+    System.out.println(multiset.add("qw", 3));
+    System.out.println(multiset.add("e", 0));
+    System.out.println("向集合中添加元素：" + multiset);
+  }
+
+  /**
+   * multiset集合统计与判断
+   */
+  private void countAndJudge(Multiset<String> multiset) {
+    System.out.println("计算集合中指定元素的个数：" + multiset.count("raw"));
+    System.out.println("集合中是否包含指定的元素：" + multiset.contains("raw"));
+    Multiset<String> set = HashMultiset.create();
+    set.add("raw");
+    List<String> list = new ArrayList<>(Arrays.asList("raw", "qw"));
+    System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(set));
+    System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(list));
+  }
+
+  /**
+   * remove / retain
+   */
+  private void removeAndRetain(Multiset<String> multiset) {
+    System.out.println("remove test：" + multiset.remove("raw"));
+    System.out.println("after remove ：" + multiset);
+
+    System.out.println("remove specify num：" + multiset.remove("qpoi", 1));
+    System.out.println("after remove specify num ：" + multiset);
+
+    Multiset<String> set = HashMultiset.create();
+    set.add("raw");
+    set.add("qqqq");
+    set.add("qw");
+    System.out.println("retain :" + multiset.retainAll(set));
+    System.out.println("after retain element：" + multiset);
+
+    System.out.println("remove all in set：" + multiset.removeAll(set));
+    System.out.println("after remove all element in set：" + multiset);
+
+    addSetElement(multiset);
+  }
+
+  /**
+   * 集合遍历
+   */
+  private void goThroughSet(Multiset<String> multiset) {
+    Set<String> set = multiset.elementSet();
+
+    System.out.print("use elementSet go through set：");
+    for (String item : set) {
+      System.out.print(item + " ");
+    }
+
+    Iterator<String> iter = multiset.iterator();
+    System.out.println("iterator go through set ：");
+    while (iter.hasNext()) {
+      System.out.print(iter.next() + " ");
+    }
+    System.out.println();
+    System.out.println("entrySet go through set：");
+    for (Multiset.Entry<String> item : multiset.entrySet()) {
+      System.out.println(
+          item.getCount() + " " + item.getElement() + " " + (item.getElement() == null ? 0
+              : item.getElement().length()));
+    }
+  }
+
+  /**
+   * setCount test
+   */
+  private void setCountTest(Multiset<String> multiset) {
+
+    System.out.println(multiset.setCount("test", 9));
+    System.out.println(multiset);
+    System.out.println(multiset.setCount("qw", 6));
+    System.out.println(multiset);
+
+    System.out.println(multiset.setCount("qw", 8, 9));
+    System.out.println(multiset.setCount("qw", 6, 9));
+  }
+}
+```
+### 3.2 BiMap
+> 继承 java.util.Map
+
+BiMap实现键值对的双向映射，并保持它们间的同步。键和值都不可以有重复
+#### 常用方法
+
+    //如果key存在，返回之前的value，如果不存在，返回null
+    V put(K key, V value) 
+    //如果key存在，返回之前的value，如果不存在，返回null
+    V forcePut(K key, V value)
+    //把另一个集合添加到bimap中
+    void putAll(Map<? extends K,? extends V> map)
+    //返回一个set
+    Set<V> values()
+    //将map的键值反转
+    BiMap<K, V> inverse()
+
+#### 例子
+
+```java
+public class BiMapTest {
+
+  public static void main(String[] args) {
+    BiMapTest test = new BiMapTest();
+    BiMap<String, Integer> biMap = HashBiMap.create(16);
+    test.addElement(biMap);
+    test.keyToValue(biMap);
+  }
+
+  /**
+   * biMap中添加元素 value already present 对于不同的键，不可以有相同的值
+   */
+  private void addElement(BiMap<String, Integer> biMap) {
+    System.out.println("test return value: " + biMap.put("test1", 9));
+    System.out.println("test return value: " + biMap.put("test1", 0));
+    biMap.put("test2", 3);
+    System.out.println(biMap);
+
+    Map<String, Integer> map = new HashMap<>();
+    map.put("map", 1);
+    map.put("map1", 2);
+    map.put("map2", 4);
+    biMap.putAll(map);
+    System.out.println("put map into biMap: " + biMap);
+    System.out.println(biMap.forcePut("test3", 3));
+    System.out.println(biMap.forcePut("test3", 3));
+    System.out.println("force put into biMap:" + biMap);
+  }
+  /**
+   * search value by key
+   */
+  private void keyToValue(BiMap<String, Integer> biMap) {
+    System.out.println("get value by key: " + biMap.get("map"));
+    System.out.println("get key by value: " + biMap.inverse().get(1));
+    System.out.println("get values: " + biMap.values());
+    System.out.println("get keys: " + biMap.inverse().values());
+  }
+}
+```

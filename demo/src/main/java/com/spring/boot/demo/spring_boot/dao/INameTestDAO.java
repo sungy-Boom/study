@@ -36,6 +36,12 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
   @Transactional(rollbackFor = Exception.class)
   void updateByName(@Param("updateTime") Date updateTime, @Param("name") String name);
 
+  @Query(value = "select * from `test`.`name_test` where `name` like concat('%',:name,'%')"
+      + "and (case when :sub is null then 1=1 \n"
+      + "else `sub`=:sub end) limit 10", nativeQuery = true)
+  List<NameTestEntity> getByMultiCondition(@Param("name") String name,
+      @Param("sub") String subName);
+
   /**
    * 模糊查询
    *

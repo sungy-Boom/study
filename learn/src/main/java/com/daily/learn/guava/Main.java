@@ -5,31 +5,37 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
-        String str = "测试";
-        System.out.println(str.length());
-        strTest();
-        splitTest();
-    }
+  public static void main(String[] args) {
+    String str = "测试";
+    System.out.println(str.length());
+    strTest();
+    splitTest();
+    trimTest();
+  }
 
-    private static void strTest() {
-        List<Integer> strList = new ArrayList<>();
-        strList.add(1);
-        strList.add(2);
-        strList.add(3);
-        strList.add(4);
+  private static void strTest() {
+    List<Integer> strList = new ArrayList<>();
+    strList.add(1);
+    strList.add(2);
+    strList.add(3);
+    strList.add(4);
 
-        if (strList.contains(3)) {
-            System.out.println("3");
-        }
+    if (strList.contains(3)) {
+      System.out.println("3");
     }
+  }
 
-    private static void splitTest() {
-        String str = "test.pdf";
-        str = str.split("\\.")[0];
-        System.out.println(str);
-        str = "test";
-        str = str.split("\\.")[0];
-        System.out.println("222   " + str);
-    }
+  private static void splitTest() {
+    String str = "test.pdf";
+    str = str.split("\\.")[0];
+    System.out.println(str);
+    str = "test";
+    str = str.split("\\.")[0];
+    System.out.println("222   " + str);
+  }
+
+  private static void trimTest() {
+    String str = "  test  ff ";
+    System.out.println(str.trim());
+  }
 }
