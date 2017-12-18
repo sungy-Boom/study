@@ -47,7 +47,7 @@ public class PreconditionTest {
         try {
             age = null;
             String name = "test";
-            age = Preconditions.checkNotNull(age, "age is null,name is %s",name);
+            age = Preconditions.checkNotNull(age, "age is null,name is %s", name);
             System.out.println(age);
         } catch (Exception e) {
             System.out.println("age null: " + e.getMessage());

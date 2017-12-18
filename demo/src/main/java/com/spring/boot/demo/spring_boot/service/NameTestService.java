@@ -12,25 +12,25 @@ import java.util.List;
 @Component
 public interface NameTestService {
 
-  /**
-   * 获取list
-   */
-  List<NameTestEntity> getNameTestByName(String name);
+    /**
+     * 获取list
+     */
+    List<NameTestEntity> getNameTestByName(String name);
 
-  /**
-   * 更新
-   */
-  void updateByName(Date updateTime, String name);
+    /**
+     * 更新
+     */
+    void updateByName(Date updateTime, String name);
 
-  /**
-   * 插入一个用户
-   */
-  boolean insertDB(String name);
+    /**
+     * 插入一个用户
+     */
+    boolean insertDB(String name);
 
-  List<NameTestEntity> getList(String name);
+    List<NameTestEntity> getList(String name);
 
-  /**
-   * 测试sql中的case用法
-   */
-  List<NameTestEntity> testCaseInSql(String name, String sub);
+    /**
+     * 测试sql中的case用法
+     */
+    List<NameTestEntity> testCaseInSql(String name, String sub);
 }

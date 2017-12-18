@@ -17,39 +17,39 @@ import java.util.List;
 @Controller
 public class NameTestController {
 
-  @Autowired
-  private NameTestService nameTestService;
+    @Autowired
+    private NameTestService nameTestService;
 
-  @GetMapping(name = "/getFirstByName")
-  @ResponseBody
-  public List<NameTestEntity> getNameTest(String name) {
-    return nameTestService.getNameTestByName(name);
-  }
+    @GetMapping(name = "/getFirstByName")
+    @ResponseBody
+    public List<NameTestEntity> getNameTest(String name) {
+        return nameTestService.getNameTestByName(name);
+    }
 
-  @GetMapping("/update")
-  @ResponseBody
-  public String updateData() {
-    nameTestService.updateByName(new Date(), "f");
+    @GetMapping("/update")
+    @ResponseBody
+    public String updateData() {
+        nameTestService.updateByName(new Date(), "f");
 
-    return "success";
-  }
+        return "success";
+    }
 
-  @PostMapping("/insert")
-  @ResponseBody
-  public boolean insertData(String name) {
-    return nameTestService.insertDB(name);
-  }
+    @PostMapping("/insert")
+    @ResponseBody
+    public boolean insertData(String name) {
+        return nameTestService.insertDB(name);
+    }
 
-  @GetMapping("/getList")
-  @ResponseBody
-  public List<NameTestEntity> getList(String name) {
+    @GetMapping("/getList")
+    @ResponseBody
+    public List<NameTestEntity> getList(String name) {
 
-    return nameTestService.getList(name);
-  }
+        return nameTestService.getList(name);
+    }
 
-  @GetMapping("testSQL")
-  @ResponseBody
-  public List<NameTestEntity> getTestRes(String name, String sub) {
-    return nameTestService.testCaseInSql(name, sub);
-  }
+    @GetMapping("testSQL")
+    @ResponseBody
+    public List<NameTestEntity> getTestRes(String name, String sub) {
+        return nameTestService.testCaseInSql(name, sub);
+    }
 }

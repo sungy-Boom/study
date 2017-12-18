@@ -74,6 +74,7 @@ public class FifthArrNotCollection {
     }
 
     private final int MAX_SIZE_OF_COLLECTION = 1000000;
+
     /**
      * 使用list的时候给定一个初始的大小
      */
