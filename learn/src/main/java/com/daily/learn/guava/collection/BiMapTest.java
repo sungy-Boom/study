@@ -2,7 +2,10 @@ package com.daily.learn.guava.collection;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +26,8 @@ public class BiMapTest {
     BiMap<String, Integer> biMap = HashBiMap.create(16);
     test.addElement(biMap);
     test.keyToValue(biMap);
+
+    test.biMapListTest();
   }
 
   /**
@@ -55,6 +60,15 @@ public class BiMapTest {
 
     System.out.println("get values: " + biMap.values());
     System.out.println("get keys: " + biMap.inverse().values());
+  }
+
+  private void biMapListTest() {
+    BiMap<String, List<String>> map = HashBiMap.create();
+    List<String> list_1 = new ArrayList<>(Arrays.asList("1", "2"));
+    map.put("first", list_1);
+
+    System.out.println(map.get("first"));
+    System.out.println(map.inverse().get(Arrays.asList("1", "2")));
   }
 
 }
