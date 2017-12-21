@@ -67,16 +67,19 @@ public class MultimapTest {
      */
     private void judgeContain(Multimap<String, Integer> multiMap,
                               Multimap<String, List<Integer>> map) {
-        System.out
-                .println("is multiMap contain the key-value pair : " + multiMap.containsEntry("test", 1));
-        System.out.println("is multiMap contain the specify key : " + multiMap.containsKey("test"));
-        System.out.println("is multiMap contain the specify value : " + multiMap.containsValue(1));
+        System.out.println("is multiMap contain the key-value pair : " +
+                multiMap.containsEntry("test", 1));
+        System.out.println("is multiMap contain the specify key : " +
+                multiMap.containsKey("test"));
+        System.out.println("is multiMap contain the specify value : " +
+                multiMap.containsValue(1));
 
         System.out.println("is map contain the key-value pair : " +
                 map.containsEntry("test", Arrays.asList(1, 1)));
         System.out.println("is map contain the key-value pair : " +
                 map.containsEntry("Test", Arrays.asList(1, 1)));
-        System.out.println("is map contain the specify key : " + multiMap.containsKey("test"));
+        System.out.println("is map contain the specify key : " +
+                multiMap.containsKey("test"));
         System.out.println("is map contain the specify value : " +
                 multiMap.containsValue(Arrays.asList(1, 1)));
     }

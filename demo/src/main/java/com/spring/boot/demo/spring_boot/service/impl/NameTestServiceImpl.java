@@ -48,6 +48,12 @@ public class NameTestServiceImpl implements NameTestService {
         return nameTestDAO.getByMultiCondition(name, sub);
     }
 
+    @Override
+    public boolean deleteRecord(String name) {
+        nameTestDAO.deleteByName(name);
+        return true;
+    }
+
     /**
      * 看是否有重名
      */

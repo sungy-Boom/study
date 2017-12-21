@@ -3,6 +3,7 @@ package com.spring.boot.demo.spring_boot.controller;
 import com.spring.boot.demo.spring_boot.entity.NameTestEntity;
 import com.spring.boot.demo.spring_boot.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,36 +21,48 @@ public class NameTestController {
     @Autowired
     private NameTestService nameTestService;
 
+    @GetMapping("/ok")
+    @ResponseBody
+    public String okTest() {
+        return "this is ok";
+    }
+
     @GetMapping(name = "/getFirstByName")
     @ResponseBody
-    public List<NameTestEntity> getNameTest(String name) {
+    public List<NameTestEntity> getNameTest(@Param("name") String name) {
         return nameTestService.getNameTestByName(name);
     }
 
     @GetMapping("/update")
     @ResponseBody
-    public String updateData() {
-        nameTestService.updateByName(new Date(), "f");
+    public String updateData(@Param("name") String name) {
+        nameTestService.updateByName(new Date(), name);
 
         return "success";
     }
 
-    @PostMapping("/insert")
+    @GetMapping("/insert")
     @ResponseBody
-    public boolean insertData(String name) {
+    public boolean insertData(@Param("name") String name) {
         return nameTestService.insertDB(name);
     }
 
     @GetMapping("/getList")
     @ResponseBody
-    public List<NameTestEntity> getList(String name) {
+    public List<NameTestEntity> getList(@Param("name") String name) {
 
         return nameTestService.getList(name);
     }
 
-    @GetMapping("testSQL")
+    @GetMapping("/testSQL")
     @ResponseBody
-    public List<NameTestEntity> getTestRes(String name, String sub) {
+    public List<NameTestEntity> getTestRes(@Param("name") String name, @Param("sub") String sub) {
         return nameTestService.testCaseInSql(name, sub);
+    }
+
+    @GetMapping("/deleteRecord")
+    @ResponseBody
+    public boolean deleteRecord(String name) {
+        return nameTestService.deleteRecord(name);
     }
 }

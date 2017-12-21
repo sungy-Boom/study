@@ -21,6 +21,12 @@ public class NameTestEntity implements Serializable {
     private String name;
     private String sub;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date addTime = new Date();
+
     public NameTestEntity() {
     }
 
@@ -28,9 +34,6 @@ public class NameTestEntity implements Serializable {
         this.name = name;
         this.sub = sub;
     }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
 
     public Long getId() {
         return id;
@@ -62,6 +65,14 @@ public class NameTestEntity implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     @Override

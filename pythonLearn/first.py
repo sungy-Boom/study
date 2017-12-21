@@ -27,8 +27,8 @@ else:
 # list ,set ,map,tuple
 # list = [1,2,3,4,5,6,7,8,9]
 # 通过range可以生成一个从0到100的数组
-list = range(100)
-for item in list:
+list1 = range(100)
+for item in list1:
     print(item)
 
 # map

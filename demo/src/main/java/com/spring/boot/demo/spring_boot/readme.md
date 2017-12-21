@@ -37,3 +37,7 @@ getTop10ByTitleConditionAndIsDel(title, 0) //IsDel设置默认的0
 @Query(value = "select * from `peiyou-pad`.`tb_experience_mgmt` "
       + "where `file_name` like CONCAT('%',:fileName,'%') and `is_del`=0 limit 10", nativeQuery = true)
 List<ExperienceEntity> get10FuzzyRecordByFileName(@Param("fileName") String fileName);
+
+在使用jpa的时候，DAO层使用 __fileName=:fileName__ 这种方式的时候，参数不加@Param("fileName")是错误的
+
+表中使用create_time和update_time。update_time应该是与当前时间一致，create_time应该是我们主动写入的

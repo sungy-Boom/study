@@ -33,4 +33,9 @@ public interface NameTestService {
      * 测试sql中的case用法
      */
     List<NameTestEntity> testCaseInSql(String name, String sub);
+
+    /**
+     * 删除数据
+     */
+    boolean deleteRecord(String name);
 }

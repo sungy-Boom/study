@@ -26,7 +26,7 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
      * 通过名字获取
      */
     @Query(value = "select * from name_test where name = :name ORDER BY sub DESC LIMIT 1", nativeQuery = true)
-    NameTestEntity getFirstByName(String name);
+    NameTestEntity getFirstByName(@Param("name") String name);
 
     /**
      * 更新数据 //没有使用@Param 怎么也是可以的，好怪~~
@@ -48,4 +48,8 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
      * @param name 公告名
      */
     List<NameTestEntity> getTop10ByNameContaining(String name);
+
+    @Modifying
+    @Transactional(rollbackFor = Exception.class)
+    void deleteByName(String name);
 }

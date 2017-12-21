@@ -1,42 +1,53 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
   http://maven.apache.org/xsd/maven-4.0.0.xsd">
- <!-- <parent>
-    <artifactId>study</artifactId>
-    <groupId>com.study</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>-->
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>study</artifactId>
+        <groupId>com.study</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.daily</groupId>
-  <artifactId>learn</artifactId>
-  <packaging>jar</packaging>
+    <groupId>com.daily</groupId>
+    <artifactId>learn</artifactId>
+    <packaging>jar</packaging>
 
-  <name>learn</name>
-  <url>http://maven.apache.org</url>
+    <name>learn</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>
-    <joda-time.version>2.9.4</joda-time.version>
-    <guava.versoin>21.0</guava.versoin>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <joda-time.version>2.9.4</joda-time.version>
+        <guava.versoin>21.0</guava.versoin>
+    </properties>
 
-  <dependencies>
+    <dependencies>
 
-    <!--jode-time-->
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>${joda-time.version}</version>
-    </dependency>
+        <!--jode-time-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+        </dependency>
 
-    <!--guava-->
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>${guava.versoin}</version>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+
+        <!--guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.versoin}</version>
+        </dependency>
+    </dependencies>
 </project>
