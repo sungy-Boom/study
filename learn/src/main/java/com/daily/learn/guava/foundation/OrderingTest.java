@@ -71,15 +71,15 @@ public class OrderingTest {
      * 判断集合是否已经排序
      */
     private void isSortedTest(Ordering ordering) {
-        System.out.println("sorted test ：" + ordering.isOrdered(list_2));//true
-        System.out.println("strictly sorted test ：" + ordering.isStrictlyOrdered(list_2));
+        System.out.println("sorted Test ：" + ordering.isOrdered(list_2));//true
+        System.out.println("strictly sorted Test ：" + ordering.isStrictlyOrdered(list_2));
     }
 
     /**
      * reverse
      */
     private void reverseTest(Ordering ordering) {
-        System.out.println("test list_2 reverse :" + ordering.reverse().sortedCopy(list_2));
+        System.out.println("Test list_2 reverse :" + ordering.reverse().sortedCopy(list_2));
         System.out.println("isOrdered reverse :" + ordering.reverse().isOrdered(abc));
     }
 
@@ -122,6 +122,6 @@ public class OrderingTest {
     };*/
 
         Comparator<Integer> comparator = (Integer o1, Integer o2) -> (o1.compareTo(o2));
-        System.out.println("comparator test: " + Ordering.from(comparator).sortedCopy(comparator_test));
+        System.out.println("comparator Test: " + Ordering.from(comparator).sortedCopy(comparator_test));
     }
 }

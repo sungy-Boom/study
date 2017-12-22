@@ -1,4 +1,4 @@
-package com.spring.boot.demo;
+package com.tal.peiyoupad;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

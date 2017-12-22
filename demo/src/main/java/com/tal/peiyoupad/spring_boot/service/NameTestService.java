@@ -1,6 +1,6 @@
-package com.spring.boot.demo.spring_boot.service;
+package com.tal.peiyoupad.spring_boot.service;
 
-import com.spring.boot.demo.spring_boot.entity.NameTestEntity;
+import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

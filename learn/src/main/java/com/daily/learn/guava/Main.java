@@ -26,16 +26,16 @@ public class Main {
     }
 
     private static void splitTest() {
-        String str = "test.pdf";
+        String str = "Test.pdf";
         str = str.split("\\.")[0];
         System.out.println(str);
-        str = "test";
+        str = "Test";
         str = str.split("\\.")[0];
         System.out.println("222   " + str);
     }
 
     private static void trimTest() {
-        String str = "  test  ff ";
+        String str = "  Test  ff ";
         System.out.println(str.trim());
     }
 }

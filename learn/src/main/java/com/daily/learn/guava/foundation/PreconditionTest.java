@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Preconditions test
+ * Preconditions Test
  *
  * @author Soul
  */
@@ -26,7 +26,7 @@ public class PreconditionTest {
         }
 
         try {
-            str = "test";
+            str = "Test";
             test.argumentCondition(str, 0);
         } catch (Exception e) {
             System.out.println("name： " + e.getMessage());
@@ -46,7 +46,7 @@ public class PreconditionTest {
 
         try {
             age = null;
-            String name = "test";
+            String name = "Test";
             age = Preconditions.checkNotNull(age, "age is null,name is %s", name);
             System.out.println(age);
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class PreconditionTest {
         }
 
         try {
-            list.add("test");
+            list.add("Test");
             res = Preconditions.checkElementIndex(-1, list.size(), "this list is not right");
             System.out.println(res);
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class PreconditionTest {
         }
 
         try {
-            list.add("test");
+            list.add("Test");
             res = Preconditions.checkElementIndex(0, list.size(), "this list is not right");
             Preconditions.checkPositionIndex(0, list.size());
             System.out.println(res);
@@ -100,7 +100,7 @@ public class PreconditionTest {
         }
 
         try {
-            list.add("test");
+            list.add("Test");
             list.add("12");
             Preconditions.checkPositionIndexes(0, 1, list.size());
             System.out.println(res);
@@ -120,21 +120,21 @@ public class PreconditionTest {
         }
 
         try {
-            state = "test";
-            Preconditions.checkState("test".equals(state), "the expression is not right");
+            state = "Test";
+            Preconditions.checkState("Test".equals(state), "the expression is not right");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         try {
             state = "test1234";
-            Preconditions.checkState("test".equals(state), "the expression is not right,it's value is", state, 1);
+            Preconditions.checkState("Test".equals(state), "the expression is not right,it's value is", state, 1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         try {
             state = "test1234";
-            Preconditions.checkState("test".equals(state), "the expression is not right,it's value is", state, 1, 2, 2, 1, 2, 2);
+            Preconditions.checkState("Test".equals(state), "the expression is not right,it's value is", state, 1, 2, 2, 1, 2, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -160,7 +160,7 @@ public class PreconditionTest {
     private void argumentCondition(String name, int age) throws Exception {
         Preconditions.checkArgument(name != null);
 
-        Preconditions.checkArgument(name != "test", "this is a test");
+        Preconditions.checkArgument(name != "Test", "this is a Test");
 
         Preconditions.checkArgument(age > 0 && name != null, "%s's age is %s is valid", name, age);
     }

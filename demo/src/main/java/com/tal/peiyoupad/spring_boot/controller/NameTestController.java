@@ -1,12 +1,12 @@
-package com.spring.boot.demo.spring_boot.controller;
+package com.tal.peiyoupad.spring_boot.controller;
 
-import com.spring.boot.demo.spring_boot.entity.NameTestEntity;
-import com.spring.boot.demo.spring_boot.service.NameTestService;
+import com.tal.peiyoupad.peiyoupad.annotation.TALMonitor;
+import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
+import com.tal.peiyoupad.spring_boot.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -23,7 +23,11 @@ public class NameTestController {
 
     @GetMapping("/ok")
     @ResponseBody
+    @TALMonitor
+//    @TestAnnotation
     public String okTest() {
+       /* TALAmonitorAOP talAmonitorAOP = new TALAmonitorAOP();
+        talAmonitorAOP.annotationProcessor_1();*/
         return "this is ok";
     }
 

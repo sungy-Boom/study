@@ -199,15 +199,15 @@ public class OrderingTest {
    * 判断集合是否已经排序
    */
   private void isSortedTest(Ordering ordering) {
-    System.out.println("sorted test ：" + ordering.isOrdered(list_2));//true
-    System.out.println("strictly sorted test ：" + ordering.isStrictlyOrdered(list_2));
+    System.out.println(Test + ordering.isOrdered(list_2));//true
+    System.out.println(Test + ordering.isStrictlyOrdered(list_2));
   }
 
   /**
    * reverse
    */
   private void reverseTest(Ordering ordering) {
-    System.out.println("test list_2 reverse :" + ordering.reverse().sortedCopy(list_2));
+    System.out.println(Test + ordering.reverse().sortedCopy(list_2));
     System.out.println("isOrdered reverse :" + ordering.reverse().isOrdered(abc));
   }
 
@@ -243,7 +243,7 @@ public class OrderingTest {
    */
   private void useComparatorTest(Ordering ordering) {
     Comparator<Integer> comparator = (Integer o1,Integer o2)->(o1.compareTo(o2));
-    System.out.println("comparator test: " + Ordering.from(comparator).sortedCopy(comparator_test));
+    System.out.println(Test + Ordering.from(comparator).sortedCopy(comparator_test));
   }
 }
 ```
@@ -469,8 +469,8 @@ public class BiMapTest {
    * biMap中添加元素 value already present 对于不同的键，不可以有相同的值
    */
   private void addElement(BiMap<String, Integer> biMap) {
-    System.out.println("test return value: " + biMap.put("test1", 9));
-    System.out.println("test return value: " + biMap.put("test1", 0));
+    System.out.println(Test + biMap.put("test1", 9));
+    System.out.println(Test + biMap.put("test1", 0));
     biMap.put("test2", 3);
     System.out.println(biMap);
 

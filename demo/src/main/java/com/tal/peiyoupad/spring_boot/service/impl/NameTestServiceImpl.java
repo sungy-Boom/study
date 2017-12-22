@@ -1,8 +1,8 @@
-package com.spring.boot.demo.spring_boot.service.impl;
+package com.tal.peiyoupad.spring_boot.service.impl;
 
-import com.spring.boot.demo.spring_boot.dao.INameTestDAO;
-import com.spring.boot.demo.spring_boot.entity.NameTestEntity;
-import com.spring.boot.demo.spring_boot.service.NameTestService;
+import com.tal.peiyoupad.spring_boot.dao.INameTestDAO;
+import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
+import com.tal.peiyoupad.spring_boot.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

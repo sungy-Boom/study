@@ -1,4 +1,4 @@
-package com.spring.boot.demo;
+package com.tal.peiyoupad;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

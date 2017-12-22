@@ -1,6 +1,6 @@
-package com.spring.boot.demo.spring_boot.dao;
+package com.tal.peiyoupad.spring_boot.dao;
 
-import com.spring.boot.demo.spring_boot.entity.NameTestEntity;
+import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author SunGuiyong
  */
-@Repository
+@Repository(value = "nameTestDAO")
 public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
 
     /**
