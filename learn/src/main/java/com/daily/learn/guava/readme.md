@@ -301,7 +301,7 @@ public class OrderingTest {
     //判断当前集合是不是指定集合的子集
     boolean containsAll(Collection<?> elements)
      
-    //移除一个元素，其count值 会响应减少
+    //移除一个元素，其count值 会相应减少
     boolean remove(E element) 
     //如果element存在，返回数目，如果不存在返回0
     int remove(Object element, int occurrences) 
