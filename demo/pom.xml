@@ -24,6 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mysql.version>5.1.40</mysql.version>
+        <tomcat.version>8.0.26</tomcat.version>
     </properties>
 
     <dependencies>
@@ -39,11 +40,23 @@
             </exclusions>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>${tomcat.version}</version>
         </dependency>-->
+
+        <dependency>
+            <groupId>com.tal</groupId>
+            <artifactId>monitor-aop</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
         <!--guava-->
         <dependency>
@@ -55,7 +68,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.8</version>
+            <version>1.2.40</version>
         </dependency>
         
         <!--AOP依赖-->

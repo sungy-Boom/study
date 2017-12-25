@@ -19,8 +19,13 @@ import java.util.Map;
  * <p>
  * void clear()
  * <p>
- * //判断是否包含 key-value 对 boolean containsEntry(Object key, Object value) boolean containsKey(Object
- * key) boolean containsValue(Object value)
+ * //判断是否包含 key-value 对
+ * <p>
+ * boolean containsEntry(Object key, Object value)
+ * <p>
+ * boolean containsKey(Object * key)
+ * <p>
+ * boolean containsValue(Object value)
  * <p>
  * Collection<Map.Entry<K,V>> entries()
  */
@@ -87,8 +92,8 @@ public class MultimapTest {
     /**
      * go through map
      */
-    private void throughTest(Multimap<String, Integer> multiMap,
-                             Multimap<String, List<Integer>> map) {
+    private void throughTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+
     }
 
     /**
