@@ -495,3 +495,28 @@ public class BiMapTest {
   }
 }
 ```
+
+### 3.3 Multimap
+
+#### 常用方法
+
+    //Multimap 中加入元素，如果key在之前不存在，返回true，如果存在，返回false。 对于同一个key，如果put不同的value，会将value形成一个Collection
+    boolean put(K, V)
+    boolean putAll(K key, Iterable<? extends V> values)
+    //清除map中的所有内容
+    void clear()
+    //判断是否包含 key-value 对
+    boolean containsEntry(Object key, Object value)
+    boolean containsKey(Object * key)
+    boolean containsValue(Object value)
+    // 返回一个存放在Collection中的map
+    Collection<Map.Entry<K,V>> entries()
+    // 根据key返回value
+    Collection<V> get(K key)
+    //返回所有的key，不重复
+    Multiset<K> keys()
+    Set<K> keySet()
+    //返回一个map，value放到数组中，返回一个Map<key, Collection<value>>
+    Map<K,Collection<V>> asMap()
+    boolean remove(Object key, Object value)
+    Collection<V> removeAll(Object key)

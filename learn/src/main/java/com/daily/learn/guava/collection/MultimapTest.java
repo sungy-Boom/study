@@ -15,8 +15,6 @@ import java.util.*;
  * <p>
  * boolean putAll(K key, Iterable<? extends V> values)
  * <p>
- * <p>
- * <p>
  * //清除map中的所有内容
  * <p>
  * void clear()
@@ -43,9 +41,14 @@ import java.util.*;
  * <p>
  * Set<K> keySet()
  * <p>
- * //返回一个map，value放到数组中
+ * //返回一个map，value放到数组中，返回一个Map<key, Collection<value>>
  * <p>
  * Map<K,Collection<V>> asMap()
+ *
+ * boolean remove(Object key, Object value)
+ * Collection<V> removeAll(Object key)
+ * Collection<V> replaceValues(K key, Iterable<? extends V> values)
+ * Collection<V> values()
  */
 public class MultimapTest {
 
