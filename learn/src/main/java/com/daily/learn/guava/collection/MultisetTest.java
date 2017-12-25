@@ -16,8 +16,6 @@ import java.util.Set;
 /**
  * Multiset常用方法
  * <p>
- * <p>
- * <p>
  * int add(E element) :向其中添加单个元素
  * <p>
  * int add(E element,int occurrences) : 向其中添加指定个数的元素 返回0 element是新增加的对象，返回1的时候，说明原来的element已经存在

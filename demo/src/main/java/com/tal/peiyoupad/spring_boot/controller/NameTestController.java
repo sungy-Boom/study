@@ -1,6 +1,6 @@
 package com.tal.peiyoupad.spring_boot.controller;
 
-import com.tal.peiyoupad.peiyoupad.annotation.TALMonitor;
+import com.tal.peiyoupad.annotation.TALMonitor;
 import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
 import com.tal.peiyoupad.spring_boot.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ public class NameTestController {
 
     @GetMapping(name = "/getFirstByName")
     @ResponseBody
+    @TALMonitor
     public List<NameTestEntity> getNameTest(@Param("name") String name) {
         return nameTestService.getNameTestByName(name);
     }

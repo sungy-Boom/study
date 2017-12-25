@@ -1,0 +1,7 @@
+{
+  "server": {
+    "server_ip": "127.0.01",
+    "server_name": "study"
+  },
+  "log-server": "http://localhost:8080"
+}
