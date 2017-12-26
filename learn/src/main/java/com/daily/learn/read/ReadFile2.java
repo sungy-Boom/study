@@ -15,23 +15,51 @@ import java.util.Enumeration;
  * on 2017/12/25.
  */
 public class ReadFile2 {
+
+    public static String INTRANET_IP = getIntranetIp(); // 内网IP
+    public static String INTERNET_IP = getInternetIp(); // 外网IP
+
     public static void main(String[] args) {
-        try {
-            Enumeration allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+        System.out.println(INTERNET_IP);
+    }
+
+    /**
+     * 获得内网IP
+     * @return 内网IP
+     */
+    private static String getIntranetIp(){
+        try{
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String getInternetIp(){
+        try{
+            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
             InetAddress ip = null;
-            while (allNetInterfaces.hasMoreElements()) {
-                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
-                System.out.println(netInterface.getName());
-                Enumeration addresses = netInterface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    ip = (InetAddress) addresses.nextElement();
-                    if (ip != null && ip instanceof Inet4Address) {
-                        System.out.println("本机的IP = " + ip.getHostAddress());
+            Enumeration<InetAddress> addrs;
+            while (networks.hasMoreElements())
+            {
+                addrs = networks.nextElement().getInetAddresses();
+                while (addrs.hasMoreElements())
+                {
+                    ip = addrs.nextElement();
+                    if (ip != null
+                            && ip instanceof Inet4Address
+                            && ip.isSiteLocalAddress()
+                            && !ip.getHostAddress().equals(INTRANET_IP))
+                    {
+                        return ip.getHostAddress();
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+
+            // 如果没有外网IP，就返回内网IP
+            return INTRANET_IP;
+        } catch(Exception e){
+            throw new RuntimeException(e);
         }
     }
 

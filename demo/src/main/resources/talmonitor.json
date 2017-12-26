@@ -1,7 +1,6 @@
 {
 	"server": {
-		"server_ip": "127.0.0.1",
-		"server_name": "test"
+		"server_name": "peiyoupad-mgmt"
 	},
-	"log-server": "http://localhost:8081/eslog/eslog/monitor/upload?"
+	"log-server": "http://talmonitorlog.speiyou.cn/monitor-eslog/eslog/monitor/upload"
 }

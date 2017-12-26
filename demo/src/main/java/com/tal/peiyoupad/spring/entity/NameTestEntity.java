@@ -1,4 +1,4 @@
-package com.tal.peiyoupad.spring_boot.entity;
+package com.tal.peiyoupad.spring.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

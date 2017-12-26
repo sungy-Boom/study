@@ -1,8 +1,9 @@
-package com.tal.peiyoupad.spring_boot.controller;
+package com.tal.peiyoupad.spring.controller;
 
 //import com.tal.peiyoupad.annotation.TALMonitor;
-import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
-import com.tal.peiyoupad.spring_boot.service.NameTestService;
+import com.tal.peiyoupad.annotation.TALMonitor;
+import com.tal.peiyoupad.spring.entity.NameTestEntity;
+import com.tal.peiyoupad.spring.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class NameTestController {
 
     @GetMapping("/ok")
     @ResponseBody
-//    @TALMonitor
+    @TALMonitor
 //    @TestAnnotation
     public String okTest() {
        /* TALAmonitorAOP talAmonitorAOP = new TALAmonitorAOP();

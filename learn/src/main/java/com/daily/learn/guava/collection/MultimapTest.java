@@ -1,8 +1,6 @@
 package com.daily.learn.guava.collection;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
+import com.google.common.collect.*;
 
 import java.util.*;
 
@@ -41,14 +39,25 @@ import java.util.*;
  * <p>
  * Set<K> keySet()
  * <p>
+ * //返回一个value的集合
+ * <p>
+ * Collection<V> values()
+ * <p>
  * //返回一个map，value放到数组中，返回一个Map<key, Collection<value>>
  * <p>
  * Map<K,Collection<V>> asMap()
- *
+ * <p>
+ * // remove掉一个键值对，如果没有这键值对，返回false，否则返回true
+ * <p>
  * boolean remove(Object key, Object value)
+ * <p>
+ * //remove删除指定key所对应的value，返回Collection<value>
+ * <p>
  * Collection<V> removeAll(Object key)
+ * <p>
+ * // 把指定key原来的value替换为指定的value。返回原value
+ * <p>
  * Collection<V> replaceValues(K key, Iterable<? extends V> values)
- * Collection<V> values()
  */
 public class MultimapTest {
 
@@ -62,6 +71,10 @@ public class MultimapTest {
         test.judgeContain(multiMap, map);
         System.out.println();
         test.throughTest(multiMap, map);
+        System.out.println();
+        test.replceTest(multiMap, map);
+        System.out.println();
+        test.removeTest(multiMap, map);
         System.out.println();
 
         test.clearTest(multiMap, map);
@@ -149,6 +162,37 @@ public class MultimapTest {
         Set<String> keySet = map.keySet();
         System.out.println("keySet: " + keySet);
 
+        //map.asMap()
+        Map<String, Collection<Integer>> asmap = multiMap.asMap();
+        System.out.println("asMap: " + asmap);
+
+        //map.values()
+        Collection<Integer> multi = multiMap.values();
+        System.out.println("values: " + multi);
+    }
+
+    //replace
+    private void replceTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        System.out.println("replace test: " + multiMap.replaceValues("test", ImmutableList.of(1, 23, 4)));
+        System.out.println(multiMap);
+
+        System.out.println("replace test: " + multiMap.replaceValues("error_test", ImmutableList.of(1, 23, 4)));
+        System.out.println(multiMap);
+    }
+
+    // remove
+    private void removeTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        System.out.println("multimap remove false: " + multiMap.remove("test", ImmutableList.of(1, 2)));
+        System.out.println("multimap remove true: " + multiMap.remove("test", 1));
+        System.out.println("multimap after remove : " + multiMap);
+
+        System.out.println("map remove false: " + map.remove("Test", ImmutableList.of(1, 1)));
+        System.out.println("map remove true: " + map.remove("Test", 1));
+        System.out.println("map after remove : " + map);
+
+        // map.removeAll()
+        System.out.println("removeAll test: " + multiMap.removeAll("test"));
+        System.out.println("removeAll test: " + multiMap.removeAll("error_test"));
     }
 
     /**
@@ -160,5 +204,4 @@ public class MultimapTest {
         System.out.println("multiMap after clear : " + multiMap);
         System.out.println("map after clear : " + map);
     }
-
 }

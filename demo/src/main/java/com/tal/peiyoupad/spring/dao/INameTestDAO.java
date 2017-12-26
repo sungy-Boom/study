@@ -1,6 +1,6 @@
-package com.tal.peiyoupad.spring_boot.dao;
+package com.tal.peiyoupad.spring.dao;
 
-import com.tal.peiyoupad.spring_boot.entity.NameTestEntity;
+import com.tal.peiyoupad.spring.entity.NameTestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

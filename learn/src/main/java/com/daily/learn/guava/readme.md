@@ -248,6 +248,8 @@ public class OrderingTest {
 }
 ```
 
+#### 输出结果  
+
     sorted copy ：[0, 1, 1, 2, 3, 4]
     is strictly sorted list_1： false
     binary search ：-7
@@ -436,6 +438,40 @@ public class MultisetTest {
   }
 }
 ```
+
+#### 输出结果
+
+    1
+    0
+    向集合中添加元素：[null, qw x 4, raw x 3]
+    计算集合中指定元素的个数：3
+    集合中是否包含指定的元素：true
+    集合中是否包含指定的集合：true
+    集合中是否包含指定的集合：true
+    remove test：true
+    after remove ：[null, qw x 4, raw x 2]
+    remove specify num：0
+    after remove specify num ：[null, qw x 4, raw x 2]
+    retain :true
+    after retain element：[qw x 4, raw x 2]
+    remove all in set：true
+    after remove all element in set：[]
+    1
+    0
+    向集合中添加元素：[null, qw x 4, raw x 3]
+    use elementSet go through set：null qw raw iterator go through set ：
+    null qw qw qw qw raw raw raw 
+    entrySet go through set：
+    1 null 0
+    4 qw 2
+    3 raw 3
+    0
+    [null, test x 9, qw x 4, raw x 3]
+    4
+    [null, test x 9, qw x 6, raw x 3]
+    false
+    true
+
 ### 3.2 BiMap
 > 继承 java.util.Map
 
@@ -496,8 +532,24 @@ public class BiMapTest {
 }
 ```
 
-### 3.3 Multimap
+#### 输出结果
 
+    test return value: null
+    test return value: 9
+    {test1=0, test2=3}
+    put map into biMap: {test1=0, test2=3, map2=4, map1=2, map=1}
+    null
+    3
+    force put into biMap:{test1=0, map2=4, map1=2, map=1, test3=3}
+    get value by key: 1
+    get key by value: map
+    get values: [0, 4, 2, 1, 3]
+    get keys: [test1, map2, map1, map, test3]
+    [1, 2]
+    first
+
+### 3.3 Multimap
+多重映射接口扩展映射，使得其键一次可被映射到多个值。
 #### 常用方法
 
     //Multimap 中加入元素，如果key在之前不存在，返回true，如果存在，返回false。 对于同一个key，如果put不同的value，会将value形成一个Collection
@@ -518,5 +570,222 @@ public class BiMapTest {
     Set<K> keySet()
     //返回一个map，value放到数组中，返回一个Map<key, Collection<value>>
     Map<K,Collection<V>> asMap()
+    // remove掉一个键值对，如果没有这键值对，返回false，否则返回true
     boolean remove(Object key, Object value)
+    //remove删除指定key所对应的value，返回Collection<value>
     Collection<V> removeAll(Object key)
+    // 把指定key原来的value替换为指定的value。返回原value
+    Collection<V> replaceValues(K key, Iterable<? extends V> values)
+    
+#### 代码示例
+
+```java
+public class MultimapTest {
+
+    public static void main(String[] args) {
+        Multimap<String, Integer> multiMap = HashMultimap.create();
+        Multimap<String, List<Integer>> map = HashMultimap.create();
+        MultimapTest test = new MultimapTest();
+
+        test.addTest(multiMap, map);
+        System.out.println();
+        test.judgeContain(multiMap, map);
+        System.out.println();
+        test.throughTest(multiMap, map);
+        System.out.println();
+        test.replceTest(multiMap, map);
+        System.out.println();
+        test.removeTest(multiMap, map);
+        System.out.println();
+
+        test.clearTest(multiMap, map);
+    }
+
+    /**
+     * put key-value to map
+     */
+    private void addTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        multiMap.put("test", 1);
+        System.out.println("is the value put success : " + multiMap.put("test", 2));
+        System.out.println("after addTest map : " + multiMap);
+        System.out.println("map get key : " + multiMap.get("test"));
+
+        System.out.println("is the value put success : " + multiMap.put("test", 2));
+        System.out.println("after addTest map : " + multiMap);
+        System.out.println("map get key : " + multiMap.get("test"));
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(1);
+        map.put("Test", list);
+
+        List<Integer> list_2 = new ArrayList<>();
+        list_2.add(1);
+        list_2.add(1);
+        System.out.println("is the value list put success : " + map.put("Test", list_2));
+        System.out.println("map put list : " + map);
+        list_2.add(2);
+        System.out.println("is the value list put success : " + map.put("Test", list_2));
+        System.out.println("map put list : " + map);
+        System.out.println("is the value list put success : " + map.put("Test1", list_2));
+        System.out.println("map put list : " + map);
+    }
+
+    /**
+     * judge
+     */
+    private void judgeContain(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        System.out.println("is multiMap contain the key-value pair : " +
+                multiMap.containsEntry("test", 1));
+        System.out.println("is multiMap contain the specify key : " +
+                multiMap.containsKey("test"));
+        System.out.println("is multiMap contain the specify value : " +
+                multiMap.containsValue(1));
+
+        System.out.println("is map contain the key-value pair : " +
+                map.containsEntry("test", Arrays.asList(1, 1)));
+        System.out.println("is map contain the key-value pair : " +
+                map.containsEntry("Test", Arrays.asList(1, 1)));
+        System.out.println("is map contain the specify key : " +
+                multiMap.containsKey("test"));
+        System.out.println("is map contain the specify value : " +
+                multiMap.containsValue(Arrays.asList(1, 1)));
+
+        //Multimap如果value是list，那么list中的每一个数都有一个对应的key
+        System.out.println(multiMap);
+        System.out.println("is map contain the specify value : " +
+                multiMap.containsValue(1));
+    }
+
+    /**
+     * go through map
+     */
+    private void throughTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        // map.entries()
+        Collection<Map.Entry<String, List<Integer>>> collectionMap = map.entries();
+        Iterator<Map.Entry<String, List<Integer>>> iter = collectionMap.iterator();
+        while (iter.hasNext()) {
+            Map.Entry<String, List<Integer>> entry = iter.next();
+            System.out.println("key-value " + entry);
+            System.out.println("key " + entry.getKey());
+            System.out.println("value " + entry.getValue());
+        }
+
+        //map.get(K key)
+        Collection<List<Integer>> list = map.get("Test");
+        System.out.println("getKey : " + list);
+
+        //map.keys()
+        Multiset<String> set = map.keys();
+        System.out.println("keys: " + set);
+
+        //map.keySet()
+        Set<String> keySet = map.keySet();
+        System.out.println("keySet: " + keySet);
+
+        //map.asMap()
+        Map<String, Collection<Integer>> asmap = multiMap.asMap();
+        System.out.println("asMap: " + asmap);
+
+        //map.values()
+        Collection<Integer> multi = multiMap.values();
+        System.out.println("values: " + multi);
+    }
+
+    //replace
+    private void replceTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        System.out.println("replace test: " + multiMap.replaceValues("test", ImmutableList.of(1, 23, 4)));
+        System.out.println(multiMap);
+
+        System.out.println("replace test: " + multiMap.replaceValues("error_test", ImmutableList.of(1, 23, 4)));
+        System.out.println(multiMap);
+    }
+
+    // remove
+    private void removeTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        System.out.println("multimap remove false: " + multiMap.remove("test", ImmutableList.of(1, 2)));
+        System.out.println("multimap remove true: " + multiMap.remove("test", 1));
+        System.out.println("multimap after remove : " + multiMap);
+
+        System.out.println("map remove false: " + map.remove("Test", ImmutableList.of(1, 1)));
+        System.out.println("map remove true: " + map.remove("Test", 1));
+        System.out.println("map after remove : " + map);
+
+        // map.removeAll()
+        System.out.println("removeAll test: " + multiMap.removeAll("test"));
+        System.out.println("removeAll test: " + multiMap.removeAll("error_test"));
+    }
+
+
+    /**
+     * clear map
+     */
+    private void clearTest(Multimap<String, Integer> multiMap, Multimap<String, List<Integer>> map) {
+        multiMap.clear();
+        map.clear();
+        System.out.println("multiMap after clear : " + multiMap);
+        System.out.println("map after clear : " + map);
+    }
+
+}
+```
+
+#### 输出结果
+
+    is the value put success : true
+    after addTest map : {test=[1, 2]}
+    map get key : [1, 2]
+    is the value put success : false
+    after addTest map : {test=[1, 2]}
+    map get key : [1, 2]
+    is the value list put success : false
+    map put list : {Test=[[1, 1]]}
+    is the value list put success : true
+    map put list : {Test=[[1, 1], [1, 1, 2]]}
+    is the value list put success : true
+    map put list : {Test1=[[1, 1, 2]], Test=[[1, 1], [1, 1, 2]]}
+    
+    is multiMap contain the key-value pair : true
+    is multiMap contain the specify key : true
+    is multiMap contain the specify value : true
+    is map contain the key-value pair : false
+    is map contain the key-value pair : true
+    is map contain the specify key : true
+    is map contain the specify value : false
+    {test=[1, 2]}
+    is map contain the specify value : true
+    
+    key-value Test1=[1, 1, 2]
+    key Test1
+    value [1, 1, 2]
+    key-value Test=[1, 1]
+    key Test
+    value [1, 1]
+    key-value Test=[1, 1, 2]
+    key Test
+    value [1, 1, 2]
+    getKey : [[1, 1], [1, 1, 2]]
+    keys: [Test1, Test x 2]
+    keySet: [Test1, Test]
+    asMap: {test=[1, 2]}
+    values: [1, 2]
+    
+    replace test: [1, 2]
+    {test=[4, 1, 23]}
+    replace test: []
+    {test=[4, 1, 23], error_test=[4, 1, 23]}
+    
+    multimap remove false: false
+    multimap remove true: true
+    multimap after remove : {test=[4, 23], error_test=[4, 1, 23]}
+    map remove false: true
+    map remove true: false
+    map after remove : {Test1=[[1, 1, 2]], Test=[[1, 1, 2]]}
+    removeAll test: [4, 23]
+    removeAll test: [4, 1, 23]
+    
+    multiMap after clear : {}
+    map after clear : {}
+    
+### 3.4 Table 
+有两个键一个值的数据结构。
