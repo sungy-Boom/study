@@ -744,7 +744,7 @@ public class MultimapTest {
     map put list : {Test=[[1, 1], [1, 1, 2]]}
     is the value list put success : true
     map put list : {Test1=[[1, 1, 2]], Test=[[1, 1], [1, 1, 2]]}
-    
+     
     is multiMap contain the key-value pair : true
     is multiMap contain the specify key : true
     is multiMap contain the specify value : true
@@ -754,7 +754,7 @@ public class MultimapTest {
     is map contain the specify value : false
     {test=[1, 2]}
     is map contain the specify value : true
-    
+     
     key-value Test1=[1, 1, 2]
     key Test1
     value [1, 1, 2]
@@ -769,12 +769,12 @@ public class MultimapTest {
     keySet: [Test1, Test]
     asMap: {test=[1, 2]}
     values: [1, 2]
-    
+     
     replace test: [1, 2]
     {test=[4, 1, 23]}
     replace test: []
     {test=[4, 1, 23], error_test=[4, 1, 23]}
-    
+     
     multimap remove false: false
     multimap remove true: true
     multimap after remove : {test=[4, 23], error_test=[4, 1, 23]}
@@ -783,7 +783,7 @@ public class MultimapTest {
     map after remove : {Test1=[[1, 1, 2]], Test=[[1, 1, 2]]}
     removeAll test: [4, 23]
     removeAll test: [4, 1, 23]
-    
+     
     multiMap after clear : {}
     map after clear : {}
     
@@ -901,7 +901,7 @@ public class TableTest {
     根据行和列移除元素1： null
     根据行和列移除元素2： null
     根据行和列移除元素3： 110
-    
+     
     contains key and value1 : false
     contains key and value2 : true
     contain row: true
@@ -912,4 +912,355 @@ public class TableTest {
 
 ### 4.1 Joiner
 
+#### 常用方法
+
+    // 通过使用指定参数，对字符串进行拼接
+    static Joiner on(String separator)
+    static Joiner on(char separator)
+    // join里边是要拼接的字符串
+    String join(Iterable<?> parts)
+    String join(Iterator<?> parts)
+    String join(Object[] parts)
+    String join(Object first, Object second, Object... rest)
+    // 对null进行处理
+    Joiner skipNulls()
+    Joiner useForNull(String nullText)
+    Joiner.MapJoiner withKeyValueSeparator(String keyValueSeparator)
     
+#### 代码示例
+
+```java
+public class JoinerTest {
+
+    public static void main(String[] args) {
+        JoinerTest test = new JoinerTest();
+
+        test.joinerTest1();
+    }
+
+    private void joinerTest1() {
+        List<String> list1 = ImmutableList.of("data1", "data2", "1", "2");
+        System.out.println("on(char separator) test : " + Joiner.on(',').join(list1));
+        System.out.println("on(String separator) test : " + Joiner.on("--").join(list1));
+//        list1.add("null");
+
+        System.out.println();
+        List<String> list2 = new ArrayList<>(Arrays.asList("1", "test", "4"));
+        list2.add("null");
+        list2.add("");
+        System.out.println("test : " + Joiner.on("--").join(list2));
+        System.out.println("skipNulls() test : " + Joiner.on("--").skipNulls().join(list2, null,1));
+        System.out.println("useForNull() test : " + Joiner.on("--").useForNull("this is a null").join(list2, null,2,1));
+
+        System.out.println();
+        Map<String, String> map = new HashMap<>();
+        map.put("key1", "value1");
+        map.put("key2", "value2");
+        map.put("key3", "value3");
+        Joiner.MapJoiner mapJoiner = Joiner.on(",").withKeyValueSeparator("=");
+        System.out.println("withKeyValueSeparator() test : " + mapJoiner.join(map));
+    }
+}
+```
+
+#### 输出结果
+    
+    on(char separator) test : data1,data2,1,2
+    on(String separator) test : data1--data2--1--2
+     
+    test : 1--test--4--null--
+    skipNulls() test : [1, test, 4, null, ]--1
+    useForNull() test : [1, test, 4, null, ]--this is a null--2--1
+     
+    withKeyValueSeparator() test : key1=value1,key2=value2,key3=value3
+    
+### 4.2 Splitter
+
+#### 常用方法 
+
+    // 设置分割字符
+    static Splitter on(char separator)
+    static Splitter on(String separator)
+    static Splitter on(CharMatcher separatorMatcher)
+    static Splitter on(Pattern separatorPattern)
+    static Splitter onPattern(String separatorPattern)
+    // 返回的结果是Iterable接口类型的数据
+    Iterable<String> split(CharSequence sequence)
+    List<String> splitToList(CharSequence sequence)
+    // 去掉子串中的空格
+    Splitter trimResults()
+    Splitter trimResults(CharMatcher trimmer)
+    // 直接返回Map的键值对
+    Splitter.MapSplitter withKeyValueSeparator(char separator)
+    Splitter.MapSplitter withKeyValueSeparator(String separator)
+    Splitter.MapSplitter withKeyValueSeparator(Splitter keyValueSplitter)
+    // 将给定的字符串分割为长度为length的子字符串
+    static Splitter fixedLength(int length)
+    // 分割的子字符串达到了limit个时
+    Splitter limit(int limit)
+    // 去掉空的子字符串
+    Splitter omitEmptyStrings()
+    
+#### 代码示例 
+
+```java
+public class SplitterTest {
+
+    public static void main(String[] args) {
+        SplitterTest test = new SplitterTest();
+        test.spiltterTest();
+
+    }
+
+    private final Pattern testPattern = Pattern.compile("@");
+
+    private void spiltterTest() {
+        String str = "this is a   test.@99999@email";
+        System.out.println("on(String) test: " + Splitter.on(" ").split(str));
+        System.out.println("on(Pattern) test: " + Splitter.on(testPattern).split(str));
+        System.out.println("onPattern(String) test: " + Splitter.onPattern("@").split(str));
+
+        System.out.println();
+        System.out.println("fixedLength(length) test : " + Splitter.fixedLength(2).split(str));
+        System.out.println("fixedLength(length) and trimResults test : " + Splitter.fixedLength(2).trimResults().split(str));
+        System.out.println("fixedLength(length) and trimResults test : " + Splitter.fixedLength(2).trimResults().split(str));
+
+        System.out.println();
+        System.out.println("on(String) test: " + Splitter.on(" ").split(str));
+        System.out.println("fixedLength(length) and omitEmptyStrings test : " +
+                Splitter.on(" ").omitEmptyStrings().split(str));
+
+        System.out.println();
+        Map<String,String> split = Splitter.on(";").trimResults().withKeyValueSeparator("=").split("a=2;b=3");
+        System.out.println("withKeyValueSeparator test: " + split.get("a"));
+    }
+}
+```
+
+#### 输出结果 
+
+    on(String) test: [this, is, a, , , test.@99999@email]
+    on(Pattern) test: [this is a   test., 99999, email]
+    onPattern(String) test: [this is a   test., 99999, email]
+     
+    fixedLength(length) test : [th, is,  i, s , a ,   , te, st, .@, 99, 99, 9@, em, ai, l]
+    fixedLength(length) and trimResults test : [th, is, i, s, a, , te, st, .@, 99, 99, 9@, em, ai, l]
+    fixedLength(length) and trimResults test : [th, is, i, s, a, , te, st, .@, 99, 99, 9@, em, ai, l]
+     
+    on(String) test: [this, is, a, , , test.@99999@email]
+    fixedLength(length) and omitEmptyStrings test : [this, is, a, test.@99999@email]
+     
+    withKeyValueSeparator test: 2
+    
+### 4.3 CharMatcher 
+找到匹配的字符，处理匹配的字符。
+实现了大量公用内部类, 用来方便用户对字符串做匹配；
+实现了大量处理字符串的方法, 使用特定的CharMatcher可以对匹配到的字符串做出多种处理
+
+#### 常量
+
+    ANY: 匹配任何字符
+    ASCII: 匹配是否是ASCII字符
+    BREAKING_WHITESPACE: 匹配所有可换行的空白字符(不包括非换行空白字符,例如"\u00a0")
+    DIGIT: 匹配ASCII数字
+    INVISIBLE: 匹配所有看不见的字符
+    JAVA_DIGIT: 匹配UNICODE数字, 使用 Character.isDigit() 实现
+    JAVA_ISO_CONTROL: 匹配ISO控制字符, 使用 Charater.isISOControl() 实现
+    JAVA_LETTER: 匹配字母, 使用 Charater.isLetter() 实现
+    JAVA_LETTER_OR_DIGET: 匹配数字或字母
+    JAVA_LOWER_CASE: 匹配小写
+    JAVA_UPPER_CASE: 匹配大写
+    NONE: 不匹配所有字符
+    SINGLE_WIDTH: 匹配单字宽字符, 如中文字就是双字宽
+    WHITESPACE: 匹配所有空白字符
+
+#### 常用方法 
+
+    //返回匹配指定字符的Matcher
+    CharMatcher is(char match):
+    //返回不匹配指定字符的Matcher
+    CharMatcher isNot(char match):
+     
+    //返回匹配sequence中任意字符的Matcher
+    CharMatcher anyOf(CharSequence sequence):
+    //返回不匹配sequence中任何一个字符的Matcher
+    CharMatcher noneOf(CharSequence sequence):
+     
+    //删除sequence中匹配到到的字符并返回
+    String removeFrom(CharSequence sequence):
+    //保留sequence中匹配到的字符并返回
+    String retainFrom(CharSequence sequence):
+    //返回以当前Matcher判断规则相反的Matcher
+    CharMatcher negate():
+     
+    //返回与other匹配条件组合做与来判断的Matcher
+    CharMatcher and(CharMatcher other):
+    //返回与other匹配条件组合做或来判断的Matcher
+    CharMatcher or(CharMatcher other):
+    
+    //返回匹配范围内任意字符的Matcher
+    CharMatcher inRange(char startInclusive, char endIncludesive):
+    //返回使用predicate的apply()判断匹配的Matcher
+    CharMatcher forPredicate(Predicate<? super Charater> predicate):
+    //只要sequence中有任意字符能匹配Matcher,返回true
+    boolean matchesAnyOf(CharSequence sequence):
+    //sequence中所有字符都能匹配Matcher,返回true
+    boolean matchesAllOf(CharSequence sequence):
+    // sequence中所有字符都不能匹配Matcher,返回true
+    boolean matchesNoneOf(CharSequence sequence):
+    //返回sequence中匹配到的第一个字符的坐标
+    int indexIn(CharSequence sequence):
+    //返回从start开始,在sequence中匹配到的第一个字符的坐标
+    int indexIn(CharSequence sequence, int start):
+    //返回sequence中最后一次匹配到的字符的坐标
+    int lastIndexIn(CharSequence sequence):
+    //返回sequence中匹配到的字符计数
+    int countIn(CharSequence sequence):
+     
+    //替换sequence中匹配到的字符并返回
+    String replaceFrom(CharSequence sequence, char replacement):
+    //删除首尾匹配到的字符并返回
+    String trimFrom(CharSequence sequence):
+    //删除首部匹配到的字符
+    String trimLeadingFrom(CharSequence sequence):
+    //删除尾部匹配到的字符
+    String trimTrailingFrom(CharSequence sequence):
+    //将匹配到的组(连续匹配的字符)替换成replacement
+    String collapseFrom(CharSequence sequence, char replacement):
+    //先trim再将分好的组用replacement连接
+    String trimAndCollapseFrom(CharSequence sequence, char replacement):
+    
+#### 代码示例
+
+```java
+public class CharMatcherTest {
+    public static void main(String[] args) {
+        CharMatcherTest test = new CharMatcherTest();
+        test.charMatcherTest();
+    }
+
+    public void charMatcherTest() {
+        // removerFrom
+        String removeFromResult = CharMatcher.isNot('a').removeFrom("abacd");
+        System.out.println("removeForm:" + removeFromResult);
+        // retainFrom method
+        String retainFormResult = CharMatcher.is('a').retainFrom("abacd");
+        System.out.println("retainForm:" + retainFormResult);
+        // replaceFrom method
+        String replaceFormResult1 = CharMatcher.WHITESPACE.replaceFrom("a bcd",
+                'f');
+        System.out.println("replaceFrom_1:" + replaceFormResult1);
+        String replaceFormResult2 = CharMatcher.DIGIT.replaceFrom("a3bcd",
+                "Three");
+        System.out.println("replaceFrom_2:" + replaceFormResult2);
+        // trimFrom
+        String trimFromResult = CharMatcher.anyOf("ab").trimFrom("abacatabb");
+        System.out.println("trimFrom:" + trimFromResult);
+        // trimLeadingFrom
+        String trimLeadingFromResult = CharMatcher.anyOf("ab").trimLeadingFrom(
+                "abacatabb");
+        System.out.println("trimLeadingFrom:" + trimLeadingFromResult);
+        // trimTrailingFrom
+        String trimTrailingFromResult = CharMatcher.anyOf("ab")
+                .trimTrailingFrom("abacatabb");
+        System.out.println("trimTrailingFrom:" + trimTrailingFromResult);
+        // collapseFrom
+        String collapseFromResult = CharMatcher.anyOf("bre").collapseFrom(
+                "bookkeeper", '-');
+        System.out.println("collapseFrom:" + collapseFromResult);
+        // trimAndCollapseFrom
+        String trimAndCollapseFromResult = CharMatcher.anyOf("bre")
+                .trimAndCollapseFrom("bookkeeperkko", '-');
+        System.out.println("trimAndCollapseFrom:" + trimAndCollapseFromResult);
+        // matchesAllOf
+        boolean matchesAllOfResult = CharMatcher.JAVA_UPPER_CASE
+                .matchesAnyOf("hcd");
+        System.out.println("matchesAnyOf:" + matchesAllOfResult);
+        // or and negate
+        String orResult = CharMatcher.JAVA_DIGIT
+                .or(CharMatcher.JAVA_UPPER_CASE).retainFrom("dd59cF");
+        System.out.println("or:" + orResult);
+        // negate
+        String negateResult = CharMatcher.JAVA_DIGIT.negate().retainFrom(
+                "dd59cF");
+        System.out.println("negate:" + negateResult);
+
+        // and
+        String andResult = CharMatcher.DIGIT
+                .and(CharMatcher.WHITESPACE).retainFrom(
+                "1gg4 7d d5R9cFa4");
+        System.out.println("and:" + andResult);
+    }
+}
+```
+
+#### 输出结果
+
+    removeForm:aa
+    retainForm:aa
+    replaceFrom_1:afbcd
+    replaceFrom_2:aThreebcd
+    trimFrom:cat
+    trimLeadingFrom:catabb
+    trimTrailingFrom:abacat
+    collapseFrom:-ookk-p-
+    trimAndCollapseFrom:ookk-p-kko
+    matchesAnyOf:false
+    or:59F
+    negate:ddcF
+    
+### 4.4 CaseFormat
+
+#### 常用方法
+
+    //testData
+    LOWER_CAMEL
+    // test-data
+    LOWER_HYPHEN
+    test_data
+    LOWER_UNDERSCORE
+    //TestData
+    UPPER_CAMEL
+    //TEST_DATA
+    UPPER_UNDERSCORE
+     
+    //从指定格式转换到另一种格式
+    String to(CaseFormat format, String str)
+    
+#### 代码示例 
+
+```java
+public class CaseFormatTest {
+
+    public static void main(String[] args){
+        CaseFormatTest test = new CaseFormatTest();;
+
+        test.caseFormatTest();
+    }
+
+    private void caseFormatTest(){
+        String data = "test_data";
+        System.out.println("LOWER_HYPHEN to UPPER_CAMEL: " +
+                CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_CAMEL, "test-data"));
+        System.out.println("LOWER_UNDERSCORE to LOWER_CAMEL: " +
+                CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, "test_data"));
+        System.out.println("UPPER_UNDERSCORE to UPPER_CAMEL: " +
+                CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, "Test_Data"));
+        System.out.println("LOWER_CAMEL to LOWER_UNDERSCORE: " +
+                CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "testData"));
+        System.out.println("LOWER_CAMEL to LOWER_HYPHEN: " +
+                CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, "testData"));
+        System.out.println("LOWER_CAMEL to UPPER_UNDERSCORE: " +
+                CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, "testData"));
+    }
+}
+```
+
+#### 输出结果 
+
+    LOWER_HYPHEN to UPPER_CAMEL: TestData
+    LOWER_UNDERSCORE to LOWER_CAMEL: testData
+    UPPER_UNDERSCORE to UPPER_CAMEL: TestData
+    LOWER_CAMEL to LOWER_UNDERSCORE: test_data
+    LOWER_CAMEL to LOWER_HYPHEN: test-data
+    LOWER_CAMEL to UPPER_UNDERSCORE: TEST_DATA

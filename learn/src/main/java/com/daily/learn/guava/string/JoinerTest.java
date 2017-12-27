@@ -8,9 +8,18 @@ import java.util.*;
 /**
  * Created by sunguiyong on 2017/12/26.
  * <p>
+ * // 通过使用指定参数，对字符串进行拼接
  * static Joiner on(String separator)
  * static Joiner on(char separator)
+ *
+ * // join里边是要拼接的字符串
+ * String join(Iterable<?> parts)
+ * String join(Iterator<?> parts)
+ * String join(Object[] parts)
+ * String join(Object first, Object second, Object... rest)
+ *
  * <p>
+ * // 对null进行处理
  * Joiner skipNulls()
  * Joiner useForNull(String nullText)
  * Joiner.MapJoiner withKeyValueSeparator(String keyValueSeparator)
@@ -34,8 +43,8 @@ public class JoinerTest {
         list2.add("null");
         list2.add("");
         System.out.println("test : " + Joiner.on("--").join(list2));
-        System.out.println("skipNulls() test : " + Joiner.on("--").skipNulls().join(list2, null));
-        System.out.println("useForNull() test : " + Joiner.on("--").useForNull("this is a null").join(list2, null));
+        System.out.println("skipNulls() test : " + Joiner.on("--").skipNulls().join(list2, null,1));
+        System.out.println("useForNull() test : " + Joiner.on("--").useForNull("this is a null").join(list2, null,2,1));
 
         System.out.println();
         Map<String, String> map = new HashMap<>();
