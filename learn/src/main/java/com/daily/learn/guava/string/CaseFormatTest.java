@@ -29,7 +29,6 @@ public class CaseFormatTest {
     }
 
     private void caseFormatTest(){
-        String data = "test_data";
         System.out.println("LOWER_HYPHEN to UPPER_CAMEL: " +
                 CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_CAMEL, "test-data"));
         System.out.println("LOWER_UNDERSCORE to LOWER_CAMEL: " +

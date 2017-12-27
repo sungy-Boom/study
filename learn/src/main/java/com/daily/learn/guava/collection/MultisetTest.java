@@ -80,8 +80,8 @@ public class MultisetTest {
         //指定添加元素的个数,这个个数最大为Integer.MAX_VALUE
 //    System.out.println(multiset.add("count", Integer.MAX_VALUE));
 //    System.out.println(multiset.add("count", Integer.MAX_VALUE+1));
-        System.out.println(multiset.add("qw", 3));
-        System.out.println(multiset.add("e", 0));
+        System.out.println("add test: " + multiset.add("qw", 3));
+        System.out.println("add test: " + multiset.add("e", 0));
         System.out.println("向集合中添加元素：" + multiset);
     }
 
@@ -125,24 +125,25 @@ public class MultisetTest {
      * 集合遍历
      */
     private void goThroughSet(Multiset<String> multiset) {
+        System.out.println("content multiset : " + multiset);
         Set<String> set = multiset.elementSet();
-
         System.out.print("use elementSet go through set：");
         for (String item : set) {
             System.out.print(item + " ");
         }
 
+        System.out.println();
         Iterator<String> iter = multiset.iterator();
         System.out.println("iterator go through set ：");
         while (iter.hasNext()) {
             System.out.print(iter.next() + " ");
         }
+
         System.out.println();
         System.out.println("entrySet go through set：");
         for (Multiset.Entry<String> item : multiset.entrySet()) {
-            System.out.println(
-                    item.getCount() + " " + item.getElement() + " " + (item.getElement() == null ? 0
-                            : item.getElement().length()));
+            System.out.println(item.getCount() + " " + item.getElement() + " " +
+                    (item.getElement() == null ? 0 : item.getElement().length()));
         }
     }
 

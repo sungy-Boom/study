@@ -55,7 +55,8 @@ public class PreconditionTest {
 
         try {
             age = null;
-            age = Preconditions.checkNotNull(age, "age is null", age, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1232);
+            age = Preconditions.checkNotNull(age, "age is null",
+                    age, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1232);
             System.out.println(age);
         } catch (Exception e) {
             System.out.println("age null: " + e.getMessage());
@@ -128,7 +129,8 @@ public class PreconditionTest {
 
         try {
             state = "test1234";
-            Preconditions.checkState("Test".equals(state), "the expression is not right,it's value is", state, 1);
+            Preconditions.checkState("Test".equals(state),
+                    "the expression is not right,it's value is", state, 1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -159,10 +161,9 @@ public class PreconditionTest {
      */
     private void argumentCondition(String name, int age) throws Exception {
         Preconditions.checkArgument(name != null);
-
         Preconditions.checkArgument(name != "Test", "this is a Test");
-
-        Preconditions.checkArgument(age > 0 && name != null, "%s's age is %s is valid", name, age);
+        Preconditions.checkArgument(age > 0,
+                "%s's age is %s is valid", name, age);
     }
 
 

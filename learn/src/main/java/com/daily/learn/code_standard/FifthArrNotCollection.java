@@ -1,8 +1,6 @@
 package com.daily.learn.code_standard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 改善java编程的151个建议
@@ -25,6 +23,22 @@ public class FifthArrNotCollection {
         System.out.println();
         System.out.println("**********集合初始化大小**********");
         test.initSizeOfCollection();
+
+        System.out.println();
+        System.out.println("**********基本数组转list**********");
+        test.basicArrToList();
+
+        System.out.println();
+        System.out.println("**********list create by Arrays.asList can't change**********");
+        test.userArraysAsList();
+
+        System.out.println();
+        System.out.println("**********list equals vector when it's elements is them same**********");
+        test.listEqualSet();
+
+        System.out.println();
+        System.out.println("**********it will throw exception changing list when it's useing sublist**********");
+        test.subListTest();
     }
 
     /**
@@ -99,5 +113,53 @@ public class FifthArrNotCollection {
         }
         endTime = System.currentTimeMillis();
         System.out.println("init size " + (endTime - startTime));
+    }
+
+    /**
+     * 基本类型转数组
+     */
+    private void basicArrToList() {
+        int[] arr = new int[]{1, 2, 3, 4, 2, 1};
+        List list = Arrays.asList(arr);
+        System.out.println(list.size());
+
+        Integer[] arr1 = new Integer[]{123, 34, 2, 5};
+        List list2 = Arrays.asList(arr1);
+        System.out.println(list2.size());
+    }
+
+    /**
+     * 直接通过Arrays.asList生成的List不可以修改
+     */
+    private void userArraysAsList() {
+        List list = Arrays.asList();
+//        list.add("t");
+    }
+
+    /**
+     * 对于list来说，只要是实现了List的类，只要元素相同，就是想等的
+     */
+    private void listEqualSet() {
+        List<String> list = new ArrayList<>();
+        list.add("A");
+
+        Vector<String> vector = new Vector<>();
+        vector.add("A");
+
+        System.out.println("does list equal to vector : " + list.equals(vector));
+    }
+
+    /**
+     * 使用subList之后，不修改原列表
+     */
+    private void subListTest() {
+        List<String> listTest = new ArrayList<>(Arrays.asList("123", "456", "789", "012"));
+
+        List<String> subListTest = listTest.subList(0, 2);
+
+        listTest = Collections.unmodifiableList(listTest);
+        subListTest.add("A");
+        System.out.println(listTest);
+        System.out.println(subListTest);
     }
 }

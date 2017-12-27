@@ -86,9 +86,12 @@ public class OrderingTest {
     /**
      * max min
      */
+    //private List<String> abc = ImmutableList.of("a", "b", "c");
     private void maxMinTest(Ordering ordering) {
         System.out.println("max :" + ordering.max(abc));
         System.out.println("min :" + ordering.min(abc));
+        List<Integer> list_3 = ImmutableList.of(1, 3, 4, 5, 2, 1, 6, 7, 9, 2, 3, 4, 10);
+        System.out.println("max in list_3 :" + ordering.max(list_3));
     }
 
     /**
@@ -104,6 +107,7 @@ public class OrderingTest {
         System.out.println("leastOf:" + ordering.leastOf(list_2, 2));
         System.out.println("greatestOf:" + ordering.greatestOf(list_2, 3));
         System.out.println("reverse list_2 :" + ordering.reverse().sortedCopy(list_2));
+        list_2.add(null);
         list_2.add(null);
         System.out.println("add null list_2:" + list_2);
         System.out.println("nullsFirst list_2 :" + ordering.nullsFirst().sortedCopy(list_2));

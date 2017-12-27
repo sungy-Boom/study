@@ -18,30 +18,30 @@ import com.google.common.base.CharMatcher;
  * NONE: 不匹配所有字符
  * SINGLE_WIDTH: 匹配单字宽字符, 如中文字就是双字宽
  * WHITESPACE: 匹配所有空白字符
- *
+ * <p>
  * //返回匹配指定字符的Matcher
  * CharMatcher is(char match):
  * //返回不匹配指定字符的Matcher
  * CharMatcher isNot(char match):
- *
+ * <p>
  * //返回匹配sequence中任意字符的Matcher
  * CharMatcher anyOf(CharSequence sequence):
  * //返回不匹配sequence中任何一个字符的Matcher
  * CharMatcher noneOf(CharSequence sequence):
- *
+ * <p>
  * //删除sequence中匹配到到的字符并返回
  * String removeFrom(CharSequence sequence):
  * //保留sequence中匹配到的字符并返回
  * String retainFrom(CharSequence sequence):
- *
+ * <p>
  * //返回以当前Matcher判断规则相反的Matcher
  * CharMatcher negate():
- *
+ * <p>
  * //返回与other匹配条件组合做与来判断的Matcher
  * CharMatcher and(CharMatcher other):
  * //返回与other匹配条件组合做或来判断的Matcher
  * CharMatcher or(CharMatcher other):
- *
+ * <p>
  * //返回匹配范围内任意字符的Matcher
  * CharMatcher inRange(char startInclusive, char endIncludesive):
  * //返回使用predicate的apply()判断匹配的Matcher
@@ -60,7 +60,7 @@ import com.google.common.base.CharMatcher;
  * int lastIndexIn(CharSequence sequence):
  * //返回sequence中匹配到的字符计数
  * int countIn(CharSequence sequence):
- *
+ * <p>
  * //替换sequence中匹配到的字符并返回
  * String replaceFrom(CharSequence sequence, char replacement):
  * //删除首尾匹配到的字符并返回
@@ -95,8 +95,11 @@ public class CharMatcherTest {
                 "Three");
         System.out.println("replaceFrom_2:" + replaceFormResult2);
         // trimFrom
-        String trimFromResult = CharMatcher.anyOf("ab").trimFrom("abacatabb");
+        System.out.println();
+        //trimFrom 删除首位匹配到的字符串
+        String trimFromResult = CharMatcher.anyOf("ab").trimFrom("catbanan");
         System.out.println("trimFrom:" + trimFromResult);
+        System.out.println();
         // trimLeadingFrom
         String trimLeadingFromResult = CharMatcher.anyOf("ab").trimLeadingFrom(
                 "abacatabb");
@@ -129,7 +132,7 @@ public class CharMatcherTest {
         // and
         String andResult = CharMatcher.DIGIT
                 .and(CharMatcher.WHITESPACE).retainFrom(
-                "1gg4 7d d5R9cFa4");
+                        "1gg4 7d d5R9cFa4");
         System.out.println("and:" + andResult);
     }
 }

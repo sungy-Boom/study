@@ -33,17 +33,20 @@ public class OptionalTest {
         Optional<Integer> num2 = Optional.fromNullable(value1);
 
         Optional<Integer> num3 = Optional.absent();
+        //value2 = 10  value1 = null;
         //Optional.orNull --> 如果是null，就把null作为值
-        System.out.println(num3.orNull());
+        System.out.println("orNull() test: " + num1.orNull());
+        System.out.println("orNull() test: " + num2.orNull());
 
         //Optional.isPresent --> 判断对象值是否存在
-        System.out.println(num2.isPresent());
+        System.out.println("isPresent() test: " + num1.isPresent());
+        System.out.println("isPresent() test: " + num2.isPresent());
 
         //Optional.or --> 如果存在，返回值，如果不存在，返回传入的值
         //箱用一个特定值代替null的时候，可以使用这个方法
         Integer num = Optional.fromNullable(value1).or(new Integer(1));
 
-        System.out.println(num1.get());
+        System.out.println("get() test: " + num1.get());
 
         System.out.println("a+b :" + (num1.get() + num));
     }

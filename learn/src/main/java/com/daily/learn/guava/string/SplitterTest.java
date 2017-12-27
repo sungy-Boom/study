@@ -47,7 +47,6 @@ public class SplitterTest {
     }
 
     private final Pattern testPattern = Pattern.compile("@");
-
     private void spiltterTest() {
         String str = "this is a   test.@99999@email";
         System.out.println("on(String) test: " + Splitter.on(" ").split(str));
@@ -57,8 +56,8 @@ public class SplitterTest {
 
         System.out.println();
         System.out.println("fixedLength(length) test : " + Splitter.fixedLength(2).split(str));
-        System.out.println("fixedLength(length) and trimResults test : " + Splitter.fixedLength(2).trimResults().split(str));
-        System.out.println("fixedLength(length) and trimResults test : " + Splitter.fixedLength(2).trimResults().split(str));
+        System.out.println("fixedLength(length) and trimResults test : " +
+                Splitter.fixedLength(2).trimResults().split(str));
 
         System.out.println();
         System.out.println("on(String) test: " + Splitter.on(" ").split(str));
@@ -66,7 +65,8 @@ public class SplitterTest {
                 Splitter.on(" ").omitEmptyStrings().split(str));
 
         System.out.println();
-        Map<String,String> split = Splitter.on(";").trimResults().withKeyValueSeparator("=").split("a=2;b=3");
+        Map<String,String> split = Splitter.on(";").trimResults()
+                .withKeyValueSeparator("=").split("a=2;b=3");
         System.out.println("withKeyValueSeparator test: " + split.get("a"));
     }
 }
