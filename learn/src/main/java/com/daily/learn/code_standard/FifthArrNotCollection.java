@@ -39,6 +39,10 @@ public class FifthArrNotCollection {
         System.out.println();
         System.out.println("**********it will throw exception changing list when it's useing sublist**********");
         test.subListTest();
+
+        System.out.println();
+        System.out.println("**********CompareTest**********");
+        test.compareTest();
     }
 
     /**
@@ -156,10 +160,71 @@ public class FifthArrNotCollection {
         List<String> listTest = new ArrayList<>(Arrays.asList("123", "456", "789", "012"));
 
         List<String> subListTest = listTest.subList(0, 2);
-
+//        listTest.add("A");
         listTest = Collections.unmodifiableList(listTest);
         subListTest.add("A");
         System.out.println(listTest);
         System.out.println(subListTest);
+    }
+
+    private void compareTest() {
+        TestPerson[] test = new TestPerson[5];
+
+        for (int i = 0; i < 5; i++) {
+            test[i] = new TestPerson("name_" + i, i);
+        }
+
+        Arrays.sort(test);
+        for (TestPerson item : test) {
+            System.out.printf("%s  %d\n", item.name, item.age);
+        }
+        System.out.println();
+
+       /* Comparator<TestPerson> compare = new Comparator<TestPerson>() {
+            @Override
+            public int compare(TestPerson o1, TestPerson o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        };*/
+
+        Comparator<TestPerson> compare = (o1, o2) -> o1.name.compareTo(o2.name);
+
+        Comparator<TestPerson> compare1 = Comparator.comparing(TestPerson::getName);
+
+        Arrays.sort(test, compare1);
+        for (TestPerson item : test) {
+            System.out.printf("%s  %d\n", item.name, item.age);
+        }
+    }
+
+    public class TestPerson implements Comparable<TestPerson> {
+        private String name;
+        private int age;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        TestPerson(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        @Override
+        public int compareTo(TestPerson o) {
+            return o.age - this.age;
+        }
     }
 }

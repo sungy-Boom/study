@@ -1,6 +1,7 @@
 package com.tal.peiyoupad.spring.controller;
 
 //import com.tal.peiyoupad.annotation.TALMonitor;
+
 import com.tal.peiyoupad.annotation.TALMonitor;
 import com.tal.peiyoupad.spring.entity.NameTestEntity;
 import com.tal.peiyoupad.spring.service.NameTestService;
@@ -8,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.HttpRequestHandlerServlet;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -70,5 +75,18 @@ public class NameTestController {
     @ResponseBody
     public boolean deleteRecord(String name) {
         return nameTestService.deleteRecord(name);
+    }
+
+    @PostMapping("/requestTest")
+    @ResponseBody
+    public String requestTest(HttpServletRequest request) {
+        String name = request.getHeader("name");
+
+        Enumeration<String> names = request.getHeaderNames();
+        while (names.hasMoreElements()) {
+            String n = names.nextElement();
+            System.out.println(n + "  " + request.getHeader(n));
+        }
+        return name;
     }
 }
