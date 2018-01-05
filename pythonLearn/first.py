@@ -1,117 +1,51 @@
-# K——means聚类用户分群(K值取3,4,5,6,7进行迭代优化)
+from snownlp import SnowNLP
 
-# pip install numpy
-# pip install matplotlib
+s = SnowNLP(u'这个东西真心很赞')
 
-from numpy import *
-import time
-import matplotlib.pyplot as plt
+s.words  # [u'这个', u'东西', u'真心',
+# u'很', u'赞']
 
+s.tags  # [(u'这个', u'r'), (u'东西', u'n'),
+# (u'真心', u'd'), (u'很', u'd'),
+# (u'赞', u'Vg')]
 
-# 计算距离函数
-def eucldistance(vector1, vector2):
-    return sqrt(sum(power(vector2 - vector1, 2)))
+s.sentiments  # 0.9769663402895832 positive的概率
 
+s.pinyin  # [u'zhe', u'ge', u'dong', u'xi',
+# u'zhen', u'xin', u'hen', u'zan']
 
-# 在样本集中随机选取k个样本点作为初始质心
-def initCentroids(dataSet, k):
-    numSamples, dim = dataSet.shape()
-    centroids = zeros((k, dim))
-    for i in range(k):
-        index = int(random.uniform(0, numSamples))
-        centroids[i, :] = dataSet[index, :]
-    return centroids
+s = SnowNLP(u'「繁體字」「繁體中文」的叫法在臺灣亦很常見。')
 
+print(s.han)  # u'「繁体字」「繁体中文」的叫法
+# 在台湾亦很常见。'
 
-# k-means cluster
-def kmeans(dataSet, k):
-    numSamples = dataSet.shape[0]
-    clusterAssment = mat(zeros((numSamples, 2)))
-    clusterChanged = True
+text = u'''
+自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。
+它研究能实现人与计算机之间用自然语言进行有效通信的各种理论和方法。
+自然语言处理是一门融语言学、计算机科学、数学于一体的科学。
+因此，这一领域的研究将涉及自然语言，即人们日常使用的语言，
+所以它与语言学的研究有着密切的联系，但又有重要的区别。
+自然语言处理并不是一般地研究自然语言，
+而在于研制能有效地实现自然语言通信的计算机系统，
+特别是其中的软件系统。因而它是计算机科学的一部分。
+'''
 
-    # 在样本集中随机选取k个样本点作为初始质心
-    centroids = initCentroids(dataSet, k)
+s = SnowNLP(text)
+keyWords = s.keywords(3)
+print(keyWords)  # [u'语言', u'自然', u'计算机']
 
-    while clusterChanged:
-        clusterChanged = False
-        ## for each sample  
-        for i in range(numSamples):
-            minDist = 100000.0
-            minIndex = 0
+s.summary(3)  # [u'因而它是计算机科学的一部分',
+# u'自然语言处理是一门融语言学、计算机科学、
+# 数学于一体的科学',
+# u'自然语言处理是计算机科学领域与人工智能
+# 领域中的一个重要方向']
 
-            # 计算每个样本点与质点之间的距离，将其归内到距离最小的那一簇
-            for j in range(k):
-                distance = eucldistance(centroids[j, :], dataSet[i, :])
-                if distance < minDist:
-                    minDist = distance
-                    minIndex = j
+print(s.sentences)
 
-                    # k个簇里面与第i个样本距离最小的的标号和距离保存在clusterAssment中
-            # 若所有的样本不在变化，则退出while循环
-            if clusterAssment[i, 0] != minIndex:
-                clusterChanged = True
-                clusterAssment[i, :] = minIndex, minDist ** 2
-
-                ## update centroids
-        for j in range(k):
-            # clusterAssment[:,0].A==j是找出矩阵clusterAssment中第一列元素中等于j的行的下标，返回的是一个以array的列表，第一个array为等于j的下标
-            pointsInCluster = dataSet[nonzero(clusterAssment[:, 0].A == j)[0]]  # 将dataSet矩阵中相对应的样本提取出来
-            centroids[j, :] = mean(pointsInCluster, axis=0)  # 计算标注为j的所有样本的平均值
-
-    print('Congratulations, cluster complete!')
-    return centroids, clusterAssment
-
-
-# show your cluster only available with 2-D data
-# centroids为k个类别，其中保存着每个类别的质心
-# clusterAssment为样本的标记，第一列为此样本的类别号，第二列为到此类别质心的距离
-def showCluster(dataSet, k, centroids, clusterAssment):
-    numSamples, dim = dataSet.shape()
-    if dim != 2:
-        print("Sorry! I can not draw because the dimension of your data is not 2!")
-        return 1
-
-    mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']
-    if k > len(mark):
-        print("Sorry! Your k is too large! ")
-        return 1
-
-        # draw all samples
-    for i in range(numSamples):
-        markIndex = int(clusterAssment[i, 0])  # 为样本指定颜色
-        plt.plot(dataSet[i, 0], dataSet[i, 1], mark[markIndex])
-
-    mark = ['Dr', 'Db', 'Dg', 'Dk', '^b', '+b', 'sb', 'db', '<b', 'pb']
-    # draw the centroids  
-    for i in range(k):
-        plt.plot(centroids[i, 0], centroids[i, 1], mark[i], markersize=12)
-    plt.show()
-
-
-##测试数据文件 testSet.txt
-from numpy import *
-import time
-import matplotlib.pyplot as plt
-# import KMeans
-
-##load data  
-dataSet = []
-fileIn = open("D:/testSet.txt")
-for line in fileIn.readlines():
-    temp = []
-    lineArr = line.strip().split('\t')
-    temp.append(float(lineArr[0]))
-    temp.append(float(lineArr[1]))
-    dataSet.append(temp)
-
-fileIn.close()
-
-##clustering
-print("step 2: clustering...")
-dataSet = mat(dataSet)  # mat()函数数组转化为矩阵
-k = 3
-centroids, clusterAssment = kmeans(dataSet, k)  # 调用KMeans文件中定义的kmeans方法。
-
-##show the result  
-print("step 3: show the result...")
-showCluster(dataSet, k, centroids, clusterAssment)
+s = SnowNLP([[u'这篇', u'文章'],
+             [u'那篇', u'论文'],
+             [u'这个']])
+print(s.tf)
+print(s.idf)
+# [0.3756070762985226, 0, 0]
+print(s.sim(['文章']))

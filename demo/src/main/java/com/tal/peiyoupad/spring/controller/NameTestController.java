@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.HttpRequestHandlerServlet;
 
@@ -88,5 +89,18 @@ public class NameTestController {
             System.out.println(n + "  " + request.getHeader(n));
         }
         return name;
+    }
+
+    @GetMapping("/useDefaultValue")
+    @ResponseBody
+    public void defaultValue(@RequestParam(defaultValue = "0") long time) {
+
+        System.out.println(time);
+    }
+
+    @GetMapping("/useObjectPara")
+    @ResponseBody
+    public void useObject(Object value) {
+        System.out.println((Integer) value);
     }
 }

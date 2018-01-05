@@ -1,5 +1,8 @@
 package com.daily.learn.code_standard;
 
+import com.google.common.collect.ImmutableList;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 import java.util.*;
 
 /**
@@ -43,6 +46,14 @@ public class FifthArrNotCollection {
         System.out.println();
         System.out.println("**********CompareTest**********");
         test.compareTest();
+
+        /*list type remove when run*/
+        System.out.println();
+        System.out.println("**********list运行时进行类型擦除**********");
+        List<Integer> list_1 = ImmutableList.of(123);
+        List<String> list_2 = ImmutableList.of("test");
+        test.listTest_1(list_1);
+//        test.listTest_1(list_2);
     }
 
     /**
@@ -167,6 +178,7 @@ public class FifthArrNotCollection {
         System.out.println(subListTest);
     }
 
+    /*use compare*/
     private void compareTest() {
         TestPerson[] test = new TestPerson[5];
 
@@ -227,4 +239,9 @@ public class FifthArrNotCollection {
             return o.age - this.age;
         }
     }
+
+    /*list generic test*/
+    public void listTest_1(List<Integer> list) {System.out.println(list);}
+
+    /*private void listTest_1(List<String> list) {System.out.println(list);}*/
 }
