@@ -53,7 +53,7 @@
 from snownlp import SnowNLP
 
 text = u'''
-自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。
+不好。自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。
 它研究能实现人与计算机之间用自然语言进行有效通信的各种理论和方法。
 自然语言处理是一门融语言学、计算机科学、数学于一体的科学。
 因此，这一领域的研究将涉及自然语言，即人们日常使用的语言，
@@ -65,3 +65,7 @@ text = u'''
 s = SnowNLP(text)
 words = s.words
 print(words)
+mention = s.sentiments
+print(mention)
+
+
