@@ -57,3 +57,13 @@ b = {"f", 1}
 print(a, b)
 print(a is b)
 print(a == b)
+
+print(repr(10))
+print(ord('f'))
+print(hex(12))
+print(oct(12))
+
+#  时间戳
+import time
+
+print(time.time())

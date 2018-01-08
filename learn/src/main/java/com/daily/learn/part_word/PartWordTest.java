@@ -1,4 +1,4 @@
-package com.daily.part_word;
+package com.daily.learn.part_word;
 
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.tokenizer.NLPTokenizer;

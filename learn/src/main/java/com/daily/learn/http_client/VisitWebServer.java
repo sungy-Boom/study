@@ -1,4 +1,4 @@
-package com.daily.learn.connect;
+package com.daily.learn.http_client;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

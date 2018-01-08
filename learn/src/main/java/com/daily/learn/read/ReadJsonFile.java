@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Created by SunGuiyong
  * on 2017/12/21.
  */
-public class ReadFile {
+public class ReadJsonFile {
 
     public static JSONObject readFromCongigFile() {
         String fileName = "talmonitor.json";

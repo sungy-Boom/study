@@ -14,7 +14,7 @@ import java.util.Enumeration;
  * Created by SunGuiyong
  * on 2017/12/25.
  */
-public class ReadFile2 {
+public class GetIpAddress {
 
     public static String INTRANET_IP = getIntranetIp(); // 内网IP
     public static String INTERNET_IP = getInternetIp(); // 外网IP
