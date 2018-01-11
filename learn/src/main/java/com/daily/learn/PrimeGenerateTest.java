@@ -14,7 +14,7 @@ public class PrimeGenerateTest {
 
     public static void main(String[] args) {
         PrimeGenerateTest test = new PrimeGenerateTest();
-        List<Integer> res = test.generatePrime(1, 1000000);
+        List<Integer> res = test.generatePrime(1, 5000000);
         System.out.println(res.size());
 
         long start;
@@ -116,6 +116,23 @@ public class PrimeGenerateTest {
         }
         return res;
     }
+
+    /*public List<Integer> getPrimeFactor(BigInteger num) {
+        BigInteger flg = num;
+        List<Integer> res = new ArrayList<>();
+
+        for (int i = 2; ; i++) {
+            BigInteger temp = new BigInteger(i + "");
+            if (new BigInteger(0 + "").equals(flg.mod(temp))) {
+                res.add(i);
+                flg = flg.divide(temp);
+            }
+            if (temp.compareTo(flg) >= 1) {
+                break;
+            }
+        }
+        return res;
+    }*/
 
     /*通过BigInteger 获取乘法结果*/
     private String getPrimeProduct(int num) {

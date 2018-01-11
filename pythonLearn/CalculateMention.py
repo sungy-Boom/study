@@ -6,14 +6,14 @@ mention_list = []
 
 def read_dir():
     path = "E:\\project\\java\\CommentAnalysis\\data\\train\\positive"
-    pathDir = os.listdir(path)
-    print('文档总数', len(pathDir))
-    for file in pathDir:
+    path_dir = os.listdir(path)
+    print('文档总数', len(path_dir))
+    for file in path_dir:
         str = path + "\\" + file
         read_file_content(str)
     total = calculate()
-    # print(pathDir)
-    print("准确率：", total / len(pathDir))
+    # print(path_dir)
+    print("准确率：", total / len(path_dir))
 
 
 def read_file_content(file):
