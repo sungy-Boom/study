@@ -14,7 +14,7 @@ public class PrimeGenerateTest {
 
     public static void main(String[] args) {
         PrimeGenerateTest test = new PrimeGenerateTest();
-        List<Integer> res = test.generatePrime(1, 5000000);
+        List<Integer> res = test.generatePrime(10000);
         System.out.println(res.size());
 
         long start;
@@ -40,6 +40,22 @@ public class PrimeGenerateTest {
         System.out.println(divRes);
         end = System.currentTimeMillis();
         System.out.println("getPrimeFactor use bigInteger time " + (end - start));
+    }
+
+    public List<Integer> generatePrime(int maxNum) {
+        List<Integer> resList = new ArrayList<>();
+
+        if (maxNum <= 1) {
+            return new ArrayList<>();
+        }
+        resList.add(2);
+
+        for (int i = 3; i < maxNum; i += 2) {
+            if (new PrimeGenerateTest().isPrime(i)) {
+                resList.add(i);
+            }
+        }
+        return resList;
     }
 
     //    O(n*Math.sqrt(n))--> O(n/2*Math.sqrt(n))
