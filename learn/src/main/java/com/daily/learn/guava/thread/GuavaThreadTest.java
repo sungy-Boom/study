@@ -1,6 +1,5 @@
 package com.daily.learn.guava.thread;
 
-import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
 
 import java.util.ArrayList;
@@ -8,65 +7,104 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by SunGuiyong
  * on 2018/1/15.
  */
 public class GuavaThreadTest {
-    public static List<String> createTickets() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            list.add("车票" + i);
-        }
-        return list;
-    }
+
+    private static ExecutorService exec = Executors.newFixedThreadPool(10);
+    private static ListeningExecutorService service = MoreExecutors.listeningDecorator(exec);
 
     public static void main(String[] args) {
-        List<String> list = createTickets();//获取车票
+//        futureTest();
+        listeningFutureTest();
+    }
 
-        List<ListenableFuture<Integer>> futures = Lists.newArrayList();
-        ExecutorService pool = Executors.newFixedThreadPool(10);//定义线程数
-        ListeningExecutorService executorService = MoreExecutors.listeningDecorator(pool);
-        int j = 0;
-        while (true) {
-            int i = j;
-            if (i >= list.size()) {
-                break;
-            }
-            for (; i < 10; i++) {
-                futures.add(executorService.submit(new Task(list.get(i))));
-            }
-            j = j + 10;
-        }
+    private static void futureTest() {
 
-        final ListenableFuture<List<Integer>> resultsFuture = Futures.successfulAsList(futures);
-        try {//所有都执行完毕
-            resultsFuture.get();
+        Future<Integer> future = exec.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return 123;
+            }
+        });
+        Future<Integer> future_1 = exec.submit(() -> 123456);
+
+        Future<Future<Integer>> f_2 = exec.submit(() -> future);
+
+        try {
+            System.out.println(future.get());
+            System.out.println(future_1.get());
+            System.out.println(f_2.get().get());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
-            System.out.println("操作完毕");
-            pool.shutdown();
+            exec.shutdown();
         }
     }
 
-    public static class Task implements Callable<Integer> {
-        private String ticket;
+    private static void listeningFutureTest() {
+        ListenableFuture<Integer> explosion = service.submit(() -> 123);
 
-        /**
-         * 构造方法，用于参数传递
-         *
-         * @param ticket
-         */
-        public Task(String ticket) {
-            this.ticket = ticket;
+        Futures.addCallback(explosion, new FutureCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                System.out.println("success");
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                System.out.println("failed");
+            }
+        });
+
+        List<ListenableFuture<Integer>> futures = new ArrayList<>();
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            ListenableFuture<Integer> future = service.submit(new ThreadTest(i));
+            Futures.addCallback(future, new FutureCallback<Integer>() {
+                @Override
+                public void onSuccess(Integer integer) {
+                    System.out.println("success");
+                }
+
+                @Override
+                public void onFailure(Throwable throwable) {
+                    System.out.println("failed");
+                }
+            });
+            futures.add(future);
+        }
+
+        try {
+            ListenableFuture<List<Integer>> allList = Futures.allAsList(futures);
+            System.out.println(allList.get());
+            long end = System.currentTimeMillis();
+            System.out.println("time:" + (end - start));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            service.shutdown();
+        }
+    }
+
+    public static class ThreadTest implements Callable<Integer> {
+
+        private Integer value = 0;
+
+        ThreadTest(Integer value) {
+
         }
 
         @Override
         public Integer call() throws Exception {
-            System.out.println("已卖" + ticket);//执行卖票过程
-            return 1;
+            for (int i = 0; i < 5; i++) {
+                value++;
+            }
+            return this.value;
         }
     }
 }
