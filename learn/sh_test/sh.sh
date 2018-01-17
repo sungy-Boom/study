@@ -1,11 +1,8 @@
-#!/bin/bash
-python D:\\self\\study\\pythonLearn\\first.py
-
-doFun(){
-    echo "test"
+#!bin/bash -
+function myfunc()
+{
+    myresult='some value'
 }
-doFun
-echo $1
-message="this is a message test"
--D MESSAGE=${message}
+myfunc
+echo $myresult
 read t

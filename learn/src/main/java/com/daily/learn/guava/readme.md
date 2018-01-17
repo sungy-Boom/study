@@ -1264,3 +1264,6 @@ public class CaseFormatTest {
     LOWER_CAMEL to LOWER_UNDERSCORE: test_data
     LOWER_CAMEL to LOWER_HYPHEN: test-data
     LOWER_CAMEL to UPPER_UNDERSCORE: TEST_DATA
+    
+### 5.Guava cache
+

@@ -6,14 +6,16 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+/**
+ * in http_client used countDownLatch
+ */
 public class CountDownLatchTest {
 
     private static CountDownLatch latch = new CountDownLatch(2);
     private static ExecutorService exec = Executors.newFixedThreadPool(2);
 
     public static void main(String[] args) {
-//    outputTest(str());
-
         List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
 
@@ -26,9 +28,7 @@ public class CountDownLatchTest {
             e.printStackTrace();
         }
         System.out.println(list.size());
-
         exec.shutdown();
-
     }
 
     public static class SuggestThread implements Runnable {

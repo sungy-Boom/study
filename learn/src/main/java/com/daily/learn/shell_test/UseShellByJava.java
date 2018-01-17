@@ -1,6 +1,8 @@
 package com.daily.learn.shell_test;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -9,14 +11,11 @@ import java.io.InputStreamReader;
  */
 public class UseShellByJava {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
         try {
             String shpath = "learn\\sh_test\\sh.sh";
-            String para = "test\" \"parameter";
-            Process ps = Runtime.getRuntime().exec("cmd /c " + shpath + " " + para);
+            Process ps = Runtime.getRuntime().exec("cmd /c " + shpath);
             ps.waitFor();
-            System.out.println(System.getProperty("MESSAGE"));
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
             StringBuffer sb = new StringBuffer();
@@ -26,6 +25,7 @@ public class UseShellByJava {
             }
             String result = sb.toString();
             System.out.println(result);
+            System.out.println("exit value " + ps.exitValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
