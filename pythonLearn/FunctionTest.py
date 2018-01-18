@@ -1,19 +1,12 @@
-total = 0
+import pymysql
 
+db = pymysql.connect("localhost", "root", "root", "test")
+cursor = db.cursor()
 
-def add_test(a, b):
-    global total  # 使用全局变量
-    total = a + b
-    print(total)
-
-
-def list_reverse():
-    list.reverse()
-
-
-add_test(12, 4)
-print(total)
-
-list = [1, 23, 4, 5, "sdf"]
-list_reverse()
+sql = "select * from name_test"
+cursor.execute(sql)
+list = cursor.fetchall()
+for item in list:
+    str_utf8 = item.encode("gbk")
+    print(str_utf8.decode("utf-8", "strict"))
 print(list)

@@ -77,6 +77,7 @@ def analysis(text):
 
 
 if __name__ == "__main__":
+    print("test")
     text = sys.argv[1]
     mention = analysis(text)
     print(mention)
