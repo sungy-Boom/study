@@ -1,5 +1,7 @@
 package com.daily.learn.countdownlatch_test;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -16,18 +18,26 @@ public class CountDownLatchTest {
     private static ExecutorService exec = Executors.newFixedThreadPool(2);
 
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
+
+        //countDownLatch test 1
+      /*  List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
 
         exec.execute(new SuggestThread("fileName", true, list));
-        exec.execute(new SuggestThread("fileName", false, list1));
+        exec.execute(new SuggestThread("fileName", false, list1));*/
 
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //countDownLatch test 2
+        for (int j = 0; j < 5; j++) {
+            latch = new CountDownLatch(2);
+            for (int i = 0; i < 2; i++) {
+                exec.execute(new ListTestThread());
+            }
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println(list.size());
         exec.shutdown();
     }
 
@@ -46,12 +56,36 @@ public class CountDownLatchTest {
 
         @Override
         public void run() {
+
             if (flg) {
                 resultList.addAll(t.sayOut(fileName));
             } else {
                 resultList.addAll(t.sayIn(fileName));
             }
             latch.countDown();
+        }
+    }
+
+    public static class ListTestThread implements Runnable {
+        ListTestThread() {
+
+        }
+
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 5; i++) {
+                List<String> testList = new ArrayList<>();
+                testList.add("test" + i);
+                listTest(testList);
+            }
+            latch.countDown();
+        }
+    }
+
+    private static void listTest(List<String> list) {
+        for (String item : list) {
+            System.out.println(item);
         }
     }
 }
