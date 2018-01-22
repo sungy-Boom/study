@@ -34,7 +34,7 @@ public class IntMathTest {
 
     private void testIntMath() {
         try {
-            System.out.println(IntMath.checkedAdd(Integer.MAX_VALUE, Integer.MAX_VALUE));
+            System.out.println(IntMath.checkedAdd(Integer.MAX_VALUE, /*Integer.MAX_VALUE*/1));
         } catch (ArithmeticException e) {
             System.out.println("Error: " + e.getMessage());
         }

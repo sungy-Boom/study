@@ -57,7 +57,7 @@ public class ShortsTest {
 
         //Returns the maximum
         System.out.println("Max: " + Shorts.max(shortArray));
-        data = 2400;
+        data = -2400;
         //get the byte array from an integer
         //进行移位运算  2400 --> 0000 1001 0110 0000
         byte[] byteArray = Shorts.toByteArray(data);
