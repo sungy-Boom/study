@@ -28,6 +28,7 @@ public class BigIntegerMathTest {
             //exception will be thrown as 100 is not completely divisible by 3 thus rounding
             // is required, and RoundingMode is set as UNNESSARY
             System.out.println(BigIntegerMath.divide(BigInteger.TEN, new BigInteger("3"), RoundingMode.CEILING));
+            System.out.println("half_even test :" + BigIntegerMath.divide(new BigInteger("26"), BigInteger.TEN, RoundingMode.HALF_EVEN));
             System.out.println(BigIntegerMath.divide(BigInteger.TEN, new BigInteger("3"), RoundingMode.UNNECESSARY));
         } catch (ArithmeticException e) {
             System.out.println("Error: " + e.getMessage());
@@ -41,7 +42,7 @@ public class BigIntegerMathTest {
 
         System.out.println("factorial(5): " + BigIntegerMath.factorial(5));
 
-        BigInteger test1 = new BigInteger(123+"");
-        System.out.println(test1.divide(new BigInteger(4+"")));
+        BigInteger test1 = new BigInteger(123 + "");
+        System.out.println(test1.divide(new BigInteger(4 + "")));
     }
 }

@@ -25,29 +25,57 @@ public class GuavaThreadTest {
 
     private static void futureTest() {
 
-        Future<Integer> future = exec.submit(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return 123;
-            }
-        });
-        Future<Integer> future_1 = exec.submit(() -> 123456);
-
-        Future<Future<Integer>> f_2 = exec.submit(() -> future);
-
+        // 任务2
         try {
+            List<Future<String>> list = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                final int j = i;
+
+                Future<String> stringTask = exec.submit(() -> {
+                    if (j == 3) {
+                        Thread.sleep(5000);
+                    }
+                    return ("hello world" + j);
+                });
+                list.add(stringTask);
+            }
+
+            for (Future<String> item : list) {
+                System.out.println(item.get());
+            }
+//            System.out.println(stringTask.get());
+           /* while (true) {
+                if (stringTask.isDone() && !stringTask.isCancelled()) {
+                    String result = stringTask.get();
+                    System.out.println("StringTask: " + result);
+                    break;
+                }
+            }*/
+
+            /*Future<Integer> future = exec.submit(new Callable<Integer>() {
+                @Override
+                public Integer call() throws Exception {
+                    return 123;
+                }
+            });
             System.out.println(future.get());
+
+            Future<Integer> future_1 = exec.submit(() -> 123456);
             System.out.println(future_1.get());
-            System.out.println(f_2.get().get());
+
+            Future<Future<Integer>> f_2 = exec.submit(() -> future);
+            System.out.println(f_2.get().get());*/
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             exec.shutdown();
         }
+
     }
 
     private static void listeningFutureTest() {
-        ListenableFuture<Integer> explosion = service.submit(() -> 123);
+       /* ListenableFuture<Integer> explosion = service.submit(() -> 123);
 
         Futures.addCallback(explosion, new FutureCallback<Integer>() {
             @Override
@@ -59,16 +87,17 @@ public class GuavaThreadTest {
             public void onFailure(Throwable throwable) {
                 System.out.println("failed");
             }
-        });
+        });*/
 
         List<ListenableFuture<Integer>> futures = new ArrayList<>();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
+            final int j = i;
             ListenableFuture<Integer> future = service.submit(new ThreadTest(i));
             Futures.addCallback(future, new FutureCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
-                    System.out.println("success");
+                    System.out.println("success" + j);
                 }
 
                 @Override
@@ -96,13 +125,14 @@ public class GuavaThreadTest {
         private Integer value = 0;
 
         ThreadTest(Integer value) {
-
+            this.value = value;
         }
 
         @Override
         public Integer call() throws Exception {
-            for (int i = 0; i < 5; i++) {
-                value++;
+            System.out.println(value);
+            if (value == 3) {
+                Thread.sleep(5000);
             }
             return this.value;
         }

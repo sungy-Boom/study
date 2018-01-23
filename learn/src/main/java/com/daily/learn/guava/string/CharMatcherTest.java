@@ -97,7 +97,7 @@ public class CharMatcherTest {
         // trimFrom
         System.out.println();
         //trimFrom 删除首位匹配到的字符串
-        String trimFromResult = CharMatcher.anyOf("ab").trimFrom("catbanan");
+        String trimFromResult = CharMatcher.anyOf("ab").trimFrom("maaabcatbananammbaasb");
         System.out.println("trimFrom:" + trimFromResult);
         System.out.println();
         // trimLeadingFrom
