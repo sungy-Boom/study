@@ -14,7 +14,7 @@ public class PrimeGenerateTest {
 
     public static void main(String[] args) {
         PrimeGenerateTest test = new PrimeGenerateTest();
-        List<Integer> res = test.generatePrime(10000);
+        List<Integer> res = test.generatePrime(1000000);
         System.out.println(res.size());
 
         long start;

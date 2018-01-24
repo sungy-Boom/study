@@ -4,10 +4,8 @@ import com.google.common.util.concurrent.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.Random;
+import java.util.concurrent.*;
 
 /**
  * Created by SunGuiyong
@@ -19,10 +17,19 @@ public class GuavaThreadTest {
     private static ListeningExecutorService service = MoreExecutors.listeningDecorator(exec);
 
     public static void main(String[] args) {
+        //future
 //        futureTest();
-        listeningFutureTest();
+        //listenableFuture
+//        listeningFutureTest();
+        //completeFuture
+//        completeFutureTest_1();
+        completeFutureTest_2();
     }
 
+    /**
+     * Java5 Future
+     * 阻塞的方式与我们理解的异步编程其实是相违背的，而轮询又会耗无谓的CPU资源
+     */
     private static void futureTest() {
 
         // 任务2
@@ -51,7 +58,11 @@ public class GuavaThreadTest {
                     break;
                 }
             }*/
-
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            exec.shutdown();
+        }
             /*Future<Integer> future = exec.submit(new Callable<Integer>() {
                 @Override
                 public Integer call() throws Exception {
@@ -65,15 +76,11 @@ public class GuavaThreadTest {
 
             Future<Future<Integer>> f_2 = exec.submit(() -> future);
             System.out.println(f_2.get().get());*/
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            exec.shutdown();
-        }
-
     }
 
+    /**
+     * Guava ListenableFuture
+     */
     private static void listeningFutureTest() {
        /* ListenableFuture<Integer> explosion = service.submit(() -> 123);
 
@@ -135,6 +142,87 @@ public class GuavaThreadTest {
                 Thread.sleep(5000);
             }
             return this.value;
+        }
+    }
+
+    /**
+     * Java8 CompleteFuture
+     * CompletableFuture并非一定要交给线程池执行才能实现异步
+     */
+    private static void completeFutureTest_1() {
+        System.out.println("CompletableFuture");
+        CompletableFuture<Void> futureA = CompletableFuture.runAsync(() -> {
+            System.out.println("a");
+            timeSleep();
+        });
+        CompletableFuture<Void> futureB = CompletableFuture.runAsync(() -> {
+            System.out.println("b");
+            timeSleep();
+        });
+        try {
+            futureA.runAfterEither(futureB, () -> {
+                System.out.println("c");
+                timeSleep();
+            }).get();
+        } catch (Exception e) {
+            System.out.println("get exception " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * runAsync(Runnable runnable)
+     * runAsync(Runnable runnable, Executor executor)
+     * supplyAsync(Supplier<U> supplier)
+     * supplyAsync(Supplier<U> supplier, Executor executor)
+     * <p>
+     * //future.get()在等待执行结果时，程序会一直block,如果调用complete就会直接返回结果，
+     * //但是如果future已经返回了结果，再调用complete是没有用的
+     * complete(T t)
+     * completeExceptionally(Throwable ex)
+     */
+    private static void completeFutureTest_2() {
+        CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("cf1");
+            timeSleep();
+            return "as";
+        });
+        CompletableFuture<Integer> cf2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                System.out.println("cf2");
+//                Thread.sleep(11000);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            return 1234;
+        });
+        // 如果cf2返回值还没有获取到，那么就会返回complete的值
+        // 如果cf2结果已经获取到，就不会使用complete的值
+        timeSleep();
+        cf2.complete(111111);
+        //cf2 如果等待时间短，会输出返回值
+        // 等待时间长，并不会阻塞在这里
+        cf2.thenApply(fn -> fn).thenAcceptAsync(re -> System.out.println(re));
+
+//        cf2.thenApply(fn -> fn).thenAccept(re -> System.out.println(re));
+
+        cf1.thenApply((fn) -> fn).thenAcceptAsync(re -> System.out.println(re));
+
+        //为什么使用join？
+        //因为默认是守护进程，如果想获取结果，需要人工阻塞
+        cf1.join();
+
+//        timeSleep();
+    }
+
+    private static void timeSleep() {
+        try {
+            Random random = new Random();
+            int time = random.nextInt(10);
+            System.out.println("休眠时间 ：" + time);
+            TimeUnit.SECONDS.sleep(time);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
