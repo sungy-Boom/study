@@ -20,20 +20,12 @@ import java.util.concurrent.TimeUnit;
 public class CacheTest {
 
     private RemovalListener<Integer, String> MY_LISTEN = ((removalNotification) ->
-            System.out.println("remove key :" + removalNotification.getKey()));
+            System.out.println("remove key :" + removalNotification.getKey() +
+                    "  remove value :" + removalNotification.getValue()));
     private LoadingCache<Integer, String> cache = CacheBuilder.newBuilder()
-//            .maximumSize(100)//设置最大缓存值
-            .maximumWeight(100)
-            .weigher(/*new Weigher<Integer, String>() {
-                @Override
-                public int weigh(Integer integer, String s) {
-                    return 0;
-                }
-            }*/ (Integer, String) -> 13)
-            .expireAfterAccess(5, TimeUnit.SECONDS)//设置缓存失效时间
-//            .recordStats()
+            .maximumSize(100)
+            .expireAfterAccess(3, TimeUnit.SECONDS)//设置缓存失效时间
             .removalListener(MY_LISTEN)
-            /*.refreshAfterWrite()*/
             .build(//缓存加载器，如果缓存存在，返回值，如果不存在，计算，放入缓存，
                     new CacheLoader<Integer, String>() {
                         @Override
@@ -43,6 +35,17 @@ public class CacheTest {
                         }
                     }
             );
+          /*.maximumWeight(100)
+            .weigher((Integer, String) -> 13)
+            .refreshAfterWrite()
+            .recordStats()
+            .maximumSize(100)//设置最大缓存值*/
+
+    //没有设置加载器
+    private Cache<Integer, String> cache_2 = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterAccess(3, TimeUnit.SECONDS)
+            .build();
 
     public static void main(String[] args) {
         CacheTest test = new CacheTest();
@@ -56,55 +59,41 @@ public class CacheTest {
     }
 
     private void useCacheLoader() {
-
+        System.out.println("use unchecked get.don't need catch Exception\n");
+        String value = cache.getUnchecked(1);
         try {
-            String value = cache.get(1);
-            System.out.println(value);
+            System.out.println("first get value :" + value);
             System.out.println();
-            System.out.println("get value from cache");
             value = cache.get(1);
-            System.out.println(value);
+            System.out.println("second get value from cache :" + value);
 
-            System.out.println("status: " + cache.stats().hitCount());
+            System.out.println("wait 3 seconds");
+            Thread.sleep(3000);
 
-            System.out.println("wait 5 seconds");
-            Thread.sleep(5000);
             value = cache.get(1);
-            System.out.println(value);
+            System.out.println("get value after sleep 5s:" + value);
+
             System.out.println();
-            System.out.println("get value from cache");
             value = cache.get(1);
-            System.out.println(value);
+            System.out.println("through cache :" + value);
+
+            cache.invalidate(1);
+            value = cache.get(1);
+            System.out.println("use invalidate :" + value);
 
             ConcurrentMap<Integer, String> map = cache.asMap();
-            System.out.println(map);
+            System.out.println("use cache.asMap: " + map);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void useCallable() {
-        System.out.println("use unchecked get.don't need catch Exception\n");
-        String value = cache.getUnchecked(1);
-        System.out.println(value);
-
         try {
-            value = cache.get(2, () -> String.valueOf(Math.max(123, 13123)));
-            value = cache.get(2, new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    return null;
-                }
-            });
+            String value;
+            value = cache_2.get(2, () -> String.valueOf(Math.max(123, 13123)));
+//            value = cache_2.get(2, () -> null);
             System.out.println("use callable: " + value);
-
-            cache.invalidate(1);
-            cache.invalidateAll(ImmutableList.of(1, 2));
-            System.out.println();
-            value = cache.get(1);
-            System.out.println("get after invalidate : " + value);
-
-            System.out.println();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

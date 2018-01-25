@@ -7,13 +7,12 @@ import pymysql
 import snownlp
 import datetime
 import urllib.parse
-import time
 
 db = pymysql.connect("localhost", "root", "root", "comment_analysis")
 cursor = db.cursor()
 update_cursor = db.cursor()
 db.ping(True)
-start_position = 1
+start_position = 306500 + 793000
 handled_num = 0
 row_distance = 500
 
@@ -74,18 +73,17 @@ class Consumer(threading.Thread):
     def run(self):
         while True:
             self.exists = False
-            sql = "replace into relation(`id`, `cid`, `user_name`, `comment`, `evaluation`, `add_time`) values"
-            rows = 0
+            sql = "replace into relation(`id`, `cid`, `user_name`, `comment`, `evaluation`, `add_time`) values (%s,%s,%s,%s,%s,%s)"
+            list = []
             # 队列不为空
             while not Queue.empty(self.queue):
-                rows += 1
-                sql = sql + self.get_sql_sequence(self.queue)
-                if rows == row_distance:
+                list.append(self.queue.get())
+                if len(list) == row_distance:
+                    result = self.calculate_by_thread(list)
+                    self.update_db(sql, result)
+                    list.clear()
                     self.exists = True
-                    self.update_db(sql, "")
-                    rows = 0
                     break
-                sql = sql + ","
                 global handled_num
                 handled_num += 1
                 pass
@@ -98,8 +96,8 @@ class Consumer(threading.Thread):
         while True:
             try:
                 global handled_num
-                # update_cursor.executemany(sql, sequence)
-                update_cursor.execute(sql)
+                update_cursor.executemany(sql, sequence)
+                # update_cursor.execute(sql)
                 db.commit()
                 handled_num += 1
                 print("have analyzed rows :", handled_num)
@@ -111,18 +109,30 @@ class Consumer(threading.Thread):
             pass
         pass
 
-    # 进行情感计算
     @staticmethod
-    def analysis_mention(text):
-        s = snownlp.SnowNLP(text)
-        mention = s.sentiments
-        if mention > 0.6:
-            return 1
-        elif mention < 0.4:
-            return -1
-        else:
-            return 0
-        pass
+    def calculate_by_thread(record_list):
+        result_list = []
+        # for item in record_list:
+        #     res = CalculateMention(item)
+        #     res.start()
+        #     result_list.append(res.get_result())
+        index = 0
+        while True:
+            if index >= len(record_list):
+                break
+            temp_list = []
+            for t in range(0, 2):
+                res = CalculateMention(record_list[index + t])
+                temp_list.append(res)
+                res.start()
+                pass
+
+            for t in temp_list:
+                t.join()
+                result_list.append(t.get_result())
+            index += 2
+            pass
+        return result_list
 
     # 获取拼接好的sql
     def get_sql_sequence(self, bolck_queue):
@@ -153,6 +163,49 @@ class Consumer(threading.Thread):
         return sql_extend
 
 
+class CalculateMention(threading.Thread):
+    def __init__(self, item):
+        threading.Thread.__init__(self)
+        self.record_item = item
+        pass
+
+    def run(self):
+        self.res_list = []
+        for i in range(len(self.record_item) - 1):
+            if i == 4:
+                text = urllib.parse.unquote(self.record_item[3])
+                mention = 0
+                if len(text) > 0:
+                    mention = self.analysis_mention(text)
+                    pass
+                self.res_list.append(mention)
+                pass
+            else:
+                self.res_list.append(self.record_item[i])
+            pass
+        pass
+
+    def get_result(self):
+        try:
+            return self.res_list
+        except Exception as e:
+            print("get result exception", str(e))
+            pass
+
+    # 进行情感计算
+    @staticmethod
+    def analysis_mention(text):
+        s = snownlp.SnowNLP(text)
+        mention = s.sentiments
+        if mention > 0.6:
+            return 1
+        elif mention < 0.4:
+            return -1
+        else:
+            return 0
+        pass
+
+
 if __name__ == "__main__":
     start = datetime.datetime.now()
     queue = Queue(row_distance)
@@ -163,6 +216,6 @@ if __name__ == "__main__":
 
     end = datetime.datetime.now()
 
-    print((end - start).seconds)
+    print("运行时间", (end - start).seconds)
 
     # db.close()

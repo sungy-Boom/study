@@ -59,5 +59,7 @@ public class IntMathTest {
         System.out.println("modulus(100,50): " + IntMath.mod(100, 50));
 
         System.out.println("factorial(5): " + IntMath.factorial(5));
+        System.out.println("isPowerOfTow(9): " + IntMath.isPowerOfTwo(32));
+        System.out.println("isPrime(9): " + IntMath.isPrime(2));
     }
 }

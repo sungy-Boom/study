@@ -33,6 +33,7 @@ def list_test():
     list = []
     list.append(12)
     list.append("23123")
+    print(len(list))
     for item in list:
         print(item)
 

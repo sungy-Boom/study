@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2017/7/25 10:10
-# @File    : que.py
 
 # 生产者消费者，阻塞队列实现
 

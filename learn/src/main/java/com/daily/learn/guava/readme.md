@@ -1266,4 +1266,138 @@ public class CaseFormatTest {
     LOWER_CAMEL to UPPER_UNDERSCORE: TEST_DATA
     
 ### 5.Guava cache
+Guava Cache是本地缓存，缓存项不会保存到数据库或是文件中；相比于ConCurrentMap缓存需要手动清除，guava cache可以设置缓存项的过期时间。
+#### 获取Cache对象
 
+    // 获取LoadingCache对象
+    CacheBuilder.newBuilder()
+        .maximumSize()         // 缓存项数目最大值
+        .maximumWeight()       // 缓存的最大重量
+        .weigher()             // 设置缓存的权重
+        .expireAfterAccess()   // 在指定时间没有被访问，回收
+        .expireAfterWrite()    // 在指定时间没有写访问，回收
+        .recordStats()         // 开启统计功能
+        .removalListener()     // 在移除元素的时候触发监听
+         //上边的方法都是返回一个CacheBuilder
+         //下边build方法时返回一个LoadingCache对象
+        .build()    		  // 返回一个LoadingCache对象
+    // 获取Listener对象
+    RemovalListener<Key, Value> MY_LISTEN = ((removalNotification) -> {do things});
+
+#### 常用方法
+
+    // 如果key不存在，走Callable方法
+    V get(K, Callable<V>)
+    V get(K key)
+    V getUnchecked(K key)
+    ConcurrentMap<K,V> asMap()
+    // 缓存的统计功能
+    CacheStats stats()
+    void invalidate(Object var1);
+    void invalidateAll(Iterable<?> var1);
+    void invalidateAll();
+     
+    // stats
+    hitRate()：缓存命中率；
+    averageLoadPenalty()：加载新值的平均时间，单位为纳秒；
+    evictionCount()：缓存项被回收的总数，不包括显式清除。
+
+#### 代码示例
+
+```java
+class CacheTest{
+    private RemovalListener<Integer, String> MY_LISTEN = ((removalNotification) ->
+            System.out.println("remove key :" + removalNotification.getKey() +
+                    "  remove value :" + removalNotification.getValue()));
+    private LoadingCache<Integer, String> cache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterAccess(3, TimeUnit.SECONDS)//设置缓存失效时间
+            .removalListener(MY_LISTEN)
+            .build(//缓存加载器，如果缓存存在，返回值，如果不存在，计算，放入缓存，
+                    new CacheLoader<Integer, String>() {
+                        @Override
+                        public String load(Integer integer) throws Exception {
+                            System.out.println("add into cache");
+                            return "9";
+                        }
+                    }
+            );
+          /*.maximumWeight(100)
+            .weigher((Integer, String) -> 13)
+            .refreshAfterWrite()
+            .recordStats()
+            .maximumSize(100)//设置最大缓存值*/
+          
+    //没有设置加载器
+    private Cache<Integer, String> cache_2 = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterAccess(3, TimeUnit.SECONDS)
+            .build();
+
+    public static void main(String[] args) {
+        CacheTest test = new CacheTest();
+
+        System.out.println("*************use CacheLoader**************");
+        test.useCacheLoader();
+
+        System.out.println("*************use Callable**************");
+        test.useCallable();
+
+    }
+    // 设置了cache的加载器，可以调用get(K)
+    private void useCacheLoader() {
+        System.out.println("use unchecked get.don't need catch Exception\n");
+        String value = cache.getUnchecked(1);
+        try {
+            //第一次get(K)时，缓存中没有，新计算，然后返回，第二次直接从缓存中取
+            System.out.println("first get value :" + value);
+            System.out.println();
+            value = cache.get(1);
+            System.out.println("second get value from cache :" + value);
+
+            // 等待三秒，缓存过期，清空
+            System.out.println("wait 3 seconds");
+            Thread.sleep(3000);
+
+            // 缓存过期，调用listener。缓存过期后，第一次从缓存中取值，从新计算
+            value = cache.get(1);
+            System.out.println("get value after sleep 5s:" + value);
+
+            // 第二次取
+            System.out.println();
+            value = cache.get(1);
+            System.out.println("through cache :" + value);
+
+            // 显示删除缓存内容，会调用listener
+            cache.invalidate(1);
+            value = cache.get(1);
+            System.out.println("use invalidate :" + value);
+
+            ConcurrentMap<Integer, String> map = cache.asMap();
+            System.out.println("use cache.asMap: " + map);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // 没有设置加载器，需要调用get(K, Callable)
+    private void useCallable() {
+        try {
+            String value;
+            value = cache_2.get(2, () -> String.valueOf(Math.max(123, 13123)));
+//            value = cache_2.get(2, () -> null);
+            System.out.println("use callable: " + value);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+
+### 6.多线程
+Future：Java5推出。异步计算，计算结果需要轮询获取
+CompletableFuture：Java8推出。借鉴Guava中的线程类，计算结果异步获取。
+ListenableFuture：Guava线程类，异步获取结果。计算完成时通过回调进行通知。
+Future可以通过get()进行阻塞或者通过循环轮询计算结果，但是阻塞的方式与我们理解的异步编程其实是相违背的，而轮询又会耗无谓的CPU资源。因此不管是Guava还是Java8都在Future的基础上进行了优化。
+
+#### 常用方法

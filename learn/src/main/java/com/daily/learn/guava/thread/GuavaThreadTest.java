@@ -23,16 +23,15 @@ public class GuavaThreadTest {
 //        listeningFutureTest();
         //completeFuture
 //        completeFutureTest_1();
-        completeFutureTest_2();
+//        completeFutureTest_2();
+        completableFutureTest_3();
     }
 
     /**
      * Java5 Future
-     * 阻塞的方式与我们理解的异步编程其实是相违背的，而轮询又会耗无谓的CPU资源
      */
     private static void futureTest() {
 
-        // 任务2
         try {
             List<Future<String>> list = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
@@ -139,7 +138,7 @@ public class GuavaThreadTest {
         public Integer call() throws Exception {
             System.out.println(value);
             if (value == 3) {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             }
             return this.value;
         }
@@ -154,7 +153,7 @@ public class GuavaThreadTest {
         CompletableFuture<Void> futureA = CompletableFuture.runAsync(() -> {
             System.out.println("a");
             timeSleep();
-        });
+        }, exec);
         CompletableFuture<Void> futureB = CompletableFuture.runAsync(() -> {
             System.out.println("b");
             timeSleep();
@@ -215,10 +214,33 @@ public class GuavaThreadTest {
 //        timeSleep();
     }
 
+    private static void completableFutureTest_3() {
+        List<CompletableFuture<String>> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            final int j = i;
+            CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+                if (j == 3) {
+                    timeSleep();
+                    System.out.println("test03");
+                }
+                return "test_" + j;
+            });
+            list.add(future);
+        }
+
+        timeSleep();
+        for (CompletableFuture<String> item : list) {
+            item.thenApply(f -> f).thenAcceptAsync(res -> System.out.println(res));
+        }
+
+        System.out.println("end");
+    }
+
     private static void timeSleep() {
         try {
             Random random = new Random();
             int time = random.nextInt(10);
+            time = 1;
             System.out.println("休眠时间 ：" + time);
             TimeUnit.SECONDS.sleep(time);
         } catch (Exception e) {
