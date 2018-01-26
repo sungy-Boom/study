@@ -12,9 +12,10 @@ db = pymysql.connect("localhost", "root", "root", "comment_analysis")
 cursor = db.cursor()
 update_cursor = db.cursor()
 db.ping(True)
-start_position = 306500 + 793000
-handled_num = 0
+start_position = 1579500
+handled_num = 1579500
 row_distance = 500
+total_rows = 1579882
 
 
 class Producer(threading.Thread):
@@ -50,6 +51,7 @@ class Producer(threading.Thread):
                 pass
             start_position += row_distance
             if start_position > total_num:
+                print("producer thread end")
                 break
             pass
         pass
@@ -67,28 +69,42 @@ class Consumer(threading.Thread):
     def __init__(self, block_queue):
         threading.Thread.__init__(self)
         self.queue = block_queue
+        self.queue_handled = False
         self.exists = False
         pass
 
     def run(self):
         while True:
-            self.exists = False
+            self.queue_handled = False
             sql = "replace into relation(`id`, `cid`, `user_name`, `comment`, `evaluation`, `add_time`) values (%s,%s,%s,%s,%s,%s)"
             list = []
             # 队列不为空
             while not Queue.empty(self.queue):
                 list.append(self.queue.get())
+                global handled_num
+
                 if len(list) == row_distance:
+                    result = self.calculate_by_thread(list)
+                    self.update_db(sql, result)
+                    list.clear()
+                    self.queue_handled = True
+                    break
+                elif handled_num == 1579882:
                     result = self.calculate_by_thread(list)
                     self.update_db(sql, result)
                     list.clear()
                     self.exists = True
                     break
-                global handled_num
                 handled_num += 1
                 pass
-            if self.exists:
+            if self.queue_handled:
                 self.queue.task_done()
+                pass
+            if self.exists:
+                print("consumer thread end")
+                break
+                pass
+            pass
         pass
 
     @staticmethod
@@ -112,13 +128,9 @@ class Consumer(threading.Thread):
     @staticmethod
     def calculate_by_thread(record_list):
         result_list = []
-        # for item in record_list:
-        #     res = CalculateMention(item)
-        #     res.start()
-        #     result_list.append(res.get_result())
         index = 0
         while True:
-            if index >= len(record_list):
+            if index >= len(record_list)-1:
                 break
             temp_list = []
             for t in range(0, 2):
@@ -134,33 +146,33 @@ class Consumer(threading.Thread):
             pass
         return result_list
 
-    # 获取拼接好的sql
-    def get_sql_sequence(self, bolck_queue):
-        res = bolck_queue.get()
-        sql_extend = ""
-        for i in range(len(res) - 1):
-            temp_str = res[i]
-            if isinstance(res[i], str) or isinstance(res[i], datetime.datetime):
-                temp_str = "\"" + str(res[i]) + "\""
-
-            if i == 0:
-                sql_extend = sql_extend + "(" + str(temp_str) + ","
-                continue
-            elif i == len(res) - 2:
-                sql_extend = sql_extend + str(temp_str) + ")"
-                continue
-            if i == 4:
-                text = urllib.parse.unquote(res[3])
-                mention = 0
-                if len(text) > 0:
-                    mention = self.analysis_mention(text)
-                    pass
-                sql_extend = sql_extend + str(mention) + ","
-                continue
-            else:
-                sql_extend = sql_extend + str(temp_str) + ","
-                continue
-        return sql_extend
+        # # 获取拼接好的sql
+        # def get_sql_sequence(self, bolck_queue):
+        #     res = bolck_queue.get()
+        #     sql_extend = ""
+        #     for i in range(len(res) - 1):
+        #         temp_str = res[i]
+        #         if isinstance(res[i], str) or isinstance(res[i], datetime.datetime):
+        #             temp_str = "\"" + str(res[i]) + "\""
+        #
+        #         if i == 0:
+        #             sql_extend = sql_extend + "(" + str(temp_str) + ","
+        #             continue
+        #         elif i == len(res) - 2:
+        #             sql_extend = sql_extend + str(temp_str) + ")"
+        #             continue
+        #         if i == 4:
+        #             text = urllib.parse.unquote(res[3])
+        #             mention = 0
+        #             if len(text) > 0:
+        #                 mention = self.analysis_mention(text)
+        #                 pass
+        #             sql_extend = sql_extend + str(mention) + ","
+        #             continue
+        #         else:
+        #             sql_extend = sql_extend + str(temp_str) + ","
+        #             continue
+        #     return sql_extend
 
 
 class CalculateMention(threading.Thread):
