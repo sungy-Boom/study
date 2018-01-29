@@ -1,10 +1,10 @@
-package com.tal.peiyoupad.spring.controller;
+package com.spring.boot.spring.controller;
 
 //import com.tal.peiyoupad.annotation.TALMonitor;
 
 import com.tal.peiyoupad.annotation.TALMonitor;
-import com.tal.peiyoupad.spring.entity.NameTestEntity;
-import com.tal.peiyoupad.spring.service.NameTestService;
+import com.spring.boot.spring.entity.NameTestEntity;
+import com.spring.boot.spring.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.support.HttpRequestHandlerServlet;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -102,5 +102,11 @@ public class NameTestController {
     @ResponseBody
     public void useObject(Object value) {
         System.out.println((Integer) value);
+    }
+
+    @GetMapping("/mod")
+    @ResponseBody
+    public List<NameTestEntity> getMod(BigInteger num) {
+        return nameTestService.getModRes(num);
     }
 }

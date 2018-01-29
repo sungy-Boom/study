@@ -1,12 +1,13 @@
-package com.tal.peiyoupad.spring.service.impl;
+package com.spring.boot.spring.service.impl;
 
-import com.tal.peiyoupad.spring.dao.INameTestDAO;
-import com.tal.peiyoupad.spring.entity.NameTestEntity;
-import com.tal.peiyoupad.spring.service.NameTestService;
+import com.spring.boot.spring.entity.NameTestEntity;
+import com.spring.boot.spring.service.NameTestService;
+import com.spring.boot.spring.dao.INameTestDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,11 @@ public class NameTestServiceImpl implements NameTestService {
     public boolean deleteRecord(String name) {
         nameTestDAO.deleteByName(name);
         return true;
+    }
+
+    @Override
+    public List<NameTestEntity> getModRes(BigInteger num) {
+        return nameTestDAO.getByMod(num);
     }
 
     /**

@@ -1,6 +1,6 @@
-package com.tal.peiyoupad.spring.dao;
+package com.spring.boot.spring.dao;
 
-import com.tal.peiyoupad.spring.entity.NameTestEntity;
+import com.spring.boot.spring.entity.NameTestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -52,4 +53,7 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
     @Modifying
     @Transactional(rollbackFor = Exception.class)
     void deleteByName(String name);
+
+    @Query(value = "select * from `name_test` where `big_num`%:num=0", nativeQuery = true)
+    List<NameTestEntity> getByMod(@Param("num") BigInteger num);
 }

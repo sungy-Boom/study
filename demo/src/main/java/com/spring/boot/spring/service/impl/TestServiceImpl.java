@@ -1,4 +1,4 @@
-package com.tal.peiyoupad.spring.service.impl;
+package com.spring.boot.spring.service.impl;
 
 import org.springframework.stereotype.Component;
 

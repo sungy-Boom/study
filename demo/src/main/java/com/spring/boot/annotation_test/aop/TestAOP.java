@@ -1,4 +1,4 @@
-package com.tal.peiyoupad.annotation_test.aop;
+package com.spring.boot.annotation_test.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ComponentScan
 public class TestAOP {
-    @Pointcut("@annotation(com.tal.peiyoupad.annotation_test.annotation.TestAnnotation)")
+    @Pointcut("@annotation(com.spring.boot.annotation_test.annotation.TestAnnotation)")
     public void annotationProcessor_1() {
     }
 

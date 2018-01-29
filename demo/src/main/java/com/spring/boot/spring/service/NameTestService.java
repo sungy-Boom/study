@@ -1,8 +1,9 @@
-package com.tal.peiyoupad.spring.service;
+package com.spring.boot.spring.service;
 
-import com.tal.peiyoupad.spring.entity.NameTestEntity;
+import com.spring.boot.spring.entity.NameTestEntity;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -38,4 +39,6 @@ public interface NameTestService {
      * 删除数据
      */
     boolean deleteRecord(String name);
+
+    List<NameTestEntity> getModRes(BigInteger num);
 }

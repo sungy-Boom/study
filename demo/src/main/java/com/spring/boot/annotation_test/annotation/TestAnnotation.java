@@ -1,4 +1,4 @@
-package com.tal.peiyoupad.annotation_test.annotation;
+package com.spring.boot.annotation_test.annotation;
 
 import java.lang.annotation.*;
 
