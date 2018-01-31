@@ -2,6 +2,8 @@ package com.spring.boot.spring.controller;
 
 //import com.tal.peiyoupad.annotation.TALMonitor;
 
+import com.spring.boot.spring.dao.INameTestDAO;
+import com.spring.boot.spring.dto.NameTestDTO;
 import com.tal.peiyoupad.annotation.TALMonitor;
 import com.spring.boot.spring.entity.NameTestEntity;
 import com.spring.boot.spring.service.NameTestService;
@@ -106,7 +108,7 @@ public class NameTestController {
 
     @GetMapping("/mod")
     @ResponseBody
-    public List<NameTestEntity> getMod(BigInteger num) {
-        return nameTestService.getModRes(num);
+    public List<NameTestEntity> getMod(NameTestDTO dto) {
+        return nameTestService.getModRes(dto.getNum());
     }
 }

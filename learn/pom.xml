@@ -51,7 +51,7 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.40</version>
         </dependency>
-        
+
         <!--jode-time-->
         <dependency>
             <groupId>joda-time</groupId>
@@ -63,6 +63,11 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.4</version>
+        </dependency>
+        <!--可以使用setter和getter代替bean中的get，set方法-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,7 @@
 package com.daily.learn.javamath;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * Created by SunGuiyong
@@ -10,6 +11,8 @@ public class BigDecimalTest {
     public static void main(String[] args) {
         BigDecimalTest test = new BigDecimalTest();
         test.test();
+
+        test.bigIntegerTest();
     }
 
     public void test() {
@@ -18,5 +21,14 @@ public class BigDecimalTest {
 
         System.out.println(num1);
         System.out.println(num2);
+    }
+
+    public void bigIntegerTest(){
+        BigInteger num1 = new BigInteger("123123");
+        BigInteger num2 = new BigInteger("123");
+        BigInteger temp = new BigInteger("12345678910");
+        num1 = num1.mod(temp);
+        num2 = num2.mod(temp);
+        System.out.println(num1.mod(num2));
     }
 }

@@ -70,7 +70,7 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.40</version>
         </dependency>
-        
+
         <!--AOP依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -107,6 +107,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+
+        <!--可以使用setter和getter代替bean中的get，set方法-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

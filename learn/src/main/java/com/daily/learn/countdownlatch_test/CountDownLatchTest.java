@@ -20,14 +20,20 @@ public class CountDownLatchTest {
     public static void main(String[] args) {
 
         //countDownLatch test 1
-      /*  List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
 
-        exec.execute(new SuggestThread("fileName", true, list));
-        exec.execute(new SuggestThread("fileName", false, list1));*/
-
+        ThreadTestClass t = new ThreadTestClass();
+        exec.execute(new SuggestThread("fileName", true, list, t));
+        exec.execute(new SuggestThread("fileName", false, list1, t));
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(t.getList());
         //countDownLatch test 2
-        for (int j = 0; j < 5; j++) {
+       /* for (int j = 0; j < 5; j++) {
             latch = new CountDownLatch(2);
             for (int i = 0; i < 2; i++) {
                 exec.execute(new ListTestThread());
@@ -37,19 +43,20 @@ public class CountDownLatchTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         exec.shutdown();
     }
 
     public static class SuggestThread implements Runnable {
 
         private String fileName;
-        public boolean flg;
-        public ThreadTestClass t = new ThreadTestClass();
-        public List<String> resultList;
+        private boolean flg;
+        private ThreadTestClass t = new ThreadTestClass();
+        private List<String> resultList;
 
-        public SuggestThread(String fileName, boolean flg, List<String> resultList) {
+        public SuggestThread(String fileName, boolean flg, List<String> resultList, ThreadTestClass t) {
             this.fileName = fileName;
+            this.t = t;
             this.flg = flg;
             this.resultList = resultList;
         }
