@@ -40,5 +40,18 @@ public interface NameTestService {
      */
     boolean deleteRecord(String name);
 
+    /**
+     * jpa中使用求模运算
+     * @param num
+     * @return
+     */
     List<NameTestEntity> getModRes(BigInteger num);
+
+    /**
+     * 在jpa中使用 where id in list
+     *
+     * @param isList
+     * @return
+     */
+    List<NameTestEntity> getByInSQL(List<Integer> isList);
 }

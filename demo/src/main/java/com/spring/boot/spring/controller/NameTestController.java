@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.parser.Entity;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -110,5 +112,15 @@ public class NameTestController {
     @ResponseBody
     public List<NameTestEntity> getMod(NameTestDTO dto) {
         return nameTestService.getModRes(dto.getNum());
+    }
+
+    @GetMapping("/in")
+    @ResponseBody
+    public List<NameTestEntity> getByIn() {
+        List<Integer> list = new ArrayList<Integer>() {{
+            add(34);
+            add(35);
+        }};
+        return nameTestService.getByInSQL(list);
     }
 }

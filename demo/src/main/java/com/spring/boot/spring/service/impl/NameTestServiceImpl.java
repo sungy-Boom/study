@@ -60,6 +60,12 @@ public class NameTestServiceImpl implements NameTestService {
         return nameTestDAO.getByMod(num);
     }
 
+    @Override
+    public List<NameTestEntity> getByInSQL(List<Integer> isList) {
+        return nameTestDAO.selectByInSQL(isList);
+    }
+
+
     /**
      * 看是否有重名
      */

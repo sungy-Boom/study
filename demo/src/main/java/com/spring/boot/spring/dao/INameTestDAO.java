@@ -56,4 +56,7 @@ public interface INameTestDAO extends JpaRepository<NameTestEntity, Long> {
 
     @Query(value = "select * from `name_test` where `big_num`%:num=0", nativeQuery = true)
     List<NameTestEntity> getByMod(@Param("num") BigInteger num);
+
+    @Query(value = "select * from `name_test` where id in :idList", nativeQuery = true)
+    List<NameTestEntity> selectByInSQL(@Param("idList") List<Integer> isList);
 }
