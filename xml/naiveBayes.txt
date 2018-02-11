@@ -1,0 +1,20 @@
+<dblp>
+<article key="journals/ecoi/Feki-SahnounNHB18" mdate="2018-01-25">
+<author>Wafa Feki-Sahnoun</author>
+<author>Hasna Njah</author>
+<author>Asma Hamza</author>
+<author>Nouha Barraj</author>
+<author>Mabrouka Mahfoudi</author>
+<author>Ahmed Rebai</author>
+<author orcid="0000-0001-7412-9948">Malika Bel Hassen</author>
+<title>
+Using general linear model, Bayesian Networks and Naive Bayes classifier for prediction of Karenia selliformis occurrences and blooms.
+</title>
+<pages>12-23</pages>
+<year>2018</year>
+<volume>43</volume>
+<journal>Ecological Informatics</journal>
+<ee>https://doi.org/10.1016/j.ecoinf.2017.10.017</ee>
+<url>db/journals/ecoi/ecoi43.html#Feki-SahnounNHB18</url>
+</article>
+</dblp>
