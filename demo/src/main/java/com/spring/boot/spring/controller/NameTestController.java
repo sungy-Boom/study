@@ -1,8 +1,5 @@
 package com.spring.boot.spring.controller;
 
-//import com.tal.peiyoupad.annotation.TALMonitor;
-
-import com.spring.boot.spring.dao.INameTestDAO;
 import com.spring.boot.spring.dto.NameTestDTO;
 import com.tal.peiyoupad.annotation.TALMonitor;
 import com.spring.boot.spring.entity.NameTestEntity;
@@ -16,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.parser.Entity;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -122,5 +117,11 @@ public class NameTestController {
             add(35);
         }};
         return nameTestService.getByInSQL(list);
+    }
+
+    @GetMapping("/async")
+    @ResponseBody
+    public void asyncTest() {
+        nameTestService.asyncTest();
     }
 }

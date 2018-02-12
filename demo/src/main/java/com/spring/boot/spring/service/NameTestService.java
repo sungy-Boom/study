@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author SunGuiyong
  */
-@Component
 public interface NameTestService {
 
     /**
@@ -54,4 +53,6 @@ public interface NameTestService {
      * @return
      */
     List<NameTestEntity> getByInSQL(List<Integer> isList);
+
+    void asyncTest();
 }

@@ -1,12 +1,17 @@
 package com.spring.boot.spring.service.impl;
 
+import com.spring.boot.spring.dao.INameTestDAO;
 import com.spring.boot.spring.entity.NameTestEntity;
 import com.spring.boot.spring.service.NameTestService;
-import com.spring.boot.spring.dao.INameTestDAO;
+import groovy.lang.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +20,16 @@ import java.util.List;
  * @author SunGuiyong
  */
 @Service
+@EnableAsync
 public class NameTestServiceImpl implements NameTestService {
 
     @Autowired
     private INameTestDAO nameTestDAO;
+    @Autowired
+    private AsyncTaskService asyncTaskService;
+    //会出现循环依赖的问题
+//    @Autowired
+//    private NameTestServiceImpl nameTestServiceImpl;
 
     @Override
     public List<NameTestEntity> getNameTestByName(String name) {
@@ -65,6 +76,24 @@ public class NameTestServiceImpl implements NameTestService {
         return nameTestDAO.selectByInSQL(isList);
     }
 
+    @Override
+    public void asyncTest() {
+        System.out.println("async test 1");
+        asyncTest1();
+        System.out.println("async test 2");
+        asyncTaskService.asyncTest();
+        System.out.println("async test 3");
+    }
+
+    @Async
+    public void asyncTest1() {
+        System.out.println("async test1 1");
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+        }
+        System.out.println("async test1 2");
+    }
 
     /**
      * 看是否有重名
@@ -82,3 +111,7 @@ public class NameTestServiceImpl implements NameTestService {
         }
     }
 }
+
+
+
+
