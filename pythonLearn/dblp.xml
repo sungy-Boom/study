@@ -1,0 +1,16 @@
+<dblp>
+    <inproceedings key="conf/csoc/RajM17" mdate="2017-05-22">
+        <author>V. Kiran Raj</author>
+        <author>Amit Majumder</author>
+        <title>
+            Bayesian Regularization-Based Classification for Proposed Textural and Geometrical Features in Brain MRI -
+            An Approach Towards Automated Tumor Detection.
+        </title>
+        <pages>343-353</pages>
+        <year>2017</year>
+        <booktitle>CSOC (1)</booktitle>
+        <ee>https://doi.org/10.1007/978-3-319-57261-1_34</ee>
+        <crossref>conf/csoc/2017-1</crossref>
+        <url>db/conf/csoc/csoc2017-1.html#RajM17</url>
+    </inproceedings>
+</dblp>
