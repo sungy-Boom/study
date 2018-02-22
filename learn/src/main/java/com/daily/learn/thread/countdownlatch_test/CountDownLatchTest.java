@@ -1,6 +1,4 @@
-package com.daily.learn.countdownlatch_test;
-
-import com.google.common.collect.ImmutableList;
+package com.daily.learn.thread.countdownlatch_test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,7 @@ public class CountDownLatchTest {
 
         private String fileName;
         private boolean flg;
-        private ThreadTestClass t = new ThreadTestClass();
+        private ThreadTestClass t;// = new ThreadTestClass();
         private List<String> resultList;
 
         public SuggestThread(String fileName, boolean flg, List<String> resultList, ThreadTestClass t) {

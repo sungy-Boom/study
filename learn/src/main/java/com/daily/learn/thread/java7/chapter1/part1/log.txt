@@ -1,0 +1,45 @@
+Part2Main : status of thread 0 NEW
+Part2Main : status of thread 1 NEW
+Part2Main : status of thread 2 NEW
+Part2Main : status of thread 3 NEW
+Part2Main : status of thread 4 NEW
+Part2Main : status of thread 5 NEW
+Part2Main : status of thread 6 NEW
+Part2Main : status of thread 7 NEW
+Part2Main : status of thread 8 NEW
+Part2Main : status of thread 9 NEW
+Part2Main : id 13 nameThread2
+Part2Main : Priority 10
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 13 nameThread2
+Part2Main : Priority 10
+Part2Main : old state TERMINATED
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 15 nameThread4
+Part2Main : Priority 10
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 16 nameThread5
+Part2Main : Priority 1
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 17 nameThread6
+Part2Main : Priority 10
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 19 nameThread8
+Part2Main : Priority 10
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************
+Part2Main : id 20 nameThread9
+Part2Main : Priority 1
+Part2Main : old state NEW
+Part2Main : new state TERMINATED
+Part2Main********************************************

@@ -1,9 +1,13 @@
-package com.daily.learn.countdownlatch_test;
+package com.daily.learn.thread.countdownlatch_test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThreadTestClass {
+
+    public ThreadTestClass() {
+    }
+
     private List<String> list = new ArrayList<>();
 
     public List<String> sayOut(String fileName) {
