@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 10 14:10:12 2017
-@author: Administrator
+Created on 10 14:10:12 2017
+@author:
 """
 # !/usr/bin/python
 # -*- coding: UTF-8 -*-
