@@ -12,14 +12,17 @@ public class ExceptionTest {
     }
 
     private static int exceptionTest() {
+        int a = 1;
         try {
-            System.out.println("test");
-            throw new Exception();
+            return a;
+//            System.out.println("test");
+//            throw new Exception("exception");
 //            return 1;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+//            throw e;
         } finally {
-            return -1;
+            a = -1;
         }
+        return 0;
     }
 }
