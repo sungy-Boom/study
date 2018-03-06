@@ -13,7 +13,7 @@ import java.util.List;
 public class PrimeGenerateTest {
 
     public static void main(String[] args) {
-        PrimeGenerateTest test = new PrimeGenerateTest();
+        /*PrimeGenerateTest test = new PrimeGenerateTest();
         List<Integer> res = test.generatePrime(500);
         System.out.println(res.size());
 
@@ -39,7 +39,22 @@ public class PrimeGenerateTest {
         List<Integer> divRes = test.getPrimeFactor("706905276");
         System.out.println(divRes);
         end = System.currentTimeMillis();
-        System.out.println("getPrimeFactor use bigInteger time " + (end - start));
+        System.out.println("getPrimeFactor use bigInteger time " + (end - start));*/
+
+        BigInteger result = isExactDivision(new BigInteger("42"), new BigInteger("5"));
+        System.out.println(result);
+        result = isExactDivision(new BigInteger("42"), new BigInteger("7"));
+        System.out.println(result);
+    }
+
+    /**
+     * 计算素数能否被除尽
+     *
+     * @param dividend 被除数
+     * @param divisor  除数
+     */
+    public static BigInteger isExactDivision(BigInteger dividend, BigInteger divisor) {
+        return dividend.mod(divisor);
     }
 
     public List<Integer> generatePrime(int maxNum) {

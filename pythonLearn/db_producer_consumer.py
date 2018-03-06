@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
-
+import datetime
 import threading
 from queue import Queue
 import pymysql
 import snownlp
-import datetime
 import urllib.parse
 
-db = pymysql.connect("localhost", "root", "root", "comment_analysis")
+db = pymysql.connect("localhost", "root", "root", "comment_analysis", charset="utf8")
 cursor = db.cursor()
 update_cursor = db.cursor()
 db.ping(True)
@@ -18,6 +17,7 @@ row_distance = 500
 total_rows = 1579882
 
 
+# 从数据库中读数据
 class Producer(threading.Thread):
     def __init__(self, block_queue):
         threading.Thread.__init__(self)
@@ -65,6 +65,7 @@ class Producer(threading.Thread):
         return record[0]
 
 
+# 向数据库中存数据
 class Consumer(threading.Thread):
     def __init__(self, block_queue):
         threading.Thread.__init__(self)
@@ -130,7 +131,7 @@ class Consumer(threading.Thread):
         result_list = []
         index = 0
         while True:
-            if index >= len(record_list)-1:
+            if index >= len(record_list) - 1:
                 break
             temp_list = []
             for t in range(0, 2):
@@ -146,35 +147,8 @@ class Consumer(threading.Thread):
             pass
         return result_list
 
-        # # 获取拼接好的sql
-        # def get_sql_sequence(self, bolck_queue):
-        #     res = bolck_queue.get()
-        #     sql_extend = ""
-        #     for i in range(len(res) - 1):
-        #         temp_str = res[i]
-        #         if isinstance(res[i], str) or isinstance(res[i], datetime.datetime):
-        #             temp_str = "\"" + str(res[i]) + "\""
-        #
-        #         if i == 0:
-        #             sql_extend = sql_extend + "(" + str(temp_str) + ","
-        #             continue
-        #         elif i == len(res) - 2:
-        #             sql_extend = sql_extend + str(temp_str) + ")"
-        #             continue
-        #         if i == 4:
-        #             text = urllib.parse.unquote(res[3])
-        #             mention = 0
-        #             if len(text) > 0:
-        #                 mention = self.analysis_mention(text)
-        #                 pass
-        #             sql_extend = sql_extend + str(mention) + ","
-        #             continue
-        #         else:
-        #             sql_extend = sql_extend + str(temp_str) + ","
-        #             continue
-        #     return sql_extend
 
-
+# 计算文本情感值
 class CalculateMention(threading.Thread):
     def __init__(self, item):
         threading.Thread.__init__(self)
@@ -218,16 +192,115 @@ class CalculateMention(threading.Thread):
         pass
 
 
+# 更新每一个电影对应的情感概率
+class CalculationEvaluation():
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def calculation():
+        sql = "select cid from video group by cid"
+        try:
+            cursor.execute(sql)
+            pass
+        except Exception as e:
+            print("select exception ", str(e))
+            pass
+
+        cid_res = cursor.fetchall()
+        num = 0
+        for item in cid_res:
+            print(num)
+            sql = "select * from relation where cid='%s'" % (item[0])
+            try:
+                cursor.execute(sql)
+                pass
+            except Exception as e:
+                print(str(e))
+                pass
+            relation_res = cursor.fetchall()
+            # 进行计算
+            res_list = CalculationEvaluation.doing_calculation(relation_res)
+            update_sql = "update video set good_percent='%s',bad_percent='%s', man_good_percent='%s', woman_good_percent='%s' where cid='%s'" % (
+                res_list[0], res_list[2], res_list[3], res_list[4], item[0])
+            try:
+                cursor.execute(update_sql)
+                db.commit()
+                pass
+            except Exception as e:
+                print(str(e))
+                pass
+            num += 1
+            # break
+            pass
+        pass
+
+    @staticmethod
+    def doing_calculation(relation_res):
+        # third is user_name
+        # fifth is evaluation
+        total = len(relation_res)
+        if total == 0:
+            return [0, 0, 0, 0, 0]
+        # good_percent
+        num_1 = 0
+        # bad_percent
+        num_0 = 0
+        # neutral_percent
+        num_others = 0
+        # man_good_percent  woman_good_percent
+        num_man = 0
+        num_woman = 0
+        for item in relation_res:
+            evaluation = item[4]
+            user_name = item[2]
+            if evaluation == 1:
+                num_1 += 1
+                user_sql = "select sex from user where name='%s'" % (user_name)
+                cursor.execute(user_sql)
+                sex = cursor.fetchone()
+                if sex == None:
+                    continue
+                if sex[0] == "男":
+                    num_man += 1
+                    pass
+                elif sex[0] == "女":
+                    num_woman += 1
+                    pass
+                pass
+            elif evaluation == 0:
+                num_0 += 1
+                pass
+            elif evaluation == -1:
+                num_others += 1
+            pass
+        if num_1 == 0:
+            num_man = 0
+            num_woman = 0
+            pass
+        elif num_1 != 0:
+            num_woman = num_woman / num_1
+            num_man = num_man / num_1
+            pass
+        res_list = [num_1 / total, num_0 / total, num_others / total, num_man, num_woman]
+        return res_list
+
+
 if __name__ == "__main__":
-    start = datetime.datetime.now()
-    queue = Queue(row_distance)
-    producer = Producer(queue)
-    consumer = Consumer(queue)
-    producer.start()
-    consumer.start()
+    # start = datetime.datetime.now()
+    # queue = Queue(row_distance)
+    # producer = Producer(queue)
+    # consumer = Consumer(queue)
+    # producer.start()
+    # consumer.start()
+    #
+    # producer.join()
+    # consumer.join()
+    # end = datetime.datetime.now()
+    #
+    # print("运行时间", (end - start).seconds)
 
-    end = datetime.datetime.now()
-
-    print("运行时间", (end - start).seconds)
+    calculation = CalculationEvaluation()
+    calculation.calculation()
 
     # db.close()

@@ -52,11 +52,11 @@
             <version>${tomcat.version}</version>
         </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.tal</groupId>
             <artifactId>monitor-aop</artifactId>
             <version>0.0.1</version>
-        </dependency>
+        </dependency>-->
 
         <!--guava-->
         <dependency>

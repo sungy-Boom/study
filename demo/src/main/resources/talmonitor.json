@@ -1,6 +1,6 @@
 {
 	"server": {
-		"server_name": "peiyoupad-mgmt"
+		"server_name": "demo-test"
 	},
-	"log-server": "http://talmonitorlog.speiyou.cn/monitor-eslog/eslog/monitor/upload"
+	"log-server": "http://10.4.2.163:8081/eslog/eslog/monitor/upload"
 }
