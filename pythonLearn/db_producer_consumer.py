@@ -287,18 +287,18 @@ class CalculationEvaluation():
 
 
 if __name__ == "__main__":
-    # start = datetime.datetime.now()
-    # queue = Queue(row_distance)
-    # producer = Producer(queue)
-    # consumer = Consumer(queue)
-    # producer.start()
-    # consumer.start()
-    #
-    # producer.join()
-    # consumer.join()
-    # end = datetime.datetime.now()
-    #
-    # print("运行时间", (end - start).seconds)
+    start = datetime.datetime.now()
+    queue = Queue(row_distance)
+    producer = Producer(queue)
+    consumer = Consumer(queue)
+    producer.start()
+    consumer.start()
+
+    producer.join()
+    consumer.join()
+    end = datetime.datetime.now()
+
+    print("运行时间", (end - start).seconds)
 
     calculation = CalculationEvaluation()
     calculation.calculation()
