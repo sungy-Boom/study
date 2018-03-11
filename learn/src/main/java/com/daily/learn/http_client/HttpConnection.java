@@ -26,6 +26,7 @@ public class HttpConnection {
     private static ExecutorService service = Executors.newFixedThreadPool(10);
 
     private static String url = "http://dev.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?";
+
     private static String url2 = "http://fz.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?areaCode=10&parentId=5&nodeType=1&fileSize=0&curLevel=2&fileUrl=&nodeName=";
     private static String url2_ = "http://fz.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?areaCode=10&parentId=5&nodeType=1&fileSize=0&curLevel=2&fileUrl=&nodeName=";
     private static String other = "&fileType=-1";
@@ -47,7 +48,7 @@ public class HttpConnection {
     private static String fileUrl_name_local = "&curLevel=3&nodeName=";
     private static String fileUrl_other_local = "&fileUrl=http://peiyou-pad-mgmt.oss-cn-beijing.aliyuncs.com/dev/course_file/20180213/1f063c91-1cfe-43cb-8043-cec3cecaf3b4.pdf&fileSize=2059879&fileType=0&nodeType=2&pageNo=1&pageSize=12&areaCode=10";
 
-    private static int[] idArrs = new int[]{580, 581, 582, 583, 584, 585, 586, 587};
+    private static int[] idArrs = new int[]{433, 434, 435, 436, 437, 438, 439, 440, 441, 442};
     private static int[] idArrs_local = new int[]{1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018};
 
     public static void main(String[] args) {
@@ -76,7 +77,7 @@ public class HttpConnection {
 //        for (int item : idArrs_local) {
 //            System.out.println(item);
 //            for (int i = 0; i < 1000; i++) {
-//                fileUrl_local = fileUrl_id_local + item + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
+//                fileUrl_local = fileUrl_id_local + 5 + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
 //                System.out.println(doGet(fileUrl_local));
 //            }
 //        }
