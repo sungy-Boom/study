@@ -62,22 +62,37 @@ import java.util.*;
 public class MultimapTest {
 
     public static void main(String[] args) {
-        Multimap<String, Integer> multiMap = HashMultimap.create();
-        Multimap<String, List<Integer>> map = HashMultimap.create();
-        MultimapTest test = new MultimapTest();
+//        Multimap<String, Integer> multiMap = HashMultimap.create();
+//        Multimap<String, List<Integer>> map = HashMultimap.create();
+//        MultimapTest test = new MultimapTest();
+//
+//        test.addTest(multiMap, map);
+//        System.out.println();
+//        test.judgeContain(multiMap, map);
+//        System.out.println();
+//        test.throughTest(multiMap, map);
+//        System.out.println();
+//        test.replceTest(multiMap, map);
+//        System.out.println();
+//        test.removeTest(multiMap, map);
+//        System.out.println();
+//
+//        test.clearTest(multiMap, map);
 
-        test.addTest(multiMap, map);
-        System.out.println();
-        test.judgeContain(multiMap, map);
-        System.out.println();
-        test.throughTest(multiMap, map);
-        System.out.println();
-        test.replceTest(multiMap, map);
-        System.out.println();
-        test.removeTest(multiMap, map);
-        System.out.println();
+        putTest();
+    }
 
-        test.clearTest(multiMap, map);
+    public static void putTest() {
+        Multimap<String, String> map = HashMultimap.create();
+        map.put("test", "user");
+        map.put("test", "key");
+        map.put("test", "user");
+        Iterator<Map.Entry<String, String>> iter = map.entries().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<String, String> entity = iter.next();
+            System.out.println(entity.getKey());
+            System.out.println(entity.getValue());
+        }
     }
 
     /**

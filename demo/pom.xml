@@ -52,11 +52,24 @@
             <version>${tomcat.version}</version>
         </dependency>-->
 
-        <!--<dependency>
+        <dependency>
             <groupId>com.tal</groupId>
             <artifactId>monitor-aop</artifactId>
             <version>0.0.1</version>
-        </dependency>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.1.0-alpha21</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>com.tal</groupId>-->
+        <!--<artifactId>monitor-aop</artifactId>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${project.basedir}/lib/monitor-aop.jar</systemPath>-->
+        <!--</dependency>-->
 
         <!--guava-->
         <dependency>
