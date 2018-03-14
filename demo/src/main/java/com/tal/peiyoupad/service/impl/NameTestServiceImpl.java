@@ -85,6 +85,11 @@ public class NameTestServiceImpl implements NameTestService {
         System.out.println("async test 5");
     }
 
+    @Override
+    public List<NameTestEntity> getPartOfData() {
+        return nameTestDAO.getPart();
+    }
+
     @Async
     public void asyncTest1() {
         System.out.println("async test1 1");

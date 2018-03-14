@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -20,6 +21,8 @@ public class NameTestEntity implements Serializable {
 
     private String name;
     private String sub;
+    private BigInteger bigNum;
+    private BigInteger num;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
@@ -73,6 +76,22 @@ public class NameTestEntity implements Serializable {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public BigInteger getBigNum() {
+        return bigNum;
+    }
+
+    public void setBigNum(BigInteger bigNum) {
+        this.bigNum = bigNum;
+    }
+
+    public BigInteger getNum() {
+        return num;
+    }
+
+    public void setNum(BigInteger num) {
+        this.num = num;
     }
 
     @Override

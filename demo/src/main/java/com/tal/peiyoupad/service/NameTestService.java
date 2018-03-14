@@ -54,4 +54,6 @@ public interface NameTestService {
     List<NameTestEntity> getByInSQL(List<Integer> isList);
 
     void asyncTest();
+
+    List<NameTestEntity> getPartOfData();
 }

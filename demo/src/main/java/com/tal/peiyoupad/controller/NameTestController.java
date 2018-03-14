@@ -124,4 +124,10 @@ public class NameTestController {
     public void asyncTest() {
         nameTestService.asyncTest();
     }
+
+    @GetMapping("/part-test")
+    @ResponseBody
+    public List<NameTestEntity> getPartData() {
+        return nameTestService.getPartOfData();
+    }
 }

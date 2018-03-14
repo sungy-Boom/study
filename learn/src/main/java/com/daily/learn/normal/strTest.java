@@ -103,5 +103,6 @@ public class strTest {
         System.out.println(dateTime2);
         System.out.println(dateTime1);
         System.out.println(dateTime2);
+        System.out.println(dateTime1.toLocalDate().compareTo(dateTime2.toLocalDate()));
     }
 }

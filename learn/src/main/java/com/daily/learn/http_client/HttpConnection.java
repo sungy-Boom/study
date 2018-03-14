@@ -49,7 +49,7 @@ public class HttpConnection {
     private static String fileUrl_other_local = "&fileUrl=http://peiyou-pad-mgmt.oss-cn-beijing.aliyuncs.com/dev/course_file/20180213/1f063c91-1cfe-43cb-8043-cec3cecaf3b4.pdf&fileSize=2059879&fileType=0&nodeType=2&pageNo=1&pageSize=12&areaCode=10";
 
     private static int[] idArrs = new int[]{433, 434, 435, 436, 437, 438, 439, 440, 441, 442};
-    private static int[] idArrs_local = new int[]{1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018};
+    private static int[] idArrs_local = new int[]{242, 243, 244, 245, 246, 247, 248, 249, 250};
 
     public static void main(String[] args) {
 
@@ -61,26 +61,26 @@ public class HttpConnection {
 //        }
 
         //文件夹id 578 579 580 581 582 583 584 585 586 587
-        for (int item : idArrs) {
-            System.out.println(item);
-            for (int i = 0; i < 1000; i++) {
-                fileUrl = fileUrl_id + item + fileUrl_name + "name_" + i + ".pdf" + fileUrl_other;
-                System.out.println(doGet(fileUrl));
-            }
-        }
+//        for (int item : idArrs) {
+//            System.out.println(item);
+//            for (int i = 0; i < 1000; i++) {
+//                fileUrl = fileUrl_id + item + fileUrl_name + "name_" + i + ".pdf" + fileUrl_other;
+//                System.out.println(doGet(fileUrl));
+//            }
+//        }
 
 //        for (int i = 0; i < 10; i++) {
 //            String name = "name_" + i;
 //            url2_local = url2__local + name + other_local;
 //            System.out.println(doGet(url2_local));
 //        }
-//        for (int item : idArrs_local) {
-//            System.out.println(item);
-//            for (int i = 0; i < 1000; i++) {
-//                fileUrl_local = fileUrl_id_local + 5 + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
-//                System.out.println(doGet(fileUrl_local));
-//            }
-//        }
+        for (int item : idArrs_local) {
+            System.out.println(item);
+            for (int i = 0; i < 1000; i++) {
+                fileUrl_local = fileUrl_id_local + item + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
+                System.out.println(doGet(fileUrl_local));
+            }
+        }
     }
 
     private static void getFun() {
