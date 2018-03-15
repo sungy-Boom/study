@@ -1,5 +1,6 @@
 package com.tal.peiyoupad.controller;
 
+import com.tal.annotation_test.annotation.TestAnnotation;
 import com.tal.peiyoupad.dto.NameTestDTO;
 import com.tal.peiyoupad.annotation.TALMonitor;
 import com.tal.peiyoupad.entity.NameTestEntity;
@@ -7,10 +8,7 @@ import com.tal.peiyoupad.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -27,10 +25,15 @@ public class NameTestController {
     @Autowired
     private NameTestService nameTestService;
 
+    @RequestMapping("/hello")
+    public String helloHtml() {
+        return "/index";
+    }
+
     @GetMapping("/ok")
     @ResponseBody
     @TALMonitor
-//    @TestAnnotation
+    @TestAnnotation
     public String okTest() {
        /* TALAmonitorAOP talAmonitorAOP = new TALAmonitorAOP();
         talAmonitorAOP.annotationProcessor_1();*/

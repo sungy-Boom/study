@@ -65,10 +65,10 @@
         </dependency>
 
         <!--<dependency>-->
-        <!--<groupId>com.tal</groupId>-->
-        <!--<artifactId>monitor-aop</artifactId>-->
-        <!--<scope>system</scope>-->
-        <!--<systemPath>${project.basedir}/lib/monitor-aop.jar</systemPath>-->
+            <!--<groupId>com.tal</groupId>-->
+            <!--<artifactId>monitor-aop</artifactId>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/lib/monitor-aop-0.0.1.jar</systemPath>-->
         <!--</dependency>-->
 
         <!--guava-->

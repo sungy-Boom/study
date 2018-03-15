@@ -54,11 +54,11 @@ public class HttpConnection {
     public static void main(String[] args) {
 
         //创建10个文件夹
-//        for (int i = 0; i < 10; i++) {
-//            String name = "name_" + i;
-//            url2 = url2_ + name + other;
-//            System.out.println(doGet(url2));
-//        }
+        for (int i = 0; i < 10; i++) {
+            String name = "name_" + i;
+            url2 = url2_ + name + other;
+            System.out.println(doGet(url2));
+        }
 
         //文件夹id 578 579 580 581 582 583 584 585 586 587
 //        for (int item : idArrs) {
@@ -74,13 +74,13 @@ public class HttpConnection {
 //            url2_local = url2__local + name + other_local;
 //            System.out.println(doGet(url2_local));
 //        }
-        for (int item : idArrs_local) {
-            System.out.println(item);
-            for (int i = 0; i < 1000; i++) {
-                fileUrl_local = fileUrl_id_local + item + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
-                System.out.println(doGet(fileUrl_local));
-            }
-        }
+//        for (int item : idArrs_local) {
+//            System.out.println(item);
+//            for (int i = 0; i < 1000; i++) {
+//                fileUrl_local = fileUrl_id_local + item + fileUrl_name_local + "name_" + i + ".pdf" + fileUrl_other_local;
+//                System.out.println(doGet(fileUrl_local));
+//            }
+//        }
     }
 
     private static void getFun() {
@@ -96,8 +96,8 @@ public class HttpConnection {
             request.addHeader("Content-Type", "application/json;charset=UTF-8");
             request.addHeader("Cookie", "JSESSIONID=1580635AEE51FE2DC84DF8AD1E66F9E2; SERVERID=34eb29ebbec54f7ca579b2ec2dbea277|1520405993|1520401813");
             request.addHeader("areaCode", "10");
-            request.addHeader("phone", "15280923281");
-            request.addHeader("userId", "262");
+            request.addHeader("phone", "1");
+            request.addHeader("userId", "2147483647");
 
             HttpResponse response = client.execute(request);
 
