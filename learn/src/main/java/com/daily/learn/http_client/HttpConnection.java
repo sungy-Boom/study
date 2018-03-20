@@ -27,14 +27,14 @@ public class HttpConnection {
 
     private static String url = "http://dev.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?";
 
-    private static String url2 = "http://fz.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?areaCode=10&parentId=5&nodeType=1&fileSize=0&curLevel=2&fileUrl=&nodeName=";
-    private static String url2_ = "http://fz.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?areaCode=10&parentId=5&nodeType=1&fileSize=0&curLevel=2&fileUrl=&nodeName=";
+    private static String url2;
+    private static String url2_ = "http://dev.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?areaCode=22&parentId=5&nodeType=1&fileSize=0&curLevel=2&fileUrl=&nodeName=";
     private static String other = "&fileType=-1";
 
     private static String fileUrl = "";
-    private static String fileUrl_id = "http://fz.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?parentId=";
+    private static String fileUrl_id = "http://dev.padht.speiyou.cn/peiyou-pad-mgmt/online-disk/create?parentId=";
     private static String fileUrl_name = "&curLevel=3&nodeName=";
-    private static String fileUrl_other = "&fileUrl=http://peiyou-pad-mgmt.oss-cn-beijing.aliyuncs.com/dev/course_file/20180213/1f063c91-1cfe-43cb-8043-cec3cecaf3b4.pdf&fileSize=2059879&fileType=0&nodeType=2&pageNo=1&pageSize=12&areaCode=10";
+    private static String fileUrl_other = "&fileUrl=http://peiyou-pad-mgmt.oss-cn-beijing.aliyuncs.com/dev/course_file/20180213/1f063c91-1cfe-43cb-8043-cec3cecaf3b4.pdf&fileSize=2059879&fileType=0&nodeType=2&pageNo=1&pageSize=12&areaCode=22";
 
 
     //local
@@ -63,10 +63,10 @@ public class HttpConnection {
         //文件夹id 578 579 580 581 582 583 584 585 586 587
 //        for (int item : idArrs) {
 //            System.out.println(item);
-//            for (int i = 0; i < 1000; i++) {
-//                fileUrl = fileUrl_id + item + fileUrl_name + "name_" + i + ".pdf" + fileUrl_other;
-//                System.out.println(doGet(fileUrl));
-//            }
+        for (int i = 0; i < 1000; i++) {
+            fileUrl = fileUrl_id + 480 + fileUrl_name + "name_" + i + ".pdf" + fileUrl_other;
+            System.out.println(doGet(fileUrl));
+        }
 //        }
 
 //        for (int i = 0; i < 10; i++) {
@@ -94,10 +94,10 @@ public class HttpConnection {
             HttpGet request = new HttpGet(url);
             request.addHeader("Connection", "keep-alive");
             request.addHeader("Content-Type", "application/json;charset=UTF-8");
-            request.addHeader("Cookie", "JSESSIONID=1580635AEE51FE2DC84DF8AD1E66F9E2; SERVERID=34eb29ebbec54f7ca579b2ec2dbea277|1520405993|1520401813");
-            request.addHeader("areaCode", "10");
-            request.addHeader("phone", "1");
-            request.addHeader("userId", "2147483647");
+            request.addHeader("Cookie", "JSESSIONID=800208826BB9D441FAB6A3CC97827F5D; SERVERID=20235d108ed9b7d5ca0a7fafe6326823|1521515179|1521514813");
+            request.addHeader("areaCode", "22");
+            request.addHeader("phone", "15280923281");
+            request.addHeader("userId", "157");
 
             HttpResponse response = client.execute(request);
 

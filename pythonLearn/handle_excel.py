@@ -2,8 +2,8 @@ import xlwt
 import xlrd
 from xlrd.timemachine import xrange
 
-excelFile = "C:\\Users\\Soul\\Desktop\\排班统计\\郑州排班统计-牛冬 2018-03.xlsx"
-res_list = [0] * 12
+excelFile = "C:\\Users\\Soul\\Desktop\\排班统计\\郑州排班统计-牛冬 2018-03-19.xlsx"
+res_list = [0] * 19
 
 
 def read_excel():
@@ -24,7 +24,7 @@ print(res_list)
 def write_excel():
     f = xlwt.Workbook()  # 创建工作簿
     sheet1 = f.add_sheet(u'sheet2', cell_overwrite_ok=True)  # 创建sheet
-    for i in range(len(res_list)):
+    for i in range(1, len(res_list)):
         sheet1.write(i, 0, res_list[i])  # 向表格中添加数据
     f.save('C:\\Users\\Soul\\Desktop\\统计.xls')  # 保存文件
     print(res_list)
