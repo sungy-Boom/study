@@ -1,0 +1,24 @@
+//syntax="proto3";
+
+package person.bean;
+option java_package = "com.study.person.bean";
+option java_outer_classname = "Person";
+
+// 客户端发给服务器的数据
+message PersonInfo {
+   required string person_name = 1;
+   required int32 age = 2;
+   required string sex = 3;
+
+   optional TheClass clazz = 4; //每个人所在的班级
+}
+
+message TheClass{
+  required string class_name = 1;
+  optional string teacher_name = 2;
+}
+
+message Result {
+   required int32 code = 1; //返回状态码 200 成功  500 失败
+   optional string other_info = 2; //其他信息
+}

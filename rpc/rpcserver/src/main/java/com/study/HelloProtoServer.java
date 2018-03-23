@@ -1,8 +1,7 @@
 package com.study;
 
-import com.study.helloworld.GreeterGrpc;
-import com.study.helloworld.HelloReply;
-import com.study.helloworld.HelloRequest;
+import com.study.person.bean.Person;
+import com.study.person.service.SavePersonInfoGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -20,7 +19,7 @@ public class HelloProtoServer {
 
     private void start() throws IOException {
         server = ServerBuilder.forPort(port)
-                .addService(new GreeterImpl())
+                .addService(new PersonServiceImpl())
                 .build()
                 .start();
         System.out.println("service start...");
@@ -51,13 +50,13 @@ public class HelloProtoServer {
     }
 
 
-    // 实现 定义一个实现服务接口的类
-    private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
-        public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-            System.out.println("service:" + req.getName());
-            HelloReply reply = HelloReply.newBuilder().setMessage(("Hello: " + req.getName())).build();
-            responseObserver.onNext(reply);
-            responseObserver.onCompleted();
+    private class PersonServiceImpl extends SavePersonInfoGrpc.SavePersonInfoImplBase {
+        public void savePerson(Person.PersonInfo personInfo, StreamObserver<Person.Result> result) {
+            System.out.println("person info :" + personInfo.toString());
+            Person.Result res = Person.Result.newBuilder().setCode(200).build();
+            result.onNext(res);
+            result.onCompleted();
         }
     }
+
 }
