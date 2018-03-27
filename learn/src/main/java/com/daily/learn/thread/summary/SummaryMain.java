@@ -15,6 +15,8 @@ public class SummaryMain {
 
     public static void main(String[] args) throws InterruptedException {
 
+        //使用run方法运行线程
+//        useRun();
         //设置优先级，使用三个优先级
 //        use2Priority();
 //        use10Priority();
@@ -23,9 +25,9 @@ public class SummaryMain {
         //不适用stop结束线程
 //        notUseStop();
         //使用lock锁和synchronized关键字
-//        lockAndSync();
+        lockAndSync();
         //信号量方式控制资源同步
-        semaphoreTest();
+//        semaphoreTest();
 
         //使用lock锁，实现资源同步
 //        final Lock lock = new ReentrantLock();
@@ -46,6 +48,14 @@ public class SummaryMain {
 
         //三种创建线程的方法
 //        runThread();
+    }
+
+    //使用run方法启动线程
+    private static void useRun() {
+        UseRunFunc run = new UseRunFunc();
+        run.run();
+        System.out.println();
+        new Thread(run).run();
     }
 
     //1~10
@@ -153,7 +163,7 @@ public class SummaryMain {
         TimeUnit.SECONDS.sleep(2);
     }
 
-    private static void semaphoreTest(){
+    private static void semaphoreTest() {
         SemaphoreTest sema = new SemaphoreTest();
         for (int i = 0; i < 5; i++) {
             new Thread(sema).start();
@@ -180,6 +190,15 @@ class NotUseStop implements Runnable {
     }
 }
 
+
+class UseRunFunc implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() +
+                "  " + new Date());
+    }
+}
+
 class LockTest implements Runnable {
     private Lock lock = new ReentrantLock();
 
@@ -190,8 +209,11 @@ class LockTest implements Runnable {
             Thread.sleep(1000);
             System.out.println(Thread.currentThread().getName() +
                     "  " + new Date());
+            lock.lock();
+            System.out.println("second lock test");
         } catch (InterruptedException e) {
         } finally {
+            lock.unlock();
             lock.unlock();
         }
     }
@@ -276,8 +298,8 @@ class SemaphoreTest implements Runnable {
             a--;
             String name = Thread.currentThread().getName();
             System.out.println(name + "  " + "a=  " + a);
-        }catch (Exception e){
-        }finally {
+        } catch (Exception e) {
+        } finally {
             sema.release();
         }
     }
