@@ -20,7 +20,7 @@ public class NameTestEntity implements Serializable {
     private Long id;
 
     private String name;
-    private String sub;
+    private Integer sub;
     private BigInteger bigNum;
     private BigInteger num;
 
@@ -33,7 +33,7 @@ public class NameTestEntity implements Serializable {
     public NameTestEntity() {
     }
 
-    public NameTestEntity(String name, String sub) {
+    public NameTestEntity(String name, Integer sub) {
         this.name = name;
         this.sub = sub;
     }
@@ -54,11 +54,11 @@ public class NameTestEntity implements Serializable {
         this.name = name;
     }
 
-    public String getSub() {
+    public Integer getSub() {
         return sub;
     }
 
-    public void setSub(String sub) {
+    public void setSub(Integer sub) {
         this.sub = sub;
     }
 
