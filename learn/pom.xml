@@ -24,7 +24,6 @@
     </properties>
 
     <dependencies>
-
         <!--HanLp 分词-->
         <dependency>
             <groupId>com.hankcs</groupId>
