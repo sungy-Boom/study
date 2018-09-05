@@ -1,6 +1,7 @@
 package com.tal.peiyoupad.controller;
 
 import com.tal.annotation_test.annotation.TestAnnotation;
+import com.tal.peiyoupad.dao.INameTestDAO;
 import com.tal.peiyoupad.dto.NameTestDTO;
 import com.tal.peiyoupad.annotation.TALMonitor;
 import com.tal.peiyoupad.entity.NameTestEntity;
@@ -128,9 +129,24 @@ public class NameTestController {
         nameTestService.asyncTest();
     }
 
+
     @GetMapping("/part-test")
     @ResponseBody
     public List<NameTestEntity> getPartData() {
         return nameTestService.getPartOfData();
+    }
+
+
+    @Autowired
+    private INameTestDAO nameTestDAO;
+
+    @GetMapping("/save-test")
+    @ResponseBody
+    public void test() {
+        NameTestEntity name = new NameTestEntity("test1", 234);
+        for (int i = 0; i < 3; i++) {
+            name = new NameTestEntity("test212", i + 10);
+            nameTestDAO.save(name);
+        }
     }
 }
