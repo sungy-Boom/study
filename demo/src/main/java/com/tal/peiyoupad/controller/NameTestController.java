@@ -3,7 +3,6 @@ package com.tal.peiyoupad.controller;
 import com.tal.annotation_test.annotation.TestAnnotation;
 import com.tal.peiyoupad.dao.INameTestDAO;
 import com.tal.peiyoupad.dto.NameTestDTO;
-import com.tal.peiyoupad.annotation.TALMonitor;
 import com.tal.peiyoupad.entity.NameTestEntity;
 import com.tal.peiyoupad.service.NameTestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ public class NameTestController {
 
     @GetMapping("/ok")
     @ResponseBody
-    @TALMonitor
     @TestAnnotation
     public String okTest() {
        /* TALAmonitorAOP talAmonitorAOP = new TALAmonitorAOP();

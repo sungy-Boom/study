@@ -7,8 +7,11 @@ package com.daily.learn.normal;
 public class ExceptionTest {
 
     public static void main(String[] args) {
-        int res = exceptionTest();
-        System.out.println(res);
+        try {
+            exceptionCatchTest();
+        }catch (Exception e){
+            System.out.println("null pointer occur");
+        }
     }
 
     private static int exceptionTest() {
@@ -24,5 +27,11 @@ public class ExceptionTest {
             a = -1;
         }
         return 0;
+    }
+
+    public static void exceptionCatchTest() {
+        Integer f = null;
+        String t = String.valueOf(f);
+        System.out.println(t);
     }
 }
