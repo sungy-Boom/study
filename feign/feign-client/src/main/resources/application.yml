@@ -1,0 +1,43 @@
+server:
+  port: 8800
+spring:
+  application:
+    name: feign-client-test
+  main:
+    allow-bean-definition-overriding: true
+
+hystrix:
+  threadpool:
+    feign-server-thread-test:
+      coreSize: 5
+      maximumSize: 5
+      maxQueueSize: 5
+      queueSizeRejectionThreshold: 5
+    feign-server-test:
+      coreSize: 5
+      maximumSize: 5
+      maxQueueSize: 5
+      queueSizeRejectionThreshold: 5
+  commond:
+    default:
+      fallback:
+        enabled: true
+feign:
+  server:
+    name: feign-server-test
+    url: localhost:8801
+  server-thread:
+    name: feign-server-thread-test
+    url: localhost:8801
+  hystrix:
+    enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      # 服务器注册/获取服务器的zone
+      defaultZone: http://127.0.0.1:10761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
