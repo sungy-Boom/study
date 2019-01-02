@@ -17,6 +17,8 @@
         <module>learn</module>
         <module>rpc/rpcclient</module>
         <module>rpc/rpcserver</module>
+        <module>feign/feign-client</module>
+        <module>feign/feign-server</module>
     </modules>
 
     <build>
