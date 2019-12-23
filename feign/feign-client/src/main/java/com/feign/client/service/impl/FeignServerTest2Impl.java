@@ -4,6 +4,9 @@ import com.feign.client.service.IFeignServerTest2;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * @auth amos
  * @date 2019/1/2

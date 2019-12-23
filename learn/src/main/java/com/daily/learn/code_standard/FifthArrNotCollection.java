@@ -80,7 +80,7 @@ public class FifthArrNotCollection {
             sum += item;
         }
         endTime = System.currentTimeMillis();
-        System.out.println("Integer run time " + (endTime - startTime));
+        System.out.println("Integer list run time " + (endTime - startTime));
 
         startTime = System.currentTimeMillis();
         sum = 0;

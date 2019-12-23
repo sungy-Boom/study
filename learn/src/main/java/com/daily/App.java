@@ -8,12 +8,13 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        listTest();
-
-        boolean res = returnTest("test");
-        System.out.println(res);
-        res = returnTest("");
-        System.out.println(res);
+//        listTest();
+//
+//        boolean res = returnTest("test");
+//        System.out.println(res);
+//        res = returnTest("");
+//        System.out.println(res);
+        t();
     }
 
     private static void listTest() {
@@ -26,7 +27,17 @@ public class App {
         System.out.println(str);
     }
 
-    private static boolean returnTest(String str){
+    private static boolean returnTest(String str) {
         return "".equals(str);
+    }
+
+    private static void t() {
+        for (int i = 0; i < 10; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < 10; ++i) {
+            System.out.print(i + " ");
+        }
     }
 }
