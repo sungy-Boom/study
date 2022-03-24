@@ -1,6 +1,5 @@
 package com.daily.learn.thread.L191127;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,9 +11,6 @@ public class ThreadPool {
     static ExecutorService executor = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) {
-
-        executor.execute();
-        executor.submit();
 
         class ThreadTest implements Runnable {
 
