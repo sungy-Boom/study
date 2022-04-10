@@ -14,7 +14,7 @@ public class SumEtTargetOfSubArr {
         Map<Integer, Integer> preSumMap = new HashMap<>();
         int[] preSum = new int[nums.length + 1];
         int subCount = 0;
-        preSum[0] = nums[0];
+        preSum[0] = 0;
         preSumMap.put(nums[0], 1);
         for (int i = 1; i <= nums.length; i++) {
             preSum[i] = preSum[i - 1] + nums[i - 1];

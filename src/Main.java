@@ -35,7 +35,22 @@ public class Main {
         //数组中和为 k 的连续子数组的个数
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, 1, 1}, 2));
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{2}, 2));
-        System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, -1, 0}, 0));
+        //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, -1, 0}, 0));
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1}, 0));
+
+        //找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度
+        //System.out.println(new SameZeroAndOne().findMaxLength(new int[]{0, 1, 0, 1}));
+        //System.out.println(new SameZeroAndOne().findMaxLength(new int[]{0, 0, 1, 0, 0, 0, 1, 1}));
+
+        //计算其子矩形范围内元素的总和，该子矩阵的左上角为 (row1, col1) ，右下角为 (row2, col2)
+        int[][] matrix = new int[][]{{3, 0, 1, 4, 2},
+                {5, 6, 3, 2, 1},
+                {1, 2, 0, 1, 5},
+                {4, 1, 0, 1, 7},
+                {1, 0, 3, 0, 5}};
+        NumMatrix numMatrix = new NumMatrix(matrix);
+        System.out.println(numMatrix.sumRegion(2, 1, 4, 3));
+        System.out.println(numMatrix.sumRegion(1, 1, 2, 2));
+        System.out.println(numMatrix.sumRegion(1, 2, 2, 4));
     }
 }
