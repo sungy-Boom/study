@@ -137,12 +137,3 @@ public class LinkT {
         return resHead;
     }
 }
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-    }
-}

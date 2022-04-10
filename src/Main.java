@@ -35,7 +35,55 @@ public class Main {
         //数组中和为 k 的连续子数组的个数
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, 1, 1}, 2));
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{2}, 2));
-        System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, -1, 0}, 0));
+        //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1, -1, 0}, 0));
         //System.out.println(new SumEtTargetOfSubArr().subarraySum(new int[]{1}, 0));
+
+        //包含min函数的栈
+        /*MinStack minStack = new MinStack();
+        minStack.push(12);
+        minStack.push(9);
+        minStack.push(10);
+        minStack.push(8);
+
+        System.out.println(minStack.min());
+        minStack.pop();
+        System.out.println(minStack.min());
+        minStack.pop();
+        System.out.println(minStack.min());
+        minStack.pop();
+        System.out.println(minStack.min());
+        minStack.pop();
+        System.out.println(minStack.min());
+        minStack.pop();*/
+
+        //merger两个有序链表
+        /*ListNode node1 = ListNode.generate(new int[]{1, 2, 3, 4, 7, 8, 9});
+        ListNode node2 = ListNode.generate(new int[]{2,32,34,212});
+        MergeTwoLink mergeTwoLink = new MergeTwoLink();
+        ListNode res = mergeTwoLink.mergeTwo(node1, node2);
+        ListNode.print(res);*/
+
+        //合并多个有序链表
+        /*ListNode[] list = new ListNode[3];
+        list[0] = ListNode.generate(new int[]{1, 4, 5});
+        list[1] = ListNode.generate(new int[]{1, 3, 4});
+        list[2] = ListNode.generate(new int[]{2, 6});
+        MergeLinks mergeLinks = new MergeLinks();
+        ListNode node = mergeLinks.mergeKLists(list);
+        ListNode.print(node);*/
+
+        //链表反向打印
+        /*ListNode node = ListNode.generate(new int[]{3, 1, 2, 4});
+        LinkPrintFromEnd2Head end2Head = new LinkPrintFromEnd2Head();
+        int[] arr = end2Head.reversePrint(node);
+        for (int si : arr) {
+            System.out.println(si);
+        }*/
+
+        //单链表反转
+        ListNode node = ListNode.generate(new int[]{3, 1, 2, 4});
+        LinkReverse linkReverse = new LinkReverse();
+        node = linkReverse.reverseList(node);
+        ListNode.print(node);
     }
 }
