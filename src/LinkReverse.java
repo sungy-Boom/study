@@ -1,3 +1,5 @@
+import base.ListNode;
+
 /**
  * @author sunguiyong
  * @date 2022/4/8 6:03 下午

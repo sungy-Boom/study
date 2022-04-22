@@ -1,7 +1,10 @@
+package linklist;
+
+import base.ListNode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LinkT {
 
@@ -19,7 +22,7 @@ public class LinkT {
         }
         long start = System.currentTimeMillis();
         ListNode node = new LinkT().reverseKGroup(head, 7);
-//        ListNode node1 = new LinkT().reverseKGroup1(head, 7);
+//        base.ListNode node1 = new linklist.LinkT().reverseKGroup1(head, 7);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
 //        while (node != null) {
@@ -27,8 +30,8 @@ public class LinkT {
 //            node = node.next;
 //        }
         //单链表反转
-//        ListNode pre = null;
-//        ListNode cur = null;
+//        base.ListNode pre = null;
+//        base.ListNode cur = null;
 //        while (head != null) {
 //            cur = head;
 //            head = head.next;

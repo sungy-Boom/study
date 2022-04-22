@@ -1,3 +1,11 @@
+import base.TreeNode;
+import tree.JudgeChildTree;
+import tree.MirrorTree;
+import tree.PrintTreeUpDown;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author sunguiyong
  * @date 2022/3/18 5:46 下午
@@ -57,33 +65,94 @@ public class Main {
         minStack.pop();*/
 
         //merger两个有序链表
-        /*ListNode node1 = ListNode.generate(new int[]{1, 2, 3, 4, 7, 8, 9});
-        ListNode node2 = ListNode.generate(new int[]{2,32,34,212});
-        MergeTwoLink mergeTwoLink = new MergeTwoLink();
-        ListNode res = mergeTwoLink.mergeTwo(node1, node2);
-        ListNode.print(res);*/
+        /*base.ListNode node1 = base.ListNode.generate(new int[]{1, 2, 3, 4, 7, 8, 9});
+        base.ListNode node2 = base.ListNode.generate(new int[]{2,32,34,212});
+        list.MergeTwoLink mergeTwoLink = new list.MergeTwoLink();
+        base.ListNode res = mergeTwoLink.mergeTwo(node1, node2);
+        base.ListNode.print(res);*/
 
         //合并多个有序链表
-        /*ListNode[] list = new ListNode[3];
-        list[0] = ListNode.generate(new int[]{1, 4, 5});
-        list[1] = ListNode.generate(new int[]{1, 3, 4});
-        list[2] = ListNode.generate(new int[]{2, 6});
-        MergeLinks mergeLinks = new MergeLinks();
-        ListNode node = mergeLinks.mergeKLists(list);
-        ListNode.print(node);*/
+        /*base.ListNode[] list = new base.ListNode[3];
+        list[0] = base.ListNode.generate(new int[]{1, 4, 5});
+        list[1] = base.ListNode.generate(new int[]{1, 3, 4});
+        list[2] = base.ListNode.generate(new int[]{2, 6});
+        list.MergeLinks mergeLinks = new list.MergeLinks();
+        base.ListNode node = mergeLinks.mergeKLists(list);
+        base.ListNode.print(node);*/
 
         //链表反向打印
-        /*ListNode node = ListNode.generate(new int[]{3, 1, 2, 4});
-        LinkPrintFromEnd2Head end2Head = new LinkPrintFromEnd2Head();
+        /*base.ListNode node = base.ListNode.generate(new int[]{3, 1, 2, 4});
+        list.LinkPrintFromEnd2Head end2Head = new list.LinkPrintFromEnd2Head();
         int[] arr = end2Head.reversePrint(node);
         for (int si : arr) {
             System.out.println(si);
         }*/
 
         //单链表反转
-        ListNode node = ListNode.generate(new int[]{3, 1, 2, 4});
+        /*ListNode node = ListNode.generate(new int[]{3, 1, 2, 4});
         LinkReverse linkReverse = new LinkReverse();
         node = linkReverse.reverseList(node);
-        ListNode.print(node);
+        ListNode.print(node);*/
+
+        //从上到下打印树
+        /*List<Integer> list = new ArrayList<Integer>() {
+            {
+                add(1);
+                add(2);
+                add(3);
+                add(4);
+                add(5);
+                add(6);
+                add(7);
+                add(8);
+                add(9);
+                add(10);
+            }
+        };
+        TreeNode tree = TreeNode.generate(list);
+        PrintTreeUpDown printTreeUpDown = new PrintTreeUpDown();
+        int[] arr = printTreeUpDown.levelOrderArr(tree);
+        List<List<Integer>> listRes = printTreeUpDown.levelOrder(tree);
+        System.out.println();*/
+
+        //子树判断
+        /*JudgeChildTree childTree = new JudgeChildTree();
+        List<Integer> list = new ArrayList<Integer>() {
+            {
+                add(1);
+                add(2);
+                add(3);
+                add(4);
+                add(5);
+                add(6);
+
+            }
+        };
+        List<Integer> listB = new ArrayList<Integer>() {
+            {
+                add(3);
+                add(6);
+            }
+        };
+        TreeNode treeA = TreeNode.generate(list);
+        TreeNode treeB = TreeNode.generate(listB);
+        boolean res = childTree.isSubStructure(treeA, treeB);
+        System.out.println(res);*/
+
+        //树 镜像
+        MirrorTree mirrorTree = new MirrorTree();
+        List<Integer> listB = new ArrayList<Integer>() {
+            {
+                add(1);
+                add(2);
+                add(3);
+                add(4);
+                add(5);
+                add(6);
+            }
+        };
+        TreeNode treeB = TreeNode.generate(listB);
+        treeB = mirrorTree.mirrorTree(treeB);
+        System.out.println();
     }
 }

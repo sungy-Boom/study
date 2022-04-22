@@ -1,15 +1,7 @@
+import base.TreeNode;
+
 import java.util.ArrayList;
 import java.util.List;
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}
 
 class Solution {
     public static void main(String[] args) {
@@ -30,8 +22,7 @@ class Solution {
         int i = 1;
         while (i < arr.length) {
             List<TreeNode> tmpList = new ArrayList<>();
-            for (int j = 0; j < nodeList.size(); j++) {
-                TreeNode node = nodeList.get(j);
+            for (TreeNode node : nodeList) {
                 if (i < arr.length) {
                     int left = arr[i];
                     if (left != 0) {

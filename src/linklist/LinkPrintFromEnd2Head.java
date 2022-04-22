@@ -1,3 +1,7 @@
+package linklist;
+
+import base.ListNode;
+
 import java.util.Stack;
 
 /**
@@ -20,7 +24,7 @@ public class LinkPrintFromEnd2Head {
         for (int i1 = 0; i1 < size; i1++) {
             arr[i1] = nodeStack.pop().val;
         }
-        /*for (ListNode node : nodeStack) {
+        /*for (base.ListNode node : nodeStack) {
             arr[i++] = node.val;
         }*/
         return arr;

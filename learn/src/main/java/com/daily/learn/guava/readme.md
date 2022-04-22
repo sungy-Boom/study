@@ -370,9 +370,9 @@ public class MultisetTest {
     System.out.println("集合中是否包含指定的元素：" + multiset.contains("raw"));
     Multiset<String> set = HashMultiset.create();
     set.add("raw");
-    List<String> list = new ArrayList<>(Arrays.asList("raw", "qw"));
+    List<String> linklist = new ArrayList<>(Arrays.asList("raw", "qw"));
     System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(set));
-    System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(list));
+    System.out.println("集合中是否包含指定的集合：" + multiset.containsAll(linklist));
   }
 
   /**
@@ -614,21 +614,21 @@ public class MultimapTest {
         System.out.println("after addTest map : " + multiMap);
         System.out.println("map get key : " + multiMap.get("test"));
 
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(1);
-        map.put("Test", list);
+        List<Integer> linklist = new ArrayList<>();
+        linklist.add(1);
+        linklist.add(1);
+        map.put("Test", linklist);
 
         List<Integer> list_2 = new ArrayList<>();
         list_2.add(1);
         list_2.add(1);
-        System.out.println("is the value list put success : " + map.put("Test", list_2));
-        System.out.println("map put list : " + map);
+        System.out.println("is the value linklist put success : " + map.put("Test", list_2));
+        System.out.println("map put linklist : " + map);
         list_2.add(2);
-        System.out.println("is the value list put success : " + map.put("Test", list_2));
-        System.out.println("map put list : " + map);
-        System.out.println("is the value list put success : " + map.put("Test1", list_2));
-        System.out.println("map put list : " + map);
+        System.out.println("is the value linklist put success : " + map.put("Test", list_2));
+        System.out.println("map put linklist : " + map);
+        System.out.println("is the value linklist put success : " + map.put("Test1", list_2));
+        System.out.println("map put linklist : " + map);
     }
 
     /**
@@ -672,8 +672,8 @@ public class MultimapTest {
         }
 
         //map.get(K key)
-        Collection<List<Integer>> list = map.get("Test");
-        System.out.println("getKey : " + list);
+        Collection<List<Integer>> linklist = map.get("Test");
+        System.out.println("getKey : " + linklist);
 
         //map.keys()
         Multiset<String> set = map.keys();
@@ -738,12 +738,12 @@ public class MultimapTest {
     is the value put success : false
     after addTest map : {test=[1, 2]}
     map get key : [1, 2]
-    is the value list put success : false
-    map put list : {Test=[[1, 1]]}
-    is the value list put success : true
-    map put list : {Test=[[1, 1], [1, 1, 2]]}
-    is the value list put success : true
-    map put list : {Test1=[[1, 1, 2]], Test=[[1, 1], [1, 1, 2]]}
+    is the value linklist put success : false
+    map put linklist : {Test=[[1, 1]]}
+    is the value linklist put success : true
+    map put linklist : {Test=[[1, 1], [1, 1, 2]]}
+    is the value linklist put success : true
+    map put linklist : {Test1=[[1, 1, 2]], Test=[[1, 1], [1, 1, 2]]}
      
     is multiMap contain the key-value pair : true
     is multiMap contain the specify key : true
