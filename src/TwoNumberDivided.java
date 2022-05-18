@@ -44,8 +44,8 @@ public class TwoNumberDivided {
         if (b > 0) b = -b;
         int res = 0;
         while (a <= b) {
-            int k = 1, value = b;
-            while (k <= Integer.MAX_VALUE / 2 && a >= value + value) {
+            int k = 1;
+            while (k <= Integer.MAX_VALUE / 2 && a >= b + b) {
 
                 k += k;
             }
