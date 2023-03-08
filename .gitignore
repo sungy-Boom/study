@@ -26,3 +26,4 @@ nbdist/
 target/
 out/
 classes/
+*.DS_Store
